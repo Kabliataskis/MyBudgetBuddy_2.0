@@ -4,6 +4,8 @@ import Pirmas_puslapis from './Puslapiai/Pagrindinis_puslapis/Pagrindinis_puslap
 import Pajamos from './Puslapiai/Pajamos/Pajamos';
 import Islaidos from './Puslapiai/Islaidos/Islaidos';
 import Login from './Puslapiai/Login_forma/Login_forma';
+import Istorija from './Puslapiai/Istorija/Istorija';
+import Biudzetas from './Puslapiai/Biudzetas/Biudzietas';
 
 const App = () => {
 	return (
@@ -13,6 +15,8 @@ const App = () => {
 			<Pajamos />
 			<Islaidos/>
 			<Login/>
+			<Istorija/>
+			<Biudzetas/>
 		</div>
 	);
 };
