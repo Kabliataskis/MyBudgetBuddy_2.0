@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 import React from 'react';
-import './Biudzetas_dizainas.css';
+import './Istorija_dizainas.css';
 
 function Istorija () {
 	return (
