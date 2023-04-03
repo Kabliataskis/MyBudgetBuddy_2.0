@@ -110,17 +110,18 @@ function PajamosSuvesti() {
                   value={amount}
                 />
               </p>
-
-              <button className="add-btn" type="submit">
-                Pridėti
-              </button>
-              <button
-                className="cancel-btn"
-                type="reset"
-                onClick={() => closeModal()}
-              >
-                Atšaukti
-              </button>
+              <div className="buttons-container">
+                <button className="add-btn" type="submit">
+                  Pridėti
+                </button>
+                <button
+                  className="cancel-btn"
+                  type="reset"
+                  onClick={() => closeModal()}
+                >
+                  Atšaukti
+                </button>
+              </div>
             </form>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import "./App.css";
+import "./index.css";
 import PajamosSuvesti from "./Puslapiai/Pajamos/PajamosSuvesti";
 
 function App() {
