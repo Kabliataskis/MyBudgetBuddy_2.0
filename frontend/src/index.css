@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Baloo Thambi 2';
-  src: url('./Assets/Fonts/BalooThambi2-VariableFont_wght.ttf');
+  src: url('./Assets/Fonts/BalooThambi2.ttf');
 }
 :root{
   --main-color: #28b78d;
