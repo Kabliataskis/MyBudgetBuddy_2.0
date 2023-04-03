@@ -6,12 +6,12 @@ export default function Pajamos_idetos(){
 
 const [tasks,setTasks] = useState([
 	{id:1, data: "2023-03-28",saltynis: "Maxima", suma: "20€"},
-	{id:2, data: "2023-03-28",saltynis: "Maxima", suma: "20€"},
-	{id:3, data: "2023-03-28",saltynis: "Maxima", suma: "20€"},
+	{id:2, data: "2023-03-28",saltynis: "Norfa", suma: "20€"},
+	{id:3, data: "2023-03-28",saltynis: "Lidl", suma: "20€"},
 	{id:4, data: "2023-03-28",saltynis: "Maxima", suma: "20€"},
-	{id:5, data: "2023-03-28",saltynis: "Maxima", suma: "20€"},
+	{id:5, data: "2023-03-28",saltynis: "Iki", suma: "20€"},
 	{id:6, data: "2023-03-28",saltynis: "Maxima", suma: "20€"},
-	{id:7, data: "2023-03-28",saltynis: "Maxima", suma: "20€"},
+	{id:7, data: "2023-03-28",saltynis: "Rimi", suma: "20€"},
 	{id:8, data: "2023-03-28",saltynis: "Maxima", suma: "20€"},
 	{id:9, data: "2023-03-28",saltynis: "Maxima", suma: "20€"}
 ]);
@@ -22,8 +22,13 @@ const deleteTask = (id) =>{
     setTasks(tasks.filter((item) => item.id !== id));
 };
 
+const[value,setValue] = useState('')
 
-let tasks_list = tasks.map((el) =>{
+const filterTask = tasks.filter(taskss =>{
+	return taskss.saltynis.toLocaleLowerCase().includes(value.toLocaleLowerCase()) 
+})
+
+let tasks_list = filterTask.map((el) =>{
     return(
         <Task
         key={uuidv4()}
@@ -37,6 +42,8 @@ let tasks_list = tasks.map((el) =>{
 });
 
 
+
+
 return(
 	<div className='main_back'>	
 		<div className='container_pajamos'>
@@ -48,19 +55,30 @@ return(
 		</div >
 
 		<div className='container_pajamos'>
-			<table className='table_main'>
-				<thead>
-					<tr>
-						<th>Data</th>
-						<th>Pajamu Saltynis</th>
-						<th>Suma</th>
-						<th>Redaguoti</th>
-						<th>Pasalinti</th>
-					</tr>
-				</thead>
-				<tbody>{tasks_list}</tbody>
+				<table className='table_main'>
+					<thead>
+						<tr>
+							<th>Data</th>
+							<th>Pajamu Saltynis</th>
+							<th>Suma</th>
+							<th>Redaguoti</th>
+							<th>Pasalinti</th>
+						</tr>
+					</thead>
+					<tbody>{tasks_list}</tbody>
 				</table>
-
+				<div>
+					<div>
+						<form>
+							<input
+								type="text"
+								placeholder="Paieska..."
+								onChange={(event) => setValue(event.target.value)}
+							/>
+						</form>
+					</div>
+				</div>
+				
 		</div>
 	</div>	
 )
