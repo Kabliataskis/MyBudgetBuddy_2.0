@@ -1,0 +1,103 @@
+
+/*Modal*/
+.Pajamos-modal-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(36, 55, 67, 0.9);
+    animation: 0.1s modalOpen linear 1;
+    transition: 0.2s;
+    z-index: 100;
+}
+.Pajamos-modal-container .modal-content{
+    position: relative;
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 15px 30px;
+    border-radius: 5px;
+    /* width: 100%; */
+    max-width: 400px;
+    min-height: 250px;
+    -webkit-box-shadow: 0 3px 5px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+    box-shadow: 0 3px 5px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+}
+.Pajamos-modal-container .modal-close-btn{
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    font-size: 1.5em;
+    font-weight: 800;
+    color: #243743;
+}
+.Pajamos-modal-container .modal-close-btn:hover{
+    cursor: pointer;
+}
+.Pajamos-modal-container .modal-title{
+    color: #243743;
+    font-weight: 600;
+}
+/*Modal forma*/
+.Pajamos-modal-form label{
+    font-weight: 450;
+}
+.Pajamos-modal-form input{
+    border: unset;
+    border-bottom: 1px solid #243743;
+    padding: 5px;
+    outline: none;
+    color: #28b78d;
+    width: 90%;
+    transition: 0.2s;
+}
+.Pajamos-modal-form input:focus{
+    border-bottom: 1px solid #28b78d;
+}
+.Pajamos-modal-form button:hover{
+    cursor: pointer;
+    transition: 0.2s;
+}
+.Pajamos-modal-form .add-btn,
+.Pajamos-modal-form .cancel-btn{
+    border-radius: 5px;
+    padding: 10px;
+    border: unset;
+}
+.Pajamos-modal-form .add-btn{
+    width: 60%;
+    background-color: #28b78d;
+    color: #fafafa;
+}
+.Pajamos-modal-form .add-btn:hover{
+    background-color: #26a780;
+}
+.Pajamos-modal-form .cancel-btn{
+    margin-left: 10px;
+    width: 30%;
+    background-color: #243743;
+    color: #e0e4e7;
+}
+.Pajamos-modal-form .cancel-btn:hover{
+    background-color: #1d2b35;
+}
+
+  @keyframes modalOpen {
+    from{
+        opacity: 0;
+    }
+    to{
+        display: 1;
+    }
+  }
+
+  /* tablet */
+  /*@media screen and (max-width: 1439px) {
+
+    
+  }*/
+  /* mobile */
+ /* @media screen and (max-width: 767px) {
+
+    
+  }*/ 
