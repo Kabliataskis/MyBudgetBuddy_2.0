@@ -19,11 +19,11 @@ function Pajamos () {
 				// užklausa į backend
 
 				// success
-				// swal.fire(
-				//   'Deleted!',
-				//   'Your file has been deleted.',
-				//   'success'
-				// )
+				swal.fire(
+				  'Sėkmingai!',
+				  'Įrašas ištrintas',
+				  'success'
+				)
 			  }
 		  });
 
