@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { AiOutlineClose } from "react-icons/ai";
 import "./Pajamos_dizainas.css";
+import swal from 'sweetalert2'
 
 function PajamosSuvesti() {
   const max_amount = 9999999; // Maksimali suma €
@@ -50,6 +51,12 @@ function PajamosSuvesti() {
       } else {
         // Frontend validation success
         // Request to backend
+        setModal_PajamosSuvesti(false);
+        swal.fire(
+				  'Sėkmingai!',
+				  'Įrašas pridėtas',
+				  'success'
+				)
       }
     } else {
       toast.error("Užpildykite visus laukelius!");
