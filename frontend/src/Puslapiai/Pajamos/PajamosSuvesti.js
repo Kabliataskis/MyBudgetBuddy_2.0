@@ -57,6 +57,7 @@ function PajamosSuvesti() {
 				  'Įrašas pridėtas',
 				  'success'
 				)
+        setFormInputs(defaultInputValues);
       }
     } else {
       toast.error("Užpildykite visus laukelius!");
