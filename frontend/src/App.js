@@ -9,6 +9,7 @@ import PajamosSuvesti from "./Puslapiai/Pajamos/PajamosSuvesti";
 function App() {
   return (
     <div className="App">
+<<<<<<< HEAD
       <Pajamos/>
       <ToastContainer
         position="top-right"
@@ -23,6 +24,9 @@ function App() {
         theme="colored"
       />
       <PajamosSuvesti />
+=======
+      
+>>>>>>> 7713021 (Update App.js)
     </div>
   );
 }
