@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Task from "./Pajamos_funk";
 import './Pajamos_dizainas.css';
+import swal from 'sweetalert2'
 export default function Pajamos_idetos(){
 
 const [tasks,setTasks] = useState([
@@ -16,11 +17,32 @@ const [tasks,setTasks] = useState([
 	{id:9, data: "2023-03-28",saltynis: "Maxima", suma: "20€"}
 ]);
 
+function deleteTask (id) {
+	swal.fire({
+		title: "Veiksmo patvirtinimas",
+		text: "Ar tikrai norite ištrinti įrašą?",
+		icon: "warning",
+		showCancelButton: true,
+		confirmButtonColor: '#d33',
+		cancelButtonColor: '#3085d6',
+		confirmButtonText: 'Ištrinti',
+		cancelButtonText: "Atšaukti!"
+	  }).then((result) => {
+		if (result.isConfirmed) {
+			// užklausa į backend
 
-
-const deleteTask = (id) =>{
-    setTasks(tasks.filter((item) => item.id !== id));
-};
+			// success
+			swal.fire(
+			  'Sėkmingai!',
+			  'Įrašas ištrintas',
+			  'success'
+			)
+		  }
+	  });
+	}
+// const deleteTask = (id) =>{
+//     setTasks(tasks.filter((item) => item.id !== id));
+// };
 
 const[value,setValue] = useState('')
 
@@ -88,5 +110,7 @@ return(
 		</div>
 	</div>	
 )
-}
+
+
+
 

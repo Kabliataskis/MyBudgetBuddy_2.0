@@ -84,3 +84,116 @@
     color: #28b78d;
 
 }
+
+/*Modal*/
+.Pajamos-modal-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(36, 55, 67, 0.9);
+    animation: 0.1s modalOpen linear 1;
+    transition: 0.2s;
+    z-index: 100;
+}
+.Pajamos-modal-container .modal-content{
+    position: relative;
+    background-color: var(--white-color);
+    margin: 10% auto;
+    padding: 15px 30px;
+    border-radius: 5px;
+    /* width: 100%; */
+    max-width: 420px;
+    min-height: 250px;
+    -webkit-box-shadow: 0 3px 5px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+    box-shadow: 0 3px 5px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+}
+.Pajamos-modal-container .modal-close-btn{
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    font-size: 1.5em;
+    font-weight: 800;
+    color: var(--dark-color);
+}
+.Pajamos-modal-container .modal-close-btn:hover{
+    cursor: pointer;
+}
+.Pajamos-modal-container .modal-title{
+    margin-top: 15px;
+    color: var(--dark-color);
+    font-weight: 600;
+}
+/*Modal forma*/
+.Pajamos-modal-form{
+    margin-top: 25px;
+}
+.Pajamos-modal-form label{
+    font-weight: 450;
+}
+.Pajamos-modal-form input{
+    width: 90%;
+    margin: 10px 0px;
+    border: unset;
+    border-bottom: 1px solid var(--dark-color);
+    padding: 5px;
+    outline: none;
+    background: unset;
+    color: var(--main-color);
+    transition: 0.2s;
+}
+.Pajamos-modal-form input:focus{
+    border-bottom: 1px solid var(--main-color);
+}
+.Pajamos-modal-form button:hover{
+    cursor: pointer;
+    transition: 0.2s;
+}
+.Pajamos-modal-form .add-btn,
+.Pajamos-modal-form .cancel-btn{
+    font-size: 0.95em;
+    border-radius: 5px;
+    padding: 7px;
+    border: unset;
+}
+.Pajamos-modal-form .add-btn{
+    width: 60%;
+    background-color: var(--main-color);
+    color: var(--white-color);
+}
+.Pajamos-modal-form .add-btn:hover{
+    background-color: var(--main-color_);
+}
+.Pajamos-modal-form .cancel-btn{
+    margin-left: 10px;
+    width: 30%;
+    background-color: var(--dark-color);
+    color: var(--grey-color);
+}
+.Pajamos-modal-form .cancel-btn:hover{
+    background-color: #1d2b35;
+}
+.Pajamos-modal-form .buttons-container{
+    margin-top: 25px;
+}
+
+  @keyframes modalOpen {
+    from{
+        opacity: 0;
+    }
+    to{
+        display: 1;
+    }
+  }
+
+  /* tablet */
+  /*@media screen and (max-width: 1439px) {
+
+    
+  }*/
+  /* mobile */
+ /* @media screen and (max-width: 767px) {
+
+    
+  }*/ 
