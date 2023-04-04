@@ -3,6 +3,8 @@ import { v4 as uuidv4 } from "uuid";
 import Task from "./Pajamos_funk";
 import './Pajamos_dizainas.css';
 import swal from 'sweetalert2'
+import '../../index.css';
+import { MdKeyboardDoubleArrowLeft ,MdKeyboardDoubleArrowRight ,MdOutlineKeyboardArrowRight ,MdKeyboardArrowLeft} from "react-icons/md";
 export default function Pajamos_idetos(){
 
 const [tasks,setTasks] = useState([
@@ -72,26 +74,43 @@ return(
 			<h3 className="h3-text">Pajamos</h3>
 			<div className="block_pajamos">
 				<p className="block_pajamo">Mėnesio pajamos: <span className='color-eur'>5956$</span></p>
-				<button className='btn-gren'>Įvesti pajamas</button>
+				<button  className='btn-gren'>Įvesti pajamas</button>
 			</div>
 		</div >
 
 		<div className='container_pajamos flex_container'>
-				<table className='table_main'>
-					<thead>
-						<tr>
-							<th>Data</th>
-							<th>Pajamu Saltynis</th>
-							<th>Suma</th>
-							<th>Redaguoti</th>
-							<th>Pasalinti</th>
-						</tr>
-					</thead>
-					<tbody>{tasks_list}</tbody>
-				</table>
+				<div className='table_main'>
+					<table>
+						<thead>
+							<tr>
+								<th>Data</th>
+								<th>Pajamu Saltynis</th>
+								<th>Suma</th>
+								<th>Redaguoti</th>
+								<th>Pasalinti</th>
+							</tr>
+						</thead>
+						<tbody>{tasks_list}</tbody>
+					</table>
+					<div className="paginacina_container">
+						<ul>
+							<li ><MdKeyboardDoubleArrowLeft/></li>
+							<li><MdKeyboardArrowLeft/></li>
+							<li className="select">1</li>
+							<li>2</li>
+							<li>3</li>
+							<li>4</li>
+							<li>5</li>
+							<li>6</li>
+							<li>7</li>
+							<li><MdOutlineKeyboardArrowRight/></li>
+							<li ><MdKeyboardDoubleArrowRight/></li>
+						</ul>
+					</div>
+				</div>
 
 				<div className="block_filtro">
-					<h4>Filtravimas</h4>
+					<h3>Filtravimas</h3>
 					<div>
 						<form>
 							<input
@@ -101,8 +120,8 @@ return(
 								onChange={(event) => setValue(event.target.value)}
 
 							/>
-							<p>Nuo <input className="data_filter" type="date"/> iki <input className="data_filter" type="date"/></p>
-							<button>Ieskoti</button>
+							<p className="data_filter_p">Nuo <input className="data_filter" type="date"/> iki <input className="data_filter" type="date"/></p>
+							<button className="btn-dark">Ieskoti</button>
 						</form>
 					</div>
 				</div>
@@ -110,7 +129,7 @@ return(
 		</div>
 	</div>	
 )
-
+}
 
 
 

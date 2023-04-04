@@ -14,7 +14,7 @@ export default function Task(props){
             <td>
                 <FaPen/>
             </td>
-            <td>
+            <td className="">
                 <button
                 className="btn_trash"
                 onClick={() => deleteTask(id)}
