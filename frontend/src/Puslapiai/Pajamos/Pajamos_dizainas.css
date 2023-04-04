@@ -25,7 +25,7 @@
 }
 .Pajamos-modal-container .modal-close-btn{
     position: absolute;
-    top: 30px;
+    top: 35px;
     right: 30px;
     font-size: 1.5em;
     font-weight: 800;
@@ -44,6 +44,7 @@
     margin-top: 25px;
 }
 .Pajamos-modal-form label{
+    color: var(--dark-color);
     font-weight: 450;
 }
 .Pajamos-modal-form input{
@@ -81,7 +82,7 @@
 }
 .Pajamos-modal-form .cancel-btn{
     margin-left: 10px;
-    width: 30%;
+    width: 27%;
     background-color: var(--dark-color);
     color: var(--grey-color);
 }

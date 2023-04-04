@@ -52,11 +52,18 @@ function PajamosSuvesti() {
         // Frontend validation success
         // Request to backend
         setModal_PajamosSuvesti(false);
-        swal.fire(
-				  'Sėkmingai!',
-				  'Įrašas pridėtas',
-				  'success'
-				)
+        // swal.fire(
+				//   'Sėkmingai!',
+				//   'Įrašas pridėtas',
+				//   'success'
+				// )
+        swal.fire({
+          title: 'Sėkmingai',
+          text: 'Įrašas pridėtas',
+          icon: 'success',
+          confirmButtonColor: '#28b78d',
+
+        })
         setFormInputs(defaultInputValues);
       }
     } else {
@@ -93,7 +100,7 @@ function PajamosSuvesti() {
               <label htmlFor="date">Data</label>
               <p>
                 <input
-                  type="datetime-local"
+                  type="date"
                   name="date"
                   id="date"
                   required

@@ -18,6 +18,34 @@
   font-family: 'Baloo Thambi 2', cursive;
 }
 
+
+.swal2-title{
+  color: var(--dark-color) !important;
+}
+.swal2-html-container{
+  color: var(--dark-color) !important;
+}
+
+.swal2-icon.swal2-success [class^=swal2-success-line] {
+  background-color: var(--main-color) !important;
+}
+
+.swal2-icon.swal2-success .swal2-success-ring{
+  /* border: 0.25em solid var(--main-color) !important; */
+  border: .25em solid rgba(40, 183, 141, 0.3) !important;
+}
+.swal2-styled.swal2-cancel,
+.swal2-styled.swal2-confirm:focus{
+  box-shadow: unset !important;
+}
+/* .swal2-styled.swal2-confirm{
+  background-color: var(--main-color) !important;
+}
+.swal2-styled.swal2-confirm:hover{
+  background-color: var(--main-color_) !important;
+} */
+
+
   /* tablet */
   /*@media screen and (max-width: 1439px) {
 
