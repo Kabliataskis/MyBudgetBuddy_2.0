@@ -17,6 +17,9 @@
   padding: 0;
   font-family: 'Baloo Thambi 2', cursive;
 }
+body{
+  background-color: var(--grey-color);
+}
 
   /* tablet */
   /*@media screen and (max-width: 1439px) {

@@ -1,45 +1,22 @@
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+
+
+
+
 .Pagrindinis-container{
-   margin-top: 100px;
+    max-width: calc(100% - 200px);
+    /* margin: 0 auto; */
+    margin-top: 100px;
     margin-left: 200px;
-    width: 80%;
+    margin-right: 20px;
 }
-.Pagrindinis-tables-container{
+.Pagrindinis-container .top-container{
+    background-color: var(--white-color);
+}
+.Pagrindinis-container .history-containers{
     display: flex;
     justify-content: space-between;
-    margin-top: 50px;
-    background-color: red;
+    margin-top: 25px;
 }
-.biudzetas{
-
-    border: solid  #8a949b  1px;
-    background-color: #8a949b;
-    width: 20%;
-    padding: 10px;
-    margin: 20px;            
-}
-.isleista-per-men{
-    border: solid  #8a949b  1px;
-    background-color:#8a949b;
-    width: 20%;
-    margin: 20px;
-    padding: 10px;
-
-}
-
-.ivesti_pajomos{
-    max-width: 15px;
-    margin: 10px;
-    padding: 10px;
-
-}
-.islaidu_table{ 
-    border: solid gray  1px;
-    background-color: gray;
-    width: 300px;
-    margin: 10px;
+.Pagrindinis-container .history-container{
+    background-color: var(--white-color);
 }

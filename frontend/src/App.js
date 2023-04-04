@@ -9,7 +9,6 @@ import Pirmas_puslapis from "./Puslapiai/Pagrindinis_puslapis/Pagrindinis_puslap
 function App() {
   return (
     <div className="App">
-      <Pajamos />
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -22,7 +21,6 @@ function App() {
         pauseOnHover
         theme="colored"
       />
-      <PajamosSuvesti />
       <Pirmas_puslapis />
     </div>
   );
