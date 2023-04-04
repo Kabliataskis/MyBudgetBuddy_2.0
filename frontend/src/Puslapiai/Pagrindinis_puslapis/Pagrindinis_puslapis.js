@@ -4,12 +4,21 @@ import './Pagrindinis_puslapis_dizainas.css';
 
 function Pirmas_puslapis () {
 	return (
-	
 	<div className='Pagrindinis-container'>
-		<div className='top-container'>Top-container</div>
+		<div className='top-container'>
+		<div className='controlbiuzetas'>
+		<div className='biudzetas'>biudzetas</div>
+		<div className='isleistacontainer'>Isleista per menesi</div>
+		</div>
+		</div>
 		<div className='history-containers'>
-			<div className='history-container'>History 1</div>
-			<div className='history-container'>History 2</div>
+			<div className='history-container1'>
+				<div className='ivestipajomos '>Ivesti islaidos</div>  
+			</div>
+			<div className='history-container2'>
+				<div className='ivestipajamos'>Ivesti Pajamos</div>
+				
+			</div>
 		</div>
 	</div>
 	);

@@ -1,7 +1,6 @@
-
-
-
-
+*{
+    box-sizing: border-box;
+}
 .Pagrindinis-container{
     max-width: calc(100% - 200px);
     /* margin: 0 auto; */
@@ -10,6 +9,7 @@
     margin-right: 20px;
 }
 .Pagrindinis-container .top-container{
+    padding: 15px;
     background-color: var(--white-color);
 }
 .Pagrindinis-container .history-containers{
@@ -19,4 +19,32 @@
 }
 .Pagrindinis-container .history-container{
     background-color: var(--white-color);
+}
+.biudzetas{
+    margin-top: 100px;
+   width: 220px;
+   height: 50px;
+    background-color: #8a949b;
+    /* margin: 30px; */
+    margin-top: 20px;
+
+}
+
+
+.isleistacontainer{
+    width: 220px;
+    height: 50px;
+    background-color: #8a949b;
+    /* margin: 30px; */
+    margin-top: 30px;
+    margin-left: 30px;
+    border-radius: 5px;
+    
+    
+}
+.ivestipajomos{
+    background-color: #8a949b;
+}
+.ivestipajamos{
+    background-color: #8a949b;
 }
