@@ -44,6 +44,8 @@
     margin-top: 25px;
 }
 .Pajamos-modal-form label{
+    display: block;
+    margin-top: 10px;
     color: var(--dark-color);
     font-weight: 450;
 }
@@ -61,6 +63,7 @@
 .Pajamos-modal-form input:focus{
     border-bottom: 1px solid var(--main-color);
 }
+
 .Pajamos-modal-form button:hover{
     cursor: pointer;
     transition: 0.2s;
@@ -92,7 +95,24 @@
 .Pajamos-modal-form .buttons-container{
     margin-top: 25px;
 }
-
+.Pajamos-modal-form input.error{
+    color: var(--red-color);
+    border-bottom: 1px solid var(--red-color);
+}
+.Pajamos-modal-form input.error:focus{
+    border-bottom: 1px solid var(--red-color);
+}
+.Pajamos-modal-form .error-mess-box{
+    display: flex;
+    align-items: center;
+    margin-left: 3px;
+    color: var(--red-color);
+    font-size: 0.85em;
+    transform: 0.2s;
+}
+.Pajamos-modal-form .error-mess-icon{
+    margin-right: 5px;
+}
   @keyframes modalOpen {
     from{
         opacity: 0;
