@@ -1,5 +1,6 @@
 import React from "react";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash , FaPen } from "react-icons/fa";
+
 import './Pajamos_dizainas.css';
 export default function Task(props){
     const{id,data,saltynis,suma, deleteTask} = props;
@@ -11,7 +12,7 @@ export default function Task(props){
 			<td>{saltynis}</td>
 			<td className='color-eur'>+{suma}</td>
             <td>
-          
+                <FaPen/>
             </td>
             <td>
                 <button

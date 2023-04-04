@@ -1,29 +1,38 @@
+*{
+    box-sizing: border-box;
+}
 .main_back{
     background-color: #e0e4e7;
     padding: 20px;
 }
+
 .h3-text{
     margin-left: 35px;
 }
+
 .container_pajamos{
     background-color: #fafafa;
     padding: 10px;
     margin: 20px;
     border-radius: 8px;
 }
+
 .block_pajamos{
     display: flex;
     margin-left: 60px;
 }
+
 .block_pajamo{
     background: #e0e4e7;
     padding: 20px 10px 20px 10px;
     border-radius: 8px;
     margin: 0 30px 0 0px;
 }
+
 .color-eur{
     color: #28b78d;
 }
+
 .btn_trash{
     border: none;
     color: red;
@@ -31,21 +40,47 @@
     font-size: 15px;
     text-align: center;
 }
+
 .table_main{
     border-collapse: collapse;
-    width: 60%;
-    margin-left: 60px;
+    width: 70%;
+    margin: 10px 0 0 60px;
 }
+
 .table_main th,td{
     text-align: left;
     padding: 8px;
 }
+
 .table_main th{
     background-color:#e0e4e7 ;
 }
+
 .table_main td{
     border-bottom: 1px solid #e0e4e7;
 }
-.table_center{
-    text-align: center;
+
+.flex_container{
+    display: flex;
+}
+
+.block_filtro{
+    background: #e0e4e7;
+    padding: 20px 20px 20px 40px;
+    border-radius: 8px;
+    margin: 10px 20px 0 100px;
+}
+
+.paieska_filter{
+    padding-right: 170px;
+    background: #e0e4e7;
+    border: none;
+    border-bottom: 2px solid #243743;
+}
+.data_filter{
+    border: none;
+    background: #e0e4e7;
+    border-bottom: 2px solid #243743;
+    color: #28b78d;
+
 }

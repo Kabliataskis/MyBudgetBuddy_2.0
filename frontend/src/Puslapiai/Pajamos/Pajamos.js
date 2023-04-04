@@ -54,7 +54,7 @@ return(
 			</div>
 		</div >
 
-		<div className='container_pajamos'>
+		<div className='container_pajamos flex_container'>
 				<table className='table_main'>
 					<thead>
 						<tr>
@@ -67,14 +67,20 @@ return(
 					</thead>
 					<tbody>{tasks_list}</tbody>
 				</table>
-				<div>
+
+				<div className="block_filtro">
+					<h4>Filtravimas</h4>
 					<div>
 						<form>
 							<input
 								type="text"
 								placeholder="Paieska..."
+								className="paieska_filter"
 								onChange={(event) => setValue(event.target.value)}
+
 							/>
+							<p>Nuo <input className="data_filter" type="date"/> iki <input className="data_filter" type="date"/></p>
+							<button>Ieskoti</button>
 						</form>
 					</div>
 				</div>
