@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import "./index.css";
 import PajamosSuvesti from "./Puslapiai/Pajamos/PajamosSuvesti";
+import Pirmas_puslapis from "./Puslapiai/Pagrindinis_puslapis/Pagrindinis_puslapis";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         theme="colored"
       />
       <PajamosSuvesti />
+      <Pirmas_puslapis />
     </div>
   );
 }
