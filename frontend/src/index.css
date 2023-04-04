@@ -20,7 +20,12 @@
 body{
   background-color: var(--grey-color);
 }
-
+.green{
+  color: var(--main-color);
+}
+.red{
+  color: var(--red-color);
+}
   /* tablet */
   /*@media screen and (max-width: 1439px) {
 
