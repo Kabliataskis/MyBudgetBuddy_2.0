@@ -7,6 +7,7 @@ import '../../index.css';
 import { MdKeyboardDoubleArrowLeft ,MdKeyboardDoubleArrowRight ,MdOutlineKeyboardArrowRight ,MdKeyboardArrowLeft} from "react-icons/md";
 export default function Pajamos_idetos(){
 
+
 const [tasks,setTasks] = useState([
 	{id:1, data: "2023-03-28",saltynis: "Maxima", suma: "20€"},
 	{id:2, data: "2023-03-28",saltynis: "Norfa", suma: "20€"},
