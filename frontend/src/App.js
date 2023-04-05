@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import "./index.css";
 import PajamosSuvesti from "./Puslapiai/Pajamos/PajamosSuvesti";
 import Pirmas_puslapis from "./Puslapiai/Pagrindinis_puslapis/Pagrindinis_puslapis";
+import Auth from "./Puslapiai/Login_forma/Auth";
 function App() {
   return (
     <div className="App">
