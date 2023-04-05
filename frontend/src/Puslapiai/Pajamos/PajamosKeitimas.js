@@ -5,7 +5,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import "./Pajamos_dizainas.css";
 import swal from 'sweetalert2'
 
-function PajamosSuvesti() {
+function PajamosKeitimas() {
   const max_amount = 9999999; // Maksimali suma €
   const [modal_PajamosSuvesti, setModal_PajamosSuvesti] = useState(false);
 
@@ -54,7 +54,7 @@ function PajamosSuvesti() {
         setModal_PajamosSuvesti(false);
         swal.fire(
 				  'Sėkmingai!',
-				  'Įrašas pridėtas',
+				  'Įrašas Pakeistas',
 				  'success'
 				)
       }
@@ -65,12 +65,12 @@ function PajamosSuvesti() {
   return (
     <>
       <button onClick={() => setModal_PajamosSuvesti(true)}>
-        Pridėti pajamas
+        Pakeisti pajamas
       </button>
       {modal_PajamosSuvesti ? (
         <div className="Pajamos-modal-container" onMouseDown={onMouseDown}>
           <div className="modal-content">
-            <h2 className="modal-title">Pridėti pajamas</h2>
+            <h2 className="modal-title">Pakeisti pajamas</h2>
             <span className="modal-close-btn" onClick={() => closeModal()}>
               <AiOutlineClose />
             </span>
@@ -119,7 +119,7 @@ function PajamosSuvesti() {
               </p>
               <div className="buttons-container">
                 <button className="add-btn" type="submit">
-                  Pridėti
+                  Pakeisti
                 </button>
                 <button
                   className="cancel-btn"
@@ -137,4 +137,4 @@ function PajamosSuvesti() {
   );
 }
 
-export default PajamosSuvesti;
+export default PajamosKeitimas;

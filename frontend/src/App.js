@@ -2,9 +2,9 @@ import './App.css';
 import Pajamos from './Puslapiai/Pajamos/Pajamos';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import "./index.css";
 import PajamosSuvesti from "./Puslapiai/Pajamos/PajamosSuvesti";
+import PajamosKeitimas from "./Puslapiai/Pajamos/PajamosKeitimas"
 
 function App() {
   return (
@@ -23,6 +23,7 @@ function App() {
         theme="colored"
       />
       <PajamosSuvesti />
+      <PajamosKeitimas/>
     </div>
   );
 }
