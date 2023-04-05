@@ -24,27 +24,29 @@ function Navbar(props) {
 	<ul className= "navbar-links">
         
 		<div className='firt_order'>
+			<Link to="/">
             <li className="navbar-item">
-			<Link to="/"><AiOutlineHome className='nav_icon'/>Bendra apžvalga</Link>
-            
-		</li>
+			<AiOutlineHome className='nav_icon'/>Bendra apžvalga</li>
+            </Link>
+		
+		<Link to="/pajamos">
 		<li className="navbar-item">
-			<Link to="/pajamos"><BsGraphUpArrow className='nav_icon'/> Pajamos</Link>
+			<BsGraphUpArrow className='nav_icon'/> Pajamos     
             
-		</li>
+		</li></Link>
         <li className="navbar-item">
 		<Link to="/income"><BsGraphDownArrow className='nav_icon'/> Išlaidos</Link>
             
 		</li>
         <li className="navbar-item">
 			{/* <Link to="/">Išlaidos</Link> */}
-           <TbPigMoney className='nav_icon'/> Biudžetas
+           <TbPigMoney className='nav_icon'/> Biudžetas       
 		</li>
         </div>
         <div className='second_order'>
         <li className="navbar-item">
 			{/* <Link to="/">Išlaidos</Link> */}
-            <GrUserAdmin className='nav_icon'/>Admin
+            <GrUserAdmin className='nav_icon'/>Admin 
 		</li>
         <li className="navbar-item">
 			{/* <Link to="/">Išlaidos</Link> */}
