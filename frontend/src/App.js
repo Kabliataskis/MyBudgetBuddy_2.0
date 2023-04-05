@@ -2,6 +2,7 @@ import Navbar from './Puslapiai/Navbar/Navbar';
 import Pajamos from './Puslapiai/Pajamos/Pajamos';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
 import "./index.css";
 import PajamosSuvesti from "./Puslapiai/Pajamos/PajamosSuvesti";
@@ -9,7 +10,13 @@ import PajamosSuvesti from "./Puslapiai/Pajamos/PajamosSuvesti";
 function App() {
   return (
     <div className="App">
-    <Navbar />
+      <Router>
+      <Navbar />
+        <Routes>
+          {/* <Route path='/' element={<Pagrindinis />} /> */}
+
+        </Routes>
+      </Router>
       <Pajamos/>
       <ToastContainer
         position="top-right"

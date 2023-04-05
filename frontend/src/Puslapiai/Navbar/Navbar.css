@@ -14,7 +14,7 @@ nav {
       
   }
   
-  ul {
+  .navbar-links {
     margin-top: 100px;
     height: 80%;
     /* margin: 0; */
@@ -27,24 +27,28 @@ nav {
     gap: 5px;
   }
   
-  li {
+  .navbar-item {
     display: flex;
     align-items: center;
-    justify-content: center;
     width: 90%;
     margin-left: 12px;
-    margin-top: 30px;
+    margin-top: 15px;
     text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 0.65em;
+    font-weight: 600;
     background-color: var(--grey-color);
     color: var(--dark-color);
     padding: 10px;
     border-radius: 3px;
     text-align: center;
+    
 
   }
-  
+  .navbar-item:hover{
+    cursor: pointer;
+    color: var(--white-color);
+    background-color: var(--main-color);
+  }
   .nav_icon{
 margin-right: 5px;
   }
