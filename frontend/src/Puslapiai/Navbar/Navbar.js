@@ -39,34 +39,34 @@ function Navbar(props) {
 		<div className='firt_order'>
             <li className="navbar-item">
 			{/* <Link to="/">Pagrindinis</Link> */}
-            <AiOutlineHome className='nav_icon'/>Pagrindinis
+            <AiOutlineHome className='nav_icon'/>Bendra apžvalga
 		</li>
 		<li className="navbar-item">
 			{/* <Link to="/income">Išlaidos</Link> */}
-            <BsGraphUpArrow className='nav_icon'/> pajamos
+            <BsGraphUpArrow className='nav_icon'/> Pajamos
 		</li>
         <li className="navbar-item">
 			{/* <Link to="/">Išlaidos</Link> */}
-            <BsGraphDownArrow className='nav_icon'/> islaidos
+            <BsGraphDownArrow className='nav_icon'/> Išlaidos
 		</li>
         <li className="navbar-item">
 			{/* <Link to="/">Išlaidos</Link> */}
-           <TbPigMoney className='nav_icon'/> biudzetas
+           <TbPigMoney className='nav_icon'/> Biudžetas
 		</li>
         </div>
         <div className='second_order'>
         <li className="navbar-item">
 			{/* <Link to="/">Išlaidos</Link> */}
-            <GrUserAdmin className='nav_icon'/>admin
+            <GrUserAdmin className='nav_icon'/>Admin
 		</li>
         <li className="navbar-item">
 			{/* <Link to="/">Išlaidos</Link> */}
-            <VscHistory className='nav_icon'/>istorija
+            <VscHistory className='nav_icon'/>Istorija
 		</li>
         </div>
         <li className="navbar-item">
 			{/* <Link to="/">Išlaidos</Link> */}
-            <IoIosLogOut className='nav_icon'/> atsijungti
+            <IoIosLogOut className='nav_icon'/> Atsijungti
 		</li>
 	</ul>
 </nav>
