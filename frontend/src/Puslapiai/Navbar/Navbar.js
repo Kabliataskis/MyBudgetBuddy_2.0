@@ -6,6 +6,7 @@ import {TbPigMoney} from 'react-icons/tb';
 import {GrUserAdmin} from 'react-icons/gr';
 import {VscHistory} from 'react-icons/vsc';
 import {IoIosLogOut} from 'react-icons/io';
+import logo from './logo.png';
 
 // import Pirmas_puslapis from './Puslapiai/Pagrindinis_puslapis/Pagrindinis_puslapis';
 // import Pajamos from './Puslapiai/Pajamos/Pajamos';
@@ -28,44 +29,44 @@ function Navbar(props) {
 		</Route>
 </Switch>
 </Router> */}
-  
+	<div className='top_nav'></div>
    <nav className="navbar">
 	<div className="navbar-logo">
-        <a href="/">Logo</a>
+	<img src={logo} alt="Logo" />
     </div>
 	<ul className= "navbar-links">
         
 		<div className='firt_order'>
             <li className="navbar-item">
 			{/* <Link to="/">Pagrindinis</Link> */}
-            <AiOutlineHome />Pagrindinis
+            <AiOutlineHome className='nav_icon'/>Pagrindinis
 		</li>
 		<li className="navbar-item">
 			{/* <Link to="/income">Išlaidos</Link> */}
-            <BsGraphUpArrow /> pajamos
+            <BsGraphUpArrow className='nav_icon'/> pajamos
 		</li>
         <li className="navbar-item">
 			{/* <Link to="/">Išlaidos</Link> */}
-            <BsGraphDownArrow /> islaidos
+            <BsGraphDownArrow className='nav_icon'/> islaidos
 		</li>
         <li className="navbar-item">
 			{/* <Link to="/">Išlaidos</Link> */}
-           <TbPigMoney /> biudzetas
+           <TbPigMoney className='nav_icon'/> biudzetas
 		</li>
         </div>
         <div className='second_order'>
         <li className="navbar-item">
 			{/* <Link to="/">Išlaidos</Link> */}
-            <GrUserAdmin />admin
+            <GrUserAdmin className='nav_icon'/>admin
 		</li>
         <li className="navbar-item">
 			{/* <Link to="/">Išlaidos</Link> */}
-            <VscHistory />istorija
+            <VscHistory className='nav_icon'/>istorija
 		</li>
         </div>
         <li className="navbar-item">
 			{/* <Link to="/">Išlaidos</Link> */}
-            <IoIosLogOut /> atsijungti
+            <IoIosLogOut className='nav_icon'/> atsijungti
 		</li>
 	</ul>
 </nav>
