@@ -7,8 +7,8 @@ function Pirmas_puslapis () {
 	<div className='Pagrindinis-container'>
 		<div className='top-container'>
 		<div className='controlbiuzetas'>
-		<div className='biudzetas'>biudzetas</div>
-		<div className='isleistacontainer'>Isleista per menesi</div>
+		<div className='biudzetas'>biudzetas: 5954,94 €</div>
+		<div className='isleistacontainer'>Isleista per menesi: 1044,94€</div>
 		</div>
 		</div>
 		<div className='history-containers'>
