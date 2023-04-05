@@ -119,7 +119,7 @@ return(
 								onChange={(event) => setValue(event.target.value)}
 
 							/>
-							<p className="data_filter_p">Nuo <input className="data_filter" type="date"/> iki <input className="data_filter" type="date"/></p>
+							<p className="data_filter_p"><label htmlFor="nuo_data" >Nuo</label> <input className="data_filter" type="date" id="nuo_data"/> <label htmlFor="iki_data">iki</label> <input className="data_filter" type="date" id="iki_data"/></p>
 							<button className="btn-dark">Ieskoti</button>
 						</form>
 					</div>
