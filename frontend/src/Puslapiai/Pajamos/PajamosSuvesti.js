@@ -1,21 +1,66 @@
 /* eslint-disable linebreak-style */
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose, AiFillWarning } from "react-icons/ai";
 import "./Pajamos_dizainas.css";
 import swal from 'sweetalert2'
+import {useFormik} from 'formik'
 
 function PajamosSuvesti() {
   const max_amount = 9999999; // Maksimali suma €
   const [modal_PajamosSuvesti, setModal_PajamosSuvesti] = useState(false);
 
-  const defaultInputValues = {
-    title: "",
-    date: "",
-    amount: "",
-  };
-  const [formInputs, setFormInputs] = useState(defaultInputValues);
-  const { title, date, amount } = formInputs;
+  const validate = (values) => {
+    let selected_time = new Date(values.date).getTime();
+    let curr_time = new Date().getTime();
+    let errors = {};
+
+    if(!values.title) {
+      errors.title = 'Prašome užpildyti laukelį (Pavadinimas}';
+    }else if (values.title.length > 20) {
+      errors.title = 'Pavadinimo ilgis iki 20 simbolių!';
+    } 
+
+    if(!values.date){
+      errors.date = 'Prašome užpildyti laukelį (Data}';
+    }else if (selected_time > curr_time) {
+      errors.date = 'Data negali būti didesnė už dabartinį laiką';
+    }
+
+    if(!values.amount){
+      errors.amount = 'Prašome užpildyti laukelį (Suma}';
+    }else if(values.amount <= 0){
+      errors.amount = 'Minimali suma 0.01 €';
+    }else if (values.amount > max_amount) {
+        errors.amount = `Suma negali virsyti ${max_amount} €`;
+    }
+    return errors;
+  }
+
+  const onSubmit = (values) => {
+        // Užklausa į backend
+
+        // Jei backend grąžina success
+        setModal_PajamosSuvesti(false);
+        swal.fire({
+          title: 'Sėkmingai',
+          text: 'Įrašas pridėtas',
+          icon: 'success',
+          confirmButtonColor: '#28b78d',
+       });
+       formik.resetForm();
+}
+
+  const formik = useFormik({
+    initialValues: {
+      title: '',
+      date: '',
+      amount: '',
+    },
+    onSubmit,
+    validate
+  });
+
 
   // Modal close on background click
   const onMouseDown = (e) => {
@@ -23,46 +68,12 @@ function PajamosSuvesti() {
       closeModal();
     }
   };
-  // Modal close and clear input's
+  // Modal close
   const closeModal = () => {
     setModal_PajamosSuvesti(false);
-    setFormInputs(defaultInputValues);
+    //formik.resetForm(); // reset forma
   };
 
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const val = e.target.value;
-    setFormInputs({ ...formInputs, [name]: val });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (title && date && amount) {
-      let selected_time = new Date(date).getTime();
-      let curr_time = new Date().getTime();
-
-      if (title.length > 20) {
-        toast.error("Pavadinimo ilgis iki 20 simbolių!");
-      } else if (selected_time > curr_time) {
-        toast.error("Data negali būti didesnė už dabartinį laiką");
-      } else if (amount > max_amount) {
-        toast.error(`Suma negali viršyti ${max_amount} €`);
-      } else {
-        // Frontend validation success
-        // Request to backend
-        setModal_PajamosSuvesti(false);
-        swal.fire(
-				  'Sėkmingai!',
-				  'Įrašas pridėtas',
-				  'success'
-				)
-        setFormInputs(defaultInputValues);
-      }
-    } else {
-      toast.error("Užpildykite visus laukelius!");
-    }
-  };
   return (
     <>
       <button onClick={() => setModal_PajamosSuvesti(true)}>
@@ -75,36 +86,44 @@ function PajamosSuvesti() {
             <span className="modal-close-btn" onClick={() => closeModal()}>
               <AiOutlineClose />
             </span>
-            <form className="Pajamos-modal-form" onSubmit={handleSubmit}>
+            <form className="Pajamos-modal-form" onSubmit={formik.handleSubmit}>
               <label htmlFor="title">Pavadinimas</label>
               <p>
                 <input
+                  className={formik.touched.title && formik.errors.title ? 'error' : ''}
                   type="text"
                   name="title"
                   id="title"
                   placeholder="Pavadinimas"
                   maxLength="20"
                   required
-                  onChange={handleChange}
-                  value={title}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.title}
                 />
               </p>
+              {formik.touched.title && formik.errors.title ? <div className="error-mess-box"><AiFillWarning className="error-mess-icon"/> <span>{formik.errors.title}</span></div> : null}
+
 
               <label htmlFor="date">Data</label>
               <p>
                 <input
-                  type="datetime-local"
+                  className={formik.touched.date && formik.errors.date ? 'error' : ''}
+                  type="date"
                   name="date"
                   id="date"
                   required
-                  onChange={handleChange}
-                  value={date}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.date}
                 />
               </p>
+              {formik.touched.date && formik.errors.date ? <div className="error-mess-box"><AiFillWarning className="error-mess-icon"/> <span>{formik.errors.date}</span></div> : null}
 
               <label htmlFor="title">Suma</label>
               <p className="eur">
                 <input
+                  className={formik.touched.amount && formik.errors.amount ? 'error' : ''}
                   type="number"
                   name="amount"
                   id="amount"
@@ -114,10 +133,14 @@ function PajamosSuvesti() {
                   step="0.01"
                   autoComplete="off"
                   required
-                  onChange={handleChange}
-                  value={amount}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.amount}
                 />
+                <br/>
               </p>
+              {formik.touched.amount && formik.errors.amount ? <div className="error-mess-box"><AiFillWarning className="error-mess-icon"/> <span>{formik.errors.amount}</span></div> : null}
+
               <div className="buttons-container">
                 <button className="add-btn" type="submit">
                   Pridėti
