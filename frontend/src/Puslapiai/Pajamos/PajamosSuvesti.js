@@ -1,14 +1,16 @@
 /* eslint-disable linebreak-style */
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { ContextProvider } from "../../App";
 import { toast } from "react-toastify";
 import { AiOutlineClose, AiFillWarning } from "react-icons/ai";
 import "./Pajamos_dizainas.css";
 import swal from 'sweetalert2'
 import {useFormik} from 'formik'
 
-function PajamosSuvesti() {
+function PajamosSuvesti(props) {
+  const { modal_PajamosSuvesti, setModal_PajamosSuvesti } = useContext(ContextProvider);
   const max_amount = 9999999; // Maksimali suma €
-  const [modal_PajamosSuvesti, setModal_PajamosSuvesti] = useState(false);
+  
 
   const validate = (values) => {
     let selected_time = new Date(values.date).getTime();
@@ -16,27 +18,29 @@ function PajamosSuvesti() {
     let errors = {};
 
     if(!values.title) {
-      errors.title = 'Prašome užpildyti laukelį (Pavadinimas}';
+      errors.title = 'Prašome užpildyti laukelį (Pavadinimas)';
     }else if (values.title.length > 20) {
       errors.title = 'Pavadinimo ilgis iki 20 simbolių!';
     } 
 
     if(!values.date){
-      errors.date = 'Prašome užpildyti laukelį (Data}';
+      errors.date = 'Prašome užpildyti laukelį (Data)';
     }else if (selected_time > curr_time) {
-      errors.date = 'Data negali būti didesnė už dabartinį laiką';
+      errors.date = 'Data negali būti vėlesnė nei ši diena';
     }
 
     if(!values.amount){
-      errors.amount = 'Prašome užpildyti laukelį (Suma}';
+      errors.amount = 'Prašome užpildyti laukelį (Suma)';
     }else if(values.amount <= 0){
       errors.amount = 'Minimali suma 0.01 €';
     }else if (values.amount > max_amount) {
-        errors.amount = `Suma negali virsyti ${max_amount} €`;
+      errors.amount = `Suma negali viršyti ${max_amount} €`;
+    }else if(values.amount && !/^\d+(\.\d{1,2})?$/.test(values.amount)){
+      errors.amount = 'Neteisingas formatas. Pvz: 10.21€'; 
     }
     return errors;
   }
-
+ 
   const onSubmit = (values) => {
         // Užklausa į backend
 
@@ -60,7 +64,7 @@ function PajamosSuvesti() {
     onSubmit,
     validate
   });
-
+  console.log(formik.values);
 
   // Modal close on background click
   const onMouseDown = (e) => {
@@ -86,7 +90,7 @@ function PajamosSuvesti() {
             <span className="modal-close-btn" onClick={() => closeModal()}>
               <AiOutlineClose />
             </span>
-            <form className="Pajamos-modal-form" onSubmit={formik.handleSubmit}>
+            <form className="Pajamos-modal-form" noValidate onSubmit={formik.handleSubmit}>
               <label htmlFor="title">Pavadinimas</label>
               <p>
                 <input
