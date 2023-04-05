@@ -13,11 +13,11 @@ function App() {
       <Router>
       <Navbar />
         <Routes>
-          {/* <Route path='/' element={<Pagrindinis />} /> */}
-
+          <Route path='/' element={<PajamosSuvesti />} />
+          <Route path='/pajamos' element={<Pajamos />} />
         </Routes>
       </Router>
-      <Pajamos/>
+      {/* <Pajamos/> */}
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -30,7 +30,7 @@ function App() {
         pauseOnHover
         theme="colored"
       />
-      <PajamosSuvesti />
+      {/* <PajamosSuvesti /> */}
     </div>
   );
 }
