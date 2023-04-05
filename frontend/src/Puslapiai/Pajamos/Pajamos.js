@@ -10,8 +10,8 @@ function Pajamos () {
 			text: "Ar tikrai norite ištrinti įrašą?",
 			icon: "warning",
 			showCancelButton: true,
-			confirmButtonColor: '#d33',
-			cancelButtonColor: '#3085d6',
+			confirmButtonColor: '#b72828',
+			cancelButtonColor: '#8a949b',
             confirmButtonText: 'Ištrinti',
             cancelButtonText: "Atšaukti!"
 		  }).then((result) => {
