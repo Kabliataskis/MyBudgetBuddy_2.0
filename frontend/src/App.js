@@ -1,36 +1,17 @@
-import Navbar from './Puslapiai/Navbar/Navbar';
-import Pajamos from './Puslapiai/Pajamos/Pajamos';
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import './App.css';
 
-import "./index.css";
-import PajamosSuvesti from "./Puslapiai/Pajamos/PajamosSuvesti";
+import Auth from './Puslapiai/Login_forma/Auth';
 
 function App() {
   return (
     <div className="App">
-      <Router>
-      <Navbar />
-        <Routes>
-          <Route path='/' element={<PajamosSuvesti />} />
-          <Route path='/pajamos' element={<Pajamos />} />
-        </Routes>
-      </Router>
-      {/* <Pajamos/> */}
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
-      {/* <PajamosSuvesti /> */}
+    {/* <Routes>
+      <Route path='/login' Component={Login} />
+      <Route path='/register' Component={Register} />
+    </Routes> */}
+     <Auth/>
+     
+
     </div>
   );
 }
