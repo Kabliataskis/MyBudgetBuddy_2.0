@@ -3,11 +3,12 @@
 
 
 .Pagrindinis-container{
-    max-width: calc(100% - 200px);
-    /* margin: 0 auto; */
-    margin-top: 100px;
-    margin-left: 200px;
-    margin-right: 20px;
+    
+        padding: 20px;
+        max-width: calc(100% - 250px);
+        margin-top: 105px;
+        margin-left: 250px;
+    
 }
 .Pagrindinis-container .top-container{
     padding: 25px;
