@@ -2,8 +2,10 @@
     box-sizing: border-box;
 }
 .main_back{
-    background-color: var(--grey-color);
     padding: 20px;
+    max-width: calc(100% - 250px);
+    margin-top: 105px;
+    margin-left: 250px;
 }
 
 .h3-text{
@@ -13,7 +15,7 @@
 .container_pajamos{
     background-color: var(--white-color);
     padding: 10px;
-    margin: 20px;
+    margin: 10px;
     border-radius: 5px;
     color: var(--dark-color);
 }
@@ -49,6 +51,7 @@
     border: none;
     border-radius: 5px;
     color: var(--white-color);
+    cursor: pointer;
 }
 
 .btn-gren:hover{
@@ -65,6 +68,7 @@
     background: transparent;
     font-size: 15px;
     text-align: center;
+    cursor: pointer;
 }
 
 .table_main{
@@ -98,13 +102,14 @@
     padding: 20px 20px 20px 40px;
     border-radius: 8px;
     margin: 10px 20px 0 100px;
+
 }
 .block_filtro h3{
     font-weight: 500;
 }
 
 .paieska_filter{
-    padding-right: 170px;
+    padding-right: 100px;
     background: var(--grey-color);
     border: none;
     border-bottom: 2px solid var(--dark-color);
@@ -119,7 +124,7 @@
 
 .data_filter_p{
     margin-bottom:30px;
-    word-spacing: 13px;
+    word-spacing: 10px;
 }
 
 .btn-dark{
@@ -129,6 +134,7 @@
     border-radius: 5px;
     padding: 3px 0;
     border: none;
+    cursor: pointer;
 }
 
 .paginacina_container{

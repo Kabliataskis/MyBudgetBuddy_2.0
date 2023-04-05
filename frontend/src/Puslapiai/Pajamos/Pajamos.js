@@ -15,9 +15,7 @@ const [tasks,setTasks] = useState([
 	{id:4, data: "2023-03-28",saltynis: "Maxima", suma: "20€"},
 	{id:5, data: "2023-03-28",saltynis: "Iki", suma: "20€"},
 	{id:6, data: "2023-03-28",saltynis: "Maxima", suma: "20€"},
-	{id:7, data: "2023-03-28",saltynis: "Rimi", suma: "20€"},
-	{id:8, data: "2023-03-28",saltynis: "Maxima", suma: "20€"},
-	{id:9, data: "2023-03-28",saltynis: "Maxima", suma: "20€"}
+	{id:7, data: "2023-03-28",saltynis: "Rimi", suma: "20€"}
 ]);
 
 function deleteTask (id) {

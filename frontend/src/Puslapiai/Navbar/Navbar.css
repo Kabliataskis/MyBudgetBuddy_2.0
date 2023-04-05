@@ -57,6 +57,7 @@ margin-right: 5px;
     width: 100%;
     height: 105px;
     position: fixed;
+    top: 0;
     background-color: var(--dark-color);
   }
 
