@@ -1,4 +1,4 @@
-import './App.css';
+import Navbar from './Puslapiai/Navbar/Navbar';
 import Pajamos from './Puslapiai/Pajamos/Pajamos';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,6 +9,7 @@ import PajamosSuvesti from "./Puslapiai/Pajamos/PajamosSuvesti";
 function App() {
   return (
     <div className="App">
+    <Navbar />
       <Pajamos/>
       <ToastContainer
         position="top-right"
