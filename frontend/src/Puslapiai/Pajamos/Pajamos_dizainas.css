@@ -109,7 +109,7 @@
 }
 
 .paieska_filter{
-    padding-right: 100px;
+    padding-right: 120px;
     background: var(--grey-color);
     border: none;
     border-bottom: 2px solid var(--dark-color);
@@ -124,7 +124,7 @@
 
 .data_filter_p{
     margin-bottom:30px;
-    word-spacing: 10px;
+    /* word-spacing: 10px; */
 }
 
 .btn-dark{
