@@ -1,4 +1,5 @@
 import Navbar from './Puslapiai/Navbar/Navbar';
+import Pajamos from './Puslapiai/Pajamos/Pajamos';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -9,6 +10,7 @@ function App() {
   return (
     <div className="App">
     <Navbar />
+      <Pajamos/>
       <ToastContainer
         position="top-right"
         autoClose={5000}

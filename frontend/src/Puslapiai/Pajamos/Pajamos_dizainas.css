@@ -25,7 +25,7 @@
 }
 .Pajamos-modal-container .modal-close-btn{
     position: absolute;
-    top: 30px;
+    top: 35px;
     right: 30px;
     font-size: 1.5em;
     font-weight: 800;
@@ -44,21 +44,26 @@
     margin-top: 25px;
 }
 .Pajamos-modal-form label{
+    display: block;
+    margin-top: 10px;
+    color: var(--dark-color);
     font-weight: 450;
 }
 .Pajamos-modal-form input{
+    width: 90%;
     margin: 10px 0px;
     border: unset;
     border-bottom: 1px solid var(--dark-color);
     padding: 5px;
     outline: none;
+    background: unset;
     color: var(--main-color);
-    width: 90%;
     transition: 0.2s;
 }
 .Pajamos-modal-form input:focus{
     border-bottom: 1px solid var(--main-color);
 }
+
 .Pajamos-modal-form button:hover{
     cursor: pointer;
     transition: 0.2s;
@@ -80,7 +85,7 @@
 }
 .Pajamos-modal-form .cancel-btn{
     margin-left: 10px;
-    width: 30%;
+    width: 27%;
     background-color: var(--dark-color);
     color: var(--grey-color);
 }
@@ -90,7 +95,24 @@
 .Pajamos-modal-form .buttons-container{
     margin-top: 25px;
 }
-
+.Pajamos-modal-form input.error{
+    color: var(--red-color);
+    border-bottom: 1px solid var(--red-color);
+}
+.Pajamos-modal-form input.error:focus{
+    border-bottom: 1px solid var(--red-color);
+}
+.Pajamos-modal-form .error-mess-box{
+    display: flex;
+    align-items: center;
+    margin-left: 3px;
+    color: var(--red-color);
+    font-size: 0.85em;
+    transform: 0.2s;
+}
+.Pajamos-modal-form .error-mess-icon{
+    margin-right: 5px;
+}
   @keyframes modalOpen {
     from{
         opacity: 0;
