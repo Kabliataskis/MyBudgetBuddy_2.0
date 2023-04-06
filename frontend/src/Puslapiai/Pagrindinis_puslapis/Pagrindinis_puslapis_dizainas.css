@@ -7,8 +7,12 @@
     
 }
 .Pagrindinis-container .top-container{
+    display: flex;
+    justify-content: space-between;
     padding: 25px;
     background-color: var(--white-color);
+    border-radius: 5px;
+    font-weight: 500;
 }
 .Pagrindinis-container .history-containers{
     display: flex;
@@ -22,7 +26,9 @@
     background-color: var(--white-color);
     padding: 15px 50px;
     border-radius: 5px;
-    max-width: 600px;
+    width: 45%;
+    max-width: 800px;
+    /* max-width: 600px; */
 }
 .Pagrindinis-container .stats-containers{
     display: flex;
@@ -48,9 +54,10 @@
     /* border-collapse: collapse; */
     border-collapse:separate; 
     border-spacing: 0 0.5em;
-    padding: 10px 50px;
+    /* padding: 10px 50px; */
     color: var(--dark-color);
     font-weight: 500;
+    width: 100%;
 
 }
 .Pagrindinis-container .history-container table tr{
@@ -59,7 +66,7 @@
 }
 .Pagrindinis-container .history-container table td{
     text-align: center;
-    padding: 0px 15px;
+    padding: 10px 15px;
     font-size: 0.9em;
 }
 .Pagrindinis-container .history-container button{
@@ -73,7 +80,10 @@
 .Pagrindinis-container .history-container button:hover{
     color: var(--grey-color);
 }
-
+.Pagrindinis-container .doughnut-chart-container{
+    width: 500px;
+    margin-right: 100px;
+}
 
 
 
@@ -82,7 +92,11 @@
     .Pagrindinis-container .history-containers{
         flex-wrap: wrap;
     }
-    
+    .Pagrindinis-container .history-container{
+        margin-top: 15px;
+        max-width: unset;
+        width: 100%;
+    }
   }
   /* mobile */
   @media screen and (max-width: 767px) {
