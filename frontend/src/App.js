@@ -4,9 +4,12 @@ import Pajamos from './Puslapiai/Pajamos/Pajamos';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-
 import "./index.css";
 import PajamosSuvesti from "./Puslapiai/Pajamos/PajamosSuvesti";
+import Pirmas_puslapis from "./Puslapiai/Pagrindinis_puslapis/Pagrindinis_puslapis";
+import Islaidos from "./Puslapiai/Islaidos/Islaidos";
+import Biudzetas from "./Puslapiai/Biudzetas/Biudzietas";
+import Istorija from "./Puslapiai/Istorija/Istorija";
 export const ContextProvider = createContext();
 function App() {
   const [modal_PajamosSuvesti, setModal_PajamosSuvesti] = useState(false);
@@ -16,8 +19,13 @@ function App() {
       <Router>
       <Navbar />
         <Routes>
-          <Route path='/' />
+          <Route path='/pagrindinis' element={<Pirmas_puslapis />} />
           <Route path='/pajamos' element={<><Pajamos/> <PajamosSuvesti/> </>}/>
+          <Route path='/islaidos' element={<Islaidos />} />
+          <Route path='/biudzetas' element={<Biudzetas />} />
+          {/* <Route path='/admin' element={<Admin />} /> */}
+          <Route path='/istorija' element={<Istorija />} />
+
         </Routes>
       </Router>
       {/* <Pajamos/> */}
