@@ -87,7 +87,7 @@ return(
 						<thead>
 							<tr>
 								<th>Data</th>
-								<th>Pajamų šaltynis</th>
+								<th>Pajamų šaltinis</th>
 								<th>Suma</th>
 								<th>Redaguoti</th>
 								<th>Pašalinti</th>
@@ -118,7 +118,7 @@ return(
 						<form>
 							<input
 								type="text"
-								placeholder="Paieska..."
+								placeholder="Paieška..."
 								className="paieska_filter"
 								onChange={(event) => setValue(event.target.value)}
 
