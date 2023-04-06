@@ -47,12 +47,6 @@ export default function IslaidosIstorija () {
                 <td>Poliklinika</td>
                 <td className="red">-10.99€</td>
               </tr>
-              <tr>
-                <td><AiFillCar/></td>
-                <td>2022-03-22</td>
-                <td>Mašinos remontas</td>
-                <td className="red">-105.99€</td>
-              </tr>
             </tbody>
           </table>
   );

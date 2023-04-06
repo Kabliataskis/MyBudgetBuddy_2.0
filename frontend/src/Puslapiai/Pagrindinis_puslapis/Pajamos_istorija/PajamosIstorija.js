@@ -45,12 +45,6 @@ export default function PajamosIstorija () {
                 <td>Alga</td>
                 <td className="green">+10.99€</td>
               </tr>
-              <tr>
-                <td><FaPiggyBank/></td>
-                <td>2022-03-22</td>
-                <td>Alga</td>
-                <td className="green">+10.99€</td>
-              </tr>
             </tbody>
           </table>
   );

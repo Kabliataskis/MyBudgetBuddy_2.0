@@ -12,12 +12,13 @@
     padding: 25px;
     background-color: var(--white-color);
     border-radius: 5px;
-    font-weight: 500;
+    font-weight: 600;
 }
 .Pagrindinis-container .history-containers{
     display: flex;
     justify-content: space-between;
-    margin-top: 25px;
+    /* margin-top: 25px; */
+    margin-top: 50px;
 }
 .Pagrindinis-container .history-container{
     display: flex;
@@ -33,7 +34,8 @@
 .Pagrindinis-container .stats-containers{
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width: 400px;
+    gap: 25px;
 }
 .Pagrindinis-container .stats-containers .stat-container{
     padding: 15px;
@@ -62,7 +64,9 @@
 }
 .Pagrindinis-container .history-container thead tr{
     background-color: var(--grey-color);
-
+}
+.Pagrindinis-container .history-container thead tr th{
+    padding: 10px 15px;
 }
 .Pagrindinis-container .history-container table tr{
     /* background-color: var(--grey-color); */
@@ -79,6 +83,7 @@
     width: 50%;
     padding: 10px 15px;
     border: unset;
+    font-weight: 600;
     border-radius: 5px;
     color: var(--white-color);
     cursor: pointer;
@@ -90,12 +95,42 @@
 .Pagrindinis-container .doughnut-chart-container{
     width: 500px;
     margin-right: 100px;
+    transition: 0.2s;
 }
-
-
+.horizontal-bar-container{
+    display: flex;
+    margin-top: 15px;
+    /* width: 400px; */
+    height: 40px;
+    border-radius: 5px;
+}
+.horizontal-bar__pelnas,
+.horizontal-bar__islaidos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white-color);
+    font-size: 0.9em;
+    height: 100%;
+    min-width: 80px;
+    padding: 5px;
+}
+.horizontal-bar__pelnas{
+    width: 70%;
+    background-color: var(--main-color);
+    border-radius: 5px 0px 0px 5px;
+}
+.horizontal-bar__islaidos{
+    width: 30%;
+    background-color: var(--red-color);
+    border-radius: 0px 5px 5px 0px;
+}
 
   /* tablet */
   @media screen and (max-width: 1439px) {
+    .top-container{
+        flex-wrap: wrap;
+    }
     .Pagrindinis-container .history-containers{
         flex-wrap: wrap;
     }
@@ -104,9 +139,14 @@
         max-width: unset;
         width: 100%;
     }
+    .doughnut-chart-container{
+        width: 400px !important;
+    }
   }
   /* mobile */
   @media screen and (max-width: 767px) {
-
+    .doughnut-chart-container{
+        width: 250px !important;
+    }
     
   }

@@ -20,15 +20,23 @@ function Pirmas_puslapis() {
         <div className="stats-containers">
           <div className="stat-container">
             <p>
-              Biudžetas: <span className="green">399023€</span>
+              Biudžetas: <span className="green">5954.94€</span>
             </p>
           </div>
           <div className="stat-container isleista-per-men">
             <p>
-              Išleista per mėn: <span className="red">329903€</span>
+              Išleista per mėn: <span className="red">1044.94€</span>
             </p>
           </div>
+
+          <div className="horizontal-bar-container">
+        <div className="horizontal-bar__pelnas">4910 €</div>
+        <div className="horizontal-bar__islaidos">1044.94 €</div>
+      </div>
+
         </div>
+      
+
 
       <div className="doughnut-chart-container"><DoughnutChart/></div>
 
@@ -37,6 +45,7 @@ function Pirmas_puslapis() {
         <div className="history-container">
           <button type="button">Įvesti išlaidas</button>
           <div className="history-top-line"></div>
+          
          <IslaidosIstorija/>
         </div>
 

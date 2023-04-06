@@ -30,15 +30,24 @@ export const data = {
   };
 
 export default function DoughnutChart () {
-    const options = {
-        plugins: {
-          legend: {
-            position: 'left',
+  const options = {
+    plugins: {
+      legend: {
+        position: 'left',
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            const label = context.label;
+            const value = context.parsed;
+            return `${label} ${value} €`;
           },
         },
-        responsive: true,
-        maintainAspectRatio: false,
-      };
+      },
+    },
+    responsive: true,
+    maintainAspectRatio: false,
+  };
     
   return (
     <Doughnut data={data} options={options} height={300} width={500}/>
