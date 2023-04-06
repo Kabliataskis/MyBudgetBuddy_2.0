@@ -76,7 +76,7 @@ return(
 		<div className='container_pajamos'>
 			<h3 className="h3-text">Pajamos</h3>
 			<div className="block_pajamos">
-				<p className="block_pajamo">Mėnesio pajamos: <span className='color-eur'>5956$</span></p>
+				<p className="block_pajamo">Mėnesio pajamos: <span className='color-eur'>5956€</span></p>
 				<button  className='btn-gren' onClick={() => setModal_PajamosSuvesti(true)}>Įvesti pajamas</button>
 			</div>
 		</div >
