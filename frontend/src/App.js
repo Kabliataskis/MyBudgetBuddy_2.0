@@ -1,11 +1,11 @@
-import React, {useState, useContext, createContext } from 'react';
-import Navbar from './Puslapiai/Navbar/Navbar';
-import Pajamos from './Puslapiai/Pajamos/Pajamos';
+import React, { useState, useContext, createContext } from "react";
+import Navbar from "./Puslapiai/Navbar/Navbar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Auth from './Puslapiai/Login_forma/Auth';
 import "./index.css";
+import Pajamos from "./Puslapiai/Pajamos/Pajamos";
 import PajamosSuvesti from "./Puslapiai/Pajamos/PajamosSuvesti";
 import Pirmas_puslapis from "./Puslapiai/Pagrindinis_puslapis/Pagrindinis_puslapis";
 import Islaidos from "./Puslapiai/Islaidos/Islaidos";
@@ -22,7 +22,7 @@ function App() {
         <Routes>
           <Route path='/' element={<PajamosSuvesti />} />
           <Route path='/auth' element={<Auth />} />
-          <Route path='/pagrindinis' element={<Pirmas_puslapis />} />
+          <Route path='/pagrindinis' element={<><Pirmas_puslapis/> <PajamosSuvesti/></>} />
           <Route path='/pajamos' element={<><Pajamos/> <PajamosSuvesti/> </>}/>
           <Route path='/islaidos' element={<Islaidos />} />
           <Route path='/biudzetas' element={<Biudzetas />} />
