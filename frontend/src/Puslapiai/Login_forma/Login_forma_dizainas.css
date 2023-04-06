@@ -1,15 +1,27 @@
 .btn{
     border:none;
     text-align: center;
-    width: 400px;
+    width: 430px;
     height: 50px;
      background-color: #28b78d;
      border-radius: 7px;
-     margin-top: 20px;
      color: #fafafa;
      font-size:small;
-    
     }
+    .btnReg{
+      border:none;
+      text-align: center;
+      width: 440px;
+      height: 50px;
+       background-color: #28b78d;
+       border-radius: 7px;
+       color: #fafafa;
+       font-size:small;
+       margin-top: 5px;
+       
+
+       
+      }
     .btn:hover{
       background-color: #1f8d6d;
       transition: 0.7s;
@@ -24,7 +36,7 @@
 
     .flex{
     
-      border: 50px solid #e0e4e7;;
+      border: 50px solid #e0e4e7;
     }
   
     .btn2 {
@@ -39,7 +51,7 @@
         text-decoration: none;
         display: inline-block;
         font-size: 20px;
-        margin: 4px 2px;
+        margin: 20px 2px;
         cursor: pointer;
      
       }
@@ -48,12 +60,13 @@
     .forma{
         text-align:center;
         background-color: #e0e4e7;
-        width: 500px;
-        height: 680px;
+        width: 570px;
+        height: 760px;
         padding: 45px;
-        margin: 90px;
+        margin: 80px;
         border-radius: 8px;
         margin-left: 300px;
+        
     }
     
     .forma input{
@@ -83,31 +96,47 @@
     }
 
       .text1{
-        float:left;
+        float: left;
         color: #243743;
-        
-        
-        
+        margin: 5px;
+      }
+      .text2{
+        color: #243743;
+        margin-right: 350px;
+      }
+      .textinfo{
+        margin: 10px;
       }
     
       .prisijungimas{
-        max-width: 0px;
+        width: 10px;
         padding: 20px;
-        margin-bottom: 100px;
+        margin-bottom: 80px;
         color: #243743;
+        
       }
     
     
     
       .row{
-          padding: 40px; 
-          margin-top: -100px;
-      
-    
+          padding: 50px; 
+          margin-top: -120px;
+          width: 500px;
+          padding-left: 20px;
+
+
       }
-    
-    
-    
+
+      .row2{
+        padding: 50px; 
+        margin-top: -110px;
+        width: 500px;
+        padding-left: 20px;
+       
+
+
+    }
+  
       .box1{
         border:none;
         background-color:#28b78d;
@@ -120,11 +149,8 @@
         background: -webkit-linear-gradient(left, #4ccba5 0%, #3cfcc4 100%); 
         font-size: small;
         color: #fafafa;
-        
-        
-    
-        
       }
+
       .box2{
         border:none;
         background-color:coral;
@@ -163,9 +189,6 @@
     
       }
     
-    
-    
-    
       .flex{
         display: flex;
         flex-direction: row;
@@ -173,6 +196,7 @@
           max-width: calc(100% - 250px);
           margin-top: 105px;
           margin-left: 250px;
+          background-color: white;
       }
     
     
@@ -180,9 +204,7 @@
         display: inline-block;
     
       }
-    .text2{
-      color: #243743;
-    }
+
 
 
 
@@ -190,6 +212,10 @@
   margin-bottom: 20px;
   text-align: left;
 
+}
+.form-control2{
+  margin-bottom: 20px;
+  text-align: left;
 }
 
 .error{
@@ -199,3 +225,8 @@
   color: red;
   border-bottom: 2px solid red;
 }
+.formInput{
+  float: left;
+
+}
+

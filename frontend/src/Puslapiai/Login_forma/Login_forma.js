@@ -84,7 +84,7 @@ return (
 
 		</form>
 
-		<h3 className='text2'>Dar neturite paskyros ?</h3>
+		<h3 className='textinfo'>Dar neturite paskyros ?</h3>
 		
 		<button className='btn2' onClick={() => setShowLogin(false)} type='submit' variant='contained'>Registracija</button>
 		
