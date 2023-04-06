@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { ContextProvider } from "../../App";
 import { v4 as uuidv4 } from "uuid";
 import Task from "./Pajamos_funk";
 import './Pajamos_dizainas.css';
@@ -7,6 +8,7 @@ import '../../index.css';
 import { MdKeyboardDoubleArrowLeft ,MdKeyboardDoubleArrowRight ,MdOutlineKeyboardArrowRight ,MdKeyboardArrowLeft} from "react-icons/md";
 export default function Pajamos_idetos(){
 
+	const { modal_PajamosSuvesti, setModal_PajamosSuvesti } = useContext(ContextProvider);
 
 const [tasks,setTasks] = useState([
 	{id:1, data: "2023-03-28",saltynis: "Maxima", suma: "20€"},
@@ -25,19 +27,21 @@ function deleteTask (id) {
 		icon: "warning",
 		showCancelButton: true,
 		confirmButtonColor: '#d33',
-		cancelButtonColor: '#3085d6',
+		cancelButtonColor: '#243743',
 		confirmButtonText: 'Ištrinti',
 		cancelButtonText: "Atšaukti!"
+
 	  }).then((result) => {
 		if (result.isConfirmed) {
 			// užklausa į backend
 
 			// success
-			swal.fire(
-			  'Sėkmingai!',
-			  'Įrašas ištrintas',
-			  'success'
-			)
+			swal.fire({
+				title: 'Sėkmingai',
+				text: 'Įrašas ištrintas',
+				icon: 'success',
+				confirmButtonColor: '#28b78d',
+			 });
 		  }
 	  });
 	}
@@ -73,7 +77,7 @@ return(
 			<h3 className="h3-text">Pajamos</h3>
 			<div className="block_pajamos">
 				<p className="block_pajamo">Mėnesio pajamos: <span className='color-eur'>5956$</span></p>
-				<button  className='btn-gren'>Įvesti pajamas</button>
+				<button  className='btn-gren' onClick={() => setModal_PajamosSuvesti(true)}>Įvesti pajamas</button>
 			</div>
 		</div >
 
@@ -83,10 +87,10 @@ return(
 						<thead>
 							<tr>
 								<th>Data</th>
-								<th>Pajamu Saltynis</th>
+								<th>Pajamų šaltynis</th>
 								<th>Suma</th>
 								<th>Redaguoti</th>
-								<th>Pasalinti</th>
+								<th>Pašalinti</th>
 							</tr>
 						</thead>
 						<tbody>{tasks_list}</tbody>
@@ -119,8 +123,8 @@ return(
 								onChange={(event) => setValue(event.target.value)}
 
 							/>
-							<p className="data_filter_p">Nuo <input className="data_filter" type="date"/> iki <input className="data_filter" type="date"/></p>
-							<button className="btn-dark">Ieskoti</button>
+							<p className="data_filter_p"><label htmlFor="nuo_data" >Nuo</label> <input className="data_filter" type="date" id="nuo_data"/> <label htmlFor="iki_data">iki</label> <input className="data_filter" type="date" id="iki_data"/></p>
+							<button className="btn-dark">Ieškoti</button>
 						</form>
 					</div>
 				</div>

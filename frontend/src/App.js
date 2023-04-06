@@ -1,3 +1,4 @@
+import React, {useState, useContext, createContext } from 'react';
 import Navbar from './Puslapiai/Navbar/Navbar';
 import Pajamos from './Puslapiai/Pajamos/Pajamos';
 import { ToastContainer } from "react-toastify";
@@ -9,18 +10,22 @@ import Pirmas_puslapis from "./Puslapiai/Pagrindinis_puslapis/Pagrindinis_puslap
 import Islaidos from "./Puslapiai/Islaidos/Islaidos";
 import Biudzetas from "./Puslapiai/Biudzetas/Biudzietas";
 import Istorija from "./Puslapiai/Istorija/Istorija";
+export const ContextProvider = createContext();
 function App() {
+  const [modal_PajamosSuvesti, setModal_PajamosSuvesti] = useState(false);
   return (
     <div className="App">
+      <ContextProvider.Provider value={{ modal_PajamosSuvesti, setModal_PajamosSuvesti}}>
       <Router>
       <Navbar />
         <Routes>
           <Route path='/' element={<PajamosSuvesti />} />
-          <Route path='/pajamos' element={<Pajamos />} />
+          <Route path='/pajamos' element={<><Pajamos/> <PajamosSuvesti/> </>}/>
           <Route path='/islaidos' element={<Islaidos />} />
           <Route path='/biudzetas' element={<Biudzetas />} />
           {/* <Route path='/admin' element={<Admin />} /> */}
           <Route path='/istorija' element={<Istorija />} />
+
         </Routes>
       </Router>
       {/* <Pajamos/> */}
@@ -36,7 +41,7 @@ function App() {
         pauseOnHover
         theme="colored"
       />
-      {/* <PajamosSuvesti /> */}
+        </ContextProvider.Provider>
     </div>
   );
 }

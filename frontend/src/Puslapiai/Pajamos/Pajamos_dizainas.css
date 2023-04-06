@@ -114,17 +114,30 @@
     border: none;
     border-bottom: 2px solid var(--dark-color);
     margin: 25px 0 25px 0;
+    outline: none;
+    color: var(--main-color);
 }
+
+.paieska_filter:focus{
+    border-bottom: 2px solid var(--main-color);
+}
+
 .data_filter{
     border: none;
     background: var(--grey-color);
     border-bottom: 2px solid var(--dark-color);
     color: var(--main-color);
+    outline: none;
+}
+
+.data_filter:focus{
+    border-bottom: 2px solid var(--main-color);
 }
 
 .data_filter_p{
     margin-bottom:30px;
-    /* word-spacing: 10px; */
+    width: 100%;
+    word-spacing: 3px;
 }
 
 .btn-dark{
