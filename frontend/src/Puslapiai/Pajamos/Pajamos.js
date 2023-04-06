@@ -87,10 +87,10 @@ return(
 						<thead>
 							<tr>
 								<th>Data</th>
-								<th>Pajamu Saltynis</th>
+								<th>Pajamų šaltynis</th>
 								<th>Suma</th>
 								<th>Redaguoti</th>
-								<th>Pasalinti</th>
+								<th>Pašalinti</th>
 							</tr>
 						</thead>
 						<tbody>{tasks_list}</tbody>
@@ -124,7 +124,7 @@ return(
 
 							/>
 							<p className="data_filter_p"><label htmlFor="nuo_data" >Nuo</label> <input className="data_filter" type="date" id="nuo_data"/> <label htmlFor="iki_data">iki</label> <input className="data_filter" type="date" id="iki_data"/></p>
-							<button className="btn-dark">Ieskoti</button>
+							<button className="btn-dark">Ieškoti</button>
 						</form>
 					</div>
 				</div>
