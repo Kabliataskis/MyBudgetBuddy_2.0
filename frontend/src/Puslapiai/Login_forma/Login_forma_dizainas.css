@@ -1,0 +1,232 @@
+.btn{
+    border:none;
+    text-align: center;
+    width: 430px;
+    height: 50px;
+     background-color: #28b78d;
+     border-radius: 7px;
+     color: #fafafa;
+     font-size:small;
+    }
+    .btnReg{
+      border:none;
+      text-align: center;
+      width: 440px;
+      height: 50px;
+       background-color: #28b78d;
+       border-radius: 7px;
+       color: #fafafa;
+       font-size:small;
+       margin-top: 5px;
+       
+
+       
+      }
+    .btn:hover{
+      background-color: #1f8d6d;
+      transition: 0.7s;
+    }
+
+    .btn2:hover {
+      background-color:#1f8d6d;
+      transition: 0.7s;
+
+  }
+
+
+    .flex{
+    
+      border: 50px solid #e0e4e7;
+    }
+  
+    .btn2 {
+    
+      
+        background-color: #243743;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        padding: 15px 42px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 20px;
+        margin: 20px 2px;
+        cursor: pointer;
+     
+      }
+    
+    
+    .forma{
+        text-align:center;
+        background-color: #e0e4e7;
+        width: 570px;
+        height: 760px;
+        padding: 45px;
+        margin: 80px;
+        border-radius: 8px;
+        margin-left: 300px;
+        
+    }
+    
+    .forma input{
+      width: 100%;
+      padding: 10px 0;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      border: none;
+      margin-bottom: 10px;
+      border-bottom: 2px solid black;
+      outline: none;
+      background-color:transparent;
+      color: inherit;
+    }
+    .forma input:hover {
+        border-bottom-color: #28b78d;
+      }
+
+      
+    /* .forma input:focus::placeholder {
+        color: transparent;
+        color:#28b78d;
+        
+      } */
+    .forma input:focus{
+      border-bottom: 2px solid #28b78d;
+    }
+
+      .text1{
+        float: left;
+        color: #243743;
+        margin: 5px;
+      }
+      .text2{
+        color: #243743;
+        margin-right: 350px;
+      }
+      .textinfo{
+        margin: 10px;
+      }
+    
+      .prisijungimas{
+        width: 10px;
+        padding: 20px;
+        margin-bottom: 80px;
+        color: #243743;
+        
+      }
+    
+    
+    
+      .row{
+          padding: 50px; 
+          margin-top: -120px;
+          width: 500px;
+          padding-left: 20px;
+
+
+      }
+
+      .row2{
+        padding: 50px; 
+        margin-top: -110px;
+        width: 500px;
+        padding-left: 20px;
+       
+
+
+    }
+  
+      .box1{
+        border:none;
+        background-color:#28b78d;
+        text-align:left;
+        margin-top: 60px;
+        border-radius: 8px;
+        width: 400px;
+        padding: 20px;
+        height: 200px;
+        background: -webkit-linear-gradient(left, #4ccba5 0%, #3cfcc4 100%); 
+        font-size: small;
+        color: #fafafa;
+      }
+
+      .box2{
+        border:none;
+        background-color:coral;
+        text-align:left;
+        margin-top: 60px;
+        border-radius: 8px;
+        width: 400px;
+        padding: 20px;
+        height: 200px;
+        background: -webkit-linear-gradient(left, #b76f28 0%, #fcd63c 100%); 
+
+        font-size: small;
+        color: #fafafa;
+        
+      }
+      .box3{
+        border:none;
+        background-color: cyan;
+        text-align:left;
+        margin-top: 60px;
+        border-radius: 8px;
+        width: 400px;
+        padding: 20px;
+        height: 200px;
+        background: -webkit-linear-gradient(left, #287cb7 0%, #3cc8fc 100%);
+        font-size: small;
+        color: #fafafa;
+        
+    
+        
+      }
+      .AllBox{
+        margin: 50px;
+        width: 500px;
+    
+    
+      }
+    
+      .flex{
+        display: flex;
+        flex-direction: row;
+          padding: 20px;
+          max-width: calc(100% - 250px);
+          margin-top: 105px;
+          margin-left: 250px;
+          background-color: white;
+      }
+    
+    
+      .boxes{
+        display: inline-block;
+    
+      }
+
+
+
+
+.form-control{
+  margin-bottom: 20px;
+  text-align: left;
+
+}
+.form-control2{
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.error{
+  color:red;
+}
+.forma input.error{
+  color: red;
+  border-bottom: 2px solid red;
+}
+.formInput{
+  float: left;
+
+}
+
