@@ -45,7 +45,7 @@
  
 .btn-gren{
     font-size: 17px;
-    margin-top: 10px;
+    margin-top: 13px;
     padding: 7px 25px;
     background: var(--main-color);
     border: none;
@@ -99,7 +99,7 @@
 
 .block_filtro{
     background: var(--grey-color);
-    padding: 20px 20px 20px 40px;
+    padding: 18px 18px 18px 35px;
     border-radius: 8px;
     margin: 10px 20px 0 100px;
 
@@ -128,6 +128,7 @@
     border-bottom: 2px solid var(--dark-color);
     color: var(--main-color);
     outline: none;
+    text-align: center;
 }
 
 .data_filter:focus{
@@ -136,7 +137,6 @@
 
 .data_filter_p{
     margin-bottom:30px;
-    width: 100%;
     word-spacing: 3px;
 }
 
