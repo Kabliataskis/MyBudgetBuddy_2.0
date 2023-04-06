@@ -22,7 +22,7 @@ function App() {
         <Routes>
           <Route path='/' element={<PajamosSuvesti />} />
           <Route path='/auth' element={<Auth />} />
-          <Route path='/pagrindinis' element={<Pirmas_puslapis />} />
+          <Route path='/pagrindinis' element={<><Pirmas_puslapis/> <PajamosSuvesti/></>} />
           <Route path='/pajamos' element={<><Pajamos/> <PajamosSuvesti/> </>}/>
           <Route path='/islaidos' element={<Islaidos />} />
           <Route path='/biudzetas' element={<Biudzetas />} />

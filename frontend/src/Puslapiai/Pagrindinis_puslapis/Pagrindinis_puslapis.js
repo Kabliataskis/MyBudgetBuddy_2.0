@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useContext} from "react";
+import { ContextProvider } from "../../App";
 //css
 import "./Pagrindinis_puslapis_dizainas.css";
 
@@ -12,6 +13,7 @@ import PajamosIstorija from "./Pajamos_istorija/PajamosIstorija";
 
 
 function Pirmas_puslapis() {
+  const { modal_PajamosSuvesti, setModal_PajamosSuvesti } = useContext(ContextProvider);
   return (
     <div className="Pagrindinis-container">
       <div className="top-container">
@@ -39,7 +41,7 @@ function Pirmas_puslapis() {
         </div>
 
         <div className="history-container">
-          <button type="button">Įvesti pajamas</button>
+          <button type="button" onClick={() => setModal_PajamosSuvesti(true)}>Įvesti pajamas</button>
           <div className="history-top-line"></div>
           <PajamosIstorija/>
         </div>
