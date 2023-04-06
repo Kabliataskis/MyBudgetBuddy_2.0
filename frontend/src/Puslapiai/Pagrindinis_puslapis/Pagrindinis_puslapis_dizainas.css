@@ -3,7 +3,6 @@
 
 
 .Pagrindinis-container{
-    
         padding: 20px;
         max-width: calc(100% - 250px);
         margin-top: 105px;
@@ -77,6 +76,8 @@
 .Pagrindinis-container .history-container button:hover{
     color: var(--grey-color);
 }
+
+
 
 
   /* tablet */
