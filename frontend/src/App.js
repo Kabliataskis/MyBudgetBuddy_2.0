@@ -19,7 +19,7 @@ function App() {
       <Router>
       <Navbar />
         <Routes>
-          <Route path='/' element={<PajamosSuvesti />} />
+          <Route path='/pagrindinis' element={<Pirmas_puslapis />} />
           <Route path='/pajamos' element={<><Pajamos/> <PajamosSuvesti/> </>}/>
           <Route path='/islaidos' element={<Islaidos />} />
           <Route path='/biudzetas' element={<Biudzetas />} />
