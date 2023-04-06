@@ -12,7 +12,7 @@
   font-size: 1.2em;
   font-weight: 500;
 }
-.btnReg {
+/* .btnReg {
   border: none;
   text-align: center;
   width: 440px;
@@ -22,7 +22,7 @@
   color: #fafafa;
   font-size: small;
   margin-top: 5px;
-}
+} */
 .btn:hover {
   background-color: var(--main-color_);
   transition: 0.2s;
