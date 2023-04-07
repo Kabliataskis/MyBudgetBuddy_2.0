@@ -69,7 +69,7 @@ const Register = (props) => {
             id="name"
             name="name"
             className={formik.touched.name && formik.errors.name ? "error" : ""}
-            required
+            
           />
           <div className="form-control2">
             {formik.touched.name && formik.errors.name ? (
@@ -96,7 +96,7 @@ const Register = (props) => {
             className={
               formik.touched.email && formik.errors.email ? "error" : ""
             }
-            required
+            
           />
           <div className="form-control2">
             {formik.touched.email && formik.errors.email ? (
@@ -123,7 +123,7 @@ const Register = (props) => {
               formik.touched.password && formik.errors.password ? "error" : ""
             }
             name="password"
-            required
+            
           />
           <div className="form-control2">
             {formik.touched.password && formik.errors.password ? (
