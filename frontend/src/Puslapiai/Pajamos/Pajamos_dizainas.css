@@ -99,7 +99,7 @@
 
 .block_filtro{
     background: var(--grey-color);
-    padding: 18px 18px 18px 35px;
+    padding: 20px;
     border-radius: 8px;
     margin: 10px 20px 0 100px;
 
@@ -109,7 +109,7 @@
 }
 
 .paieska_filter{
-    padding-right: 120px;
+    padding-right: 125px;
     background: var(--grey-color);
     border: none;
     border-bottom: 2px solid var(--dark-color);
@@ -137,7 +137,7 @@
 
 .data_filter_p{
     margin-bottom:30px;
-    word-spacing: 3px;
+    word-spacing: 2px;
 }
 
 .btn-dark{
@@ -148,6 +148,9 @@
     padding: 3px 0;
     border: none;
     cursor: pointer;
+}
+.btn-dark:hover{
+    background-color: #1a272f;
 }
 
 .paginacina_container{
