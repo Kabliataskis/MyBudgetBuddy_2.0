@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import "./Navbar.css";
 import { BsGraphUpArrow, BsGraphDownArrow } from 'react-icons/bs';
 import { Link } from 'react-router-dom';

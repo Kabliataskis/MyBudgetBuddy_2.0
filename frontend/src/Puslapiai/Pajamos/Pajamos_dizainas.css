@@ -302,7 +302,7 @@
     margin-left: 3px;
     color: var(--red-color);
     font-size: 0.85em;
-    transform: 0.2s;
+    transition: 0.2s;
 }
 .Pajamos-modal-form .error-mess-icon{
     margin-right: 5px;
