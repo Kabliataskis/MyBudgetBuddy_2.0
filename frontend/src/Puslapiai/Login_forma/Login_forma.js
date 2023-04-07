@@ -59,7 +59,7 @@ export const Login = (props) => {
             placeholder="Vardenis"
             id="name"
             name="name"
-            required
+            
           />
           <div className="form-control">
             {formik.touched.name && formik.errors.name ? (
@@ -86,7 +86,7 @@ export const Login = (props) => {
             placeholder="**********"
             id="password"
             name="password"
-            required
+            
           />
           <div className="form-control">
             {formik.touched.password && formik.errors.password ? (

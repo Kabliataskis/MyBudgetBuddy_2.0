@@ -15,23 +15,20 @@ export const Auth = () => {
             <div className="box box__about-aplication">
               <h2>Apie Aplikacija</h2>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et
-                facere accusamus consequuntur dignissimos quod magnam.
+                Asmeninio biudžeto analizės aplikacija skirta išmintingai valdyti savo finansus -vesti pajamų ir išlaidų biudžetą.
               </p>
             </div>
 
             <div className="box box__oportunities">
               <h2>Galimybes</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Laudantium alias molestiae nemo distinctio, rerum est!
+                Kiekvienas aplikacijos vartotojas turi galimybę realiu laiku patikrinti bendro biudžeto likutį, susipažinti su jį analizuo- jančiais grafikais
               </p>
             </div>
             <div className="box box__limits">
               <h2>Limitai</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet
-                porro at, debitis distinctio consectetur fuga.
+                Aplikacijoje vartotojas gali priskirti tam tikras sumas skirtingoms kategorijomis, o  vėliau fiksuoti savo išlaidasm stengiantis neviršyti numatyto biudžo
               </p>
             </div>
         </div>
