@@ -4,6 +4,7 @@ import Pajamos from './Puslapiai/Pajamos/Pajamos';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import Auth from './Puslapiai/Login_forma/Auth';
 import "./index.css";
 import PajamosSuvesti from "./Puslapiai/Pajamos/PajamosSuvesti";
 import Pirmas_puslapis from "./Puslapiai/Pagrindinis_puslapis/Pagrindinis_puslapis";
@@ -19,6 +20,8 @@ function App() {
       <Router>
       <Navbar />
         <Routes>
+          <Route path='/' element={<PajamosSuvesti />} />
+          <Route path='/auth' element={<Auth />} />
           <Route path='/pagrindinis' element={<Pirmas_puslapis />} />
           <Route path='/pajamos' element={<><Pajamos/> <PajamosSuvesti/> </>}/>
           <Route path='/islaidos' element={<Islaidos />} />
