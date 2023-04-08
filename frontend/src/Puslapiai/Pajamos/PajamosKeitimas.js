@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import React, {/* useState,*/ useContext } from "react";
+import React, { useState } from "react";
 import { ContextProvider } from "../../App";
 // import { toast } from "react-toastify";
 import { AiOutlineClose, AiFillWarning } from "react-icons/ai";
@@ -8,8 +8,7 @@ import swal from "sweetalert2";
 import { useFormik } from "formik";
 
 function PajamosKeitimas(props) {
-  const { modal_PajamosSuvesti, setModal_PajamosSuvesti } =
-    useContext(ContextProvider);
+  const {modal_PajamosKeitimas, setModal_PajamosKeitimas, editPajamos} = props;
   const max_amount = 9999999; // Maksimali suma €
 
   const validate = (values) => {
@@ -45,16 +44,15 @@ function PajamosKeitimas(props) {
     // Užklausa į backend
 
     // Jei backend grąžina success
-    setModal_PajamosSuvesti(false);
+    setModal_PajamosKeitimas(false);
     swal.fire({
       title: "Sėkmingai",
-      text: "Įrašas pakkeistas",
+      text: "Įrašas pakeistas",
       icon: "success",
       confirmButtonColor: "#28b78d",
     });
     formik.resetForm();
   };
-
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -91,16 +89,13 @@ function PajamosKeitimas(props) {
   };
   // Modal close
   const closeModal = () => {
-    setModal_PajamosSuvesti(false);
+    setModal_PajamosKeitimas(false);
     //formik.resetForm(); // reset forma
   };
 
   return (
     <>
-      <button onClick={() => setModal_PajamosSuvesti(true)}>
-        Pakeisti pajamas
-      </button>
-      {modal_PajamosSuvesti ? (
+      {modal_PajamosKeitimas ? (
         <div className="Pajamos-modal-container" onMouseDown={onMouseDown}>
           <div className="modal-content">
             <h2 className="modal-title">Pakeisti pajamas</h2>
@@ -211,4 +206,3 @@ function PajamosKeitimas(props) {
 }
 
 export default PajamosKeitimas;
-
