@@ -164,6 +164,7 @@
 .form-control2 {
   margin-bottom: 20px;
   text-align: left;
+  outline:none;
 }
 
 .error {
@@ -178,6 +179,7 @@
 .forma input.error {
   color: var(--red-color);
   border-bottom: 2px solid var(--red-color);
+  outline: none;
 }
 .formInput {
   float: left;

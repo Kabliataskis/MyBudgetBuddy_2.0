@@ -13,22 +13,22 @@ export const Auth = () => {
       <main className="content-container">
         <div className="boxes">
             <div className="box box__about-aplication">
-              <h2>Apie Aplikacija</h2>
+              <h2>Apie aplikaciją</h2>
               <p>
-                Asmeninio biudžeto analizės aplikacija skirta išmintingai valdyti savo finansus -vesti pajamų ir išlaidų biudžetą.
+                Asmeninio biudžeto analizės aplikacija skirta išmintingai valdyti savo finansus - vesti pajamų ir išlaidų biudžetą.
               </p>
             </div>
 
             <div className="box box__oportunities">
-              <h2>Galimybes</h2>
+              <h2>Galimybės</h2>
               <p>
-                Kiekvienas aplikacijos vartotojas turi galimybę realiu laiku patikrinti bendro biudžeto likutį, susipažinti su jį analizuo- jančiais grafikais
+                Kiekvienas aplikacijos vartotojas turi galimybę realiu laiku patikrinti bendro biudžeto likutį, susipažinti su jį analizuo- jančiais grafikais.
               </p>
             </div>
             <div className="box box__limits">
               <h2>Limitai</h2>
               <p>
-                Aplikacijoje vartotojas gali priskirti tam tikras sumas skirtingoms kategorijomis, o  vėliau fiksuoti savo išlaidasm stengiantis neviršyti numatyto biudžo
+                Aplikacijoje vartotojas gali priskirti tam tikras sumas skirtingoms kategorijoms, o  vėliau fiksuoti savo išlaidas, stengiantis neviršyti numatyto biudžeto.
               </p>
             </div>
         </div>

@@ -23,11 +23,11 @@ export const Login = (props) => {
       errors.name = "Prašome užpildyti laukelį (Slapyvardis)";
     }
     if (!values.email) {
-      errors.email = "Required";
+    
     } else if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.text(values.email)
     ) {
-      errors.email = "Invalid email format";
+      errors.email = "Neteisingas El. pašto formatas";
     }
     if (!values.password) {
       errors.password = "Prašome užpildyti laukelį (Slaptažodis)";
