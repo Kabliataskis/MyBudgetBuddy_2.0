@@ -7,7 +7,7 @@ import "./Pajamos_dizainas.css";
 import swal from "sweetalert2";
 import { useFormik } from "formik";
 
-function PajamosSuvesti(props) {
+function PajamosKeitimas(props) {
   const { modal_PajamosSuvesti, setModal_PajamosSuvesti } =
     useContext(ContextProvider);
   const max_amount = 9999999; // Maksimali suma €
@@ -48,7 +48,7 @@ function PajamosSuvesti(props) {
     setModal_PajamosSuvesti(false);
     swal.fire({
       title: "Sėkmingai",
-      text: "Įrašas pridėtas",
+      text: "Įrašas pakkeistas",
       icon: "success",
       confirmButtonColor: "#28b78d",
     });
@@ -98,12 +98,12 @@ function PajamosSuvesti(props) {
   return (
     <>
       <button onClick={() => setModal_PajamosSuvesti(true)}>
-        Pridėti pajamas
+        Pakeisti pajamas
       </button>
       {modal_PajamosSuvesti ? (
         <div className="Pajamos-modal-container" onMouseDown={onMouseDown}>
           <div className="modal-content">
-            <h2 className="modal-title">Pridėti pajamas</h2>
+            <h2 className="modal-title">Pakeisti pajamas</h2>
             <span className="modal-close-btn" onClick={() => closeModal()}>
               <AiOutlineClose />
             </span>
@@ -189,7 +189,7 @@ function PajamosSuvesti(props) {
 
               <div className="buttons-container">
                 <button className="add-btn" type="submit">
-                  Pridėti
+                  Pakeisti
                 </button>
                 <button
                   className="cancel-btn"
@@ -210,4 +210,5 @@ function PajamosSuvesti(props) {
   );
 }
 
-export default PajamosSuvesti;
+export default PajamosKeitimas;
+

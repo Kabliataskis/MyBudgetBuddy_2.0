@@ -5,6 +5,7 @@ import Task from "./Pajamos_funk";
 import './Pajamos_dizainas.css';
 import swal from 'sweetalert2'
 import '../../index.css';
+import PajamosKeitimas from './PajamosKeitimas.js';
 import { MdKeyboardDoubleArrowLeft ,MdKeyboardDoubleArrowRight ,MdOutlineKeyboardArrowRight ,MdKeyboardArrowLeft} from "react-icons/md";
 export default function Pajamos_idetos(){
 
@@ -63,6 +64,7 @@ let tasks_list = filterTask.map((el) =>{
         data={el.data}
         saltynis={el.saltynis}
 		suma={el.suma}
+		keitimas={PajamosKeitimas}
         deleteTask={deleteTask}
         />
     );
