@@ -31,7 +31,7 @@ const Register = (props) => {
     } else if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
     ) {
-      errors.email = "Invalid email format";
+      errors.email = "Neteisingas El. pašto formatas";
     }
     if (!values.password) {
       errors.password = "Prašome užpildyti laukelį (Slaptažodis)";
@@ -52,7 +52,7 @@ const Register = (props) => {
 
   return (
     <div className="forma">
-      <form onSubmit={formik.handleSubmit}>
+      <form noValidate onSubmit={formik.handleSubmit}>
         <h2 className="form-title">Registracija</h2>
 
         <div className="row">
@@ -119,10 +119,11 @@ const Register = (props) => {
             type="password"
             placeholder="**********"
             id="password"
+            name="password"
             className={
               formik.touched.password && formik.errors.password ? "error" : ""
             }
-            name="password"
+            
             
           />
           <div className="form-control2">
