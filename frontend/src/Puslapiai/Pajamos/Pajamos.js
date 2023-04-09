@@ -1,13 +1,15 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { ContextProvider } from "../../App";
 import { v4 as uuidv4 } from "uuid";
 import Task from "./Pajamos_funk";
 import './Pajamos_dizainas.css';
 import swal from 'sweetalert2'
 import '../../index.css';
+import PajamosKeitimas from './PajamosKeitimas.js';
 import { MdKeyboardDoubleArrowLeft ,MdKeyboardDoubleArrowRight ,MdOutlineKeyboardArrowRight ,MdKeyboardArrowLeft} from "react-icons/md";
 export default function Pajamos_idetos(){
-
+	const [editPajamos, setEditPajamos] = useState({});
+	const [modal_PajamosKeitimas, setModal_PajamosKeitimas ] = useState(false);
 	const { modal_PajamosSuvesti, setModal_PajamosSuvesti } = useContext(ContextProvider);
 
 const [tasks,setTasks] = useState([
@@ -55,14 +57,28 @@ const filterTask = tasks.filter(taskss =>{
 	return taskss.saltynis.toLocaleLowerCase().includes(value.toLocaleLowerCase()) 
 })
 
+const keitimas = (id) => {
+	console.log(id);
+	let item_index; 
+	tasks.forEach((el, index) => {
+		if(el.id == id){
+			item_index = index;
+		}
+	});
+	setEditPajamos(tasks[item_index]);
+	setModal_PajamosKeitimas(true);
+}
 let tasks_list = filterTask.map((el) =>{
     return(
         <Task
         key={uuidv4()}
+		obj={el}
         id={el.id}
         data={el.data}
         saltynis={el.saltynis}
 		suma={el.suma}
+		setEditPajamos={setEditPajamos}
+		keitimas={keitimas}
         deleteTask={deleteTask}
         />
     );
@@ -73,6 +89,7 @@ let tasks_list = filterTask.map((el) =>{
 
 return(
 	<div className='main_back'>	
+	<PajamosKeitimas modal_PajamosKeitimas={modal_PajamosKeitimas} setModal_PajamosKeitimas={setModal_PajamosKeitimas} editPajamos={editPajamos} />
 		<div className='container_pajamos'>
 			<h3 className="h3-text">Pajamos</h3>
 			<div className="block_pajamos">

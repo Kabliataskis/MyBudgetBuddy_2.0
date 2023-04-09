@@ -1,18 +1,22 @@
 import React from "react";
 import { FaTrash , FaPen } from "react-icons/fa";
-
 import './Pajamos_dizainas.css';
-export default function Task(props){
-    const{id,data,saltynis,suma, deleteTask} = props;
 
-    
+export default function Task(props){
+    const{obj, id,data,saltynis,suma, keitimas, deleteTask} = props;
     return(
         <tr className={""}>
            <td>{data}</td>
 			<td>{saltynis}</td>
 			<td className='color-eur'>+{suma}</td>
-            <td>
-                <FaPen/>
+            <td className="">
+                <button 
+                className="btn_change"
+                onClick={() => {keitimas(id)}}
+                >
+                      <FaPen/>
+                </button>
+              
             </td>
             <td className="">
                 <button
@@ -25,5 +29,3 @@ export default function Task(props){
         </tr>
     );
 }
-
-

@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import React, {/* useState,*/ useContext } from "react";
+import React, { useState } from "react";
 import { ContextProvider } from "../../App";
 // import { toast } from "react-toastify";
 import { AiOutlineClose, AiFillWarning } from "react-icons/ai";
@@ -7,11 +7,10 @@ import "./Pajamos_dizainas.css";
 import swal from "sweetalert2";
 import { useFormik } from "formik";
 
-function PajamosSuvesti(props) {
-  const { modal_PajamosSuvesti, setModal_PajamosSuvesti } =
-    useContext(ContextProvider);
+function PajamosKeitimas(props) {
+  const {modal_PajamosKeitimas, setModal_PajamosKeitimas, editPajamos} = props;
   const max_amount = 9999999; // Maksimali suma €
-
+  console.log(editPajamos);
   const validate = (values) => {
     let selected_time = new Date(values.date).getTime();
     let curr_time = new Date().getTime();
@@ -45,17 +44,18 @@ function PajamosSuvesti(props) {
     // Užklausa į backend
 
     // Jei backend grąžina success
-    setModal_PajamosSuvesti(false);
+    setModal_PajamosKeitimas(false);
     swal.fire({
       title: "Sėkmingai",
-      text: "Įrašas pridėtas",
+      text: "Įrašas pakeistas",
       icon: "success",
       confirmButtonColor: "#28b78d",
     });
     formik.resetForm();
   };
 
-  const formik = useFormik({
+
+  const formik = useFormik({  
     initialValues: {
       title: "",
       date: "",
@@ -91,19 +91,16 @@ function PajamosSuvesti(props) {
   };
   // Modal close
   const closeModal = () => {
-    setModal_PajamosSuvesti(false);
+    setModal_PajamosKeitimas(false);
     //formik.resetForm(); // reset forma
   };
 
   return (
     <>
-      <button onClick={() => setModal_PajamosSuvesti(true)}>
-        Pridėti pajamas
-      </button>
-      {modal_PajamosSuvesti ? (
+      {modal_PajamosKeitimas ? (
         <div className="Pajamos-modal-container" onMouseDown={onMouseDown}>
           <div className="modal-content">
-            <h2 className="modal-title">Pridėti pajamas</h2>
+            <h2 className="modal-title">Pakeisti pajamas</h2>
             <span className="modal-close-btn" onClick={() => closeModal()}>
               <AiOutlineClose />
             </span>
@@ -131,7 +128,7 @@ function PajamosSuvesti(props) {
               </p>
               {formik.touched.title && formik.errors.title ? (
                 <div className="error-mess-box">
-                  <AiFillWarning className="error-mess-icon" />
+                  <AiFillWarning className="error-mess-icon" />{" "}
                   <span>{formik.errors.title}</span>
                 </div>
               ) : null}
@@ -153,7 +150,7 @@ function PajamosSuvesti(props) {
               </p>
               {formik.touched.date && formik.errors.date ? (
                 <div className="error-mess-box">
-                  <AiFillWarning className="error-mess-icon" />
+                  <AiFillWarning className="error-mess-icon" />{" "}
                   <span>{formik.errors.date}</span>
                 </div>
               ) : null}
@@ -182,14 +179,14 @@ function PajamosSuvesti(props) {
               </p>
               {formik.touched.amount && formik.errors.amount ? (
                 <div className="error-mess-box">
-                  <AiFillWarning className="error-mess-icon" />
+                  <AiFillWarning className="error-mess-icon" />{" "}
                   <span>{formik.errors.amount}</span>
                 </div>
               ) : null}
 
               <div className="buttons-container">
                 <button className="add-btn" type="submit">
-                  Pridėti
+                  Pakeisti
                 </button>
                 <button
                   className="cancel-btn"
@@ -210,4 +207,4 @@ function PajamosSuvesti(props) {
   );
 }
 
-export default PajamosSuvesti;
+export default PajamosKeitimas;

@@ -71,6 +71,14 @@
     cursor: pointer;
 }
 
+.btn_change{
+    border: none;
+    background: transparent;
+    font-size: 15px;
+    text-align: center;
+    cursor: pointer;
+}
+
 .table_main{
     width: 70%;
     margin: 10px 0 0 60px;
