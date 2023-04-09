@@ -58,7 +58,14 @@ const filterTask = tasks.filter(taskss =>{
 })
 
 const keitimas = (id) => {
-	setEditPajamos(tasks[0]);
+	console.log(id);
+	let item_index; 
+	tasks.forEach((el, index) => {
+		if(el.id == id){
+			item_index = index;
+		}
+	});
+	setEditPajamos(tasks[item_index]);
 	setModal_PajamosKeitimas(true);
 }
 let tasks_list = filterTask.map((el) =>{

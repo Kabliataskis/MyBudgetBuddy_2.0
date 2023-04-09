@@ -10,7 +10,7 @@ import { useFormik } from "formik";
 function PajamosKeitimas(props) {
   const {modal_PajamosKeitimas, setModal_PajamosKeitimas, editPajamos} = props;
   const max_amount = 9999999; // Maksimali suma €
-
+  console.log(editPajamos);
   const validate = (values) => {
     let selected_time = new Date(values.date).getTime();
     let curr_time = new Date().getTime();
@@ -53,7 +53,9 @@ function PajamosKeitimas(props) {
     });
     formik.resetForm();
   };
-  const formik = useFormik({
+
+
+  const formik = useFormik({  
     initialValues: {
       title: "",
       date: "",
