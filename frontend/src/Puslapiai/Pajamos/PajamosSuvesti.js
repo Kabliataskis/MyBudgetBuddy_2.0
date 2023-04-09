@@ -131,7 +131,7 @@ function PajamosSuvesti(props) {
               </p>
               {formik.touched.title && formik.errors.title ? (
                 <div className="error-mess-box">
-                  <AiFillWarning className="error-mess-icon" />{" "}
+                  <AiFillWarning className="error-mess-icon" />
                   <span>{formik.errors.title}</span>
                 </div>
               ) : null}
@@ -153,7 +153,7 @@ function PajamosSuvesti(props) {
               </p>
               {formik.touched.date && formik.errors.date ? (
                 <div className="error-mess-box">
-                  <AiFillWarning className="error-mess-icon" />{" "}
+                  <AiFillWarning className="error-mess-icon" />
                   <span>{formik.errors.date}</span>
                 </div>
               ) : null}
@@ -182,7 +182,7 @@ function PajamosSuvesti(props) {
               </p>
               {formik.touched.amount && formik.errors.amount ? (
                 <div className="error-mess-box">
-                  <AiFillWarning className="error-mess-icon" />{" "}
+                  <AiFillWarning className="error-mess-icon" />
                   <span>{formik.errors.amount}</span>
                 </div>
               ) : null}

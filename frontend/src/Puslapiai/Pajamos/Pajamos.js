@@ -93,7 +93,7 @@ return(
 		<div className='container_pajamos'>
 			<h3 className="h3-text">Pajamos</h3>
 			<div className="block_pajamos">
-				<p className="block_pajamo">Mėnesio pajamos: <span className='color-eur'>5956$</span></p>
+				<p className="block_pajamo">Mėnesio pajamos: <span className='color-eur'>5956€</span></p>
 				<button  className='btn-gren' onClick={() => setModal_PajamosSuvesti(true)}>Įvesti pajamas</button>
 			</div>
 		</div >
@@ -104,7 +104,7 @@ return(
 						<thead>
 							<tr>
 								<th>Data</th>
-								<th>Pajamų šaltynis</th>
+								<th>Pajamų šaltinis</th>
 								<th>Suma</th>
 								<th>Redaguoti</th>
 								<th>Pašalinti</th>
@@ -135,7 +135,7 @@ return(
 						<form>
 							<input
 								type="text"
-								placeholder="Paieska..."
+								placeholder="Paieška..."
 								className="paieska_filter"
 								onChange={(event) => setValue(event.target.value)}
 

@@ -45,7 +45,7 @@
  
 .btn-gren{
     font-size: 17px;
-    margin-top: 10px;
+    margin-top: 13px;
     padding: 7px 25px;
     background: var(--main-color);
     border: none;
@@ -107,7 +107,7 @@
 
 .block_filtro{
     background: var(--grey-color);
-    padding: 20px 20px 20px 40px;
+    padding: 20px;
     border-radius: 8px;
     margin: 10px 20px 0 100px;
 
@@ -117,7 +117,7 @@
 }
 
 .paieska_filter{
-    padding-right: 120px;
+    padding-right: 125px;
     background: var(--grey-color);
     border: none;
     border-bottom: 2px solid var(--dark-color);
@@ -136,6 +136,7 @@
     border-bottom: 2px solid var(--dark-color);
     color: var(--main-color);
     outline: none;
+    text-align: center;
 }
 
 .data_filter:focus{
@@ -144,8 +145,7 @@
 
 .data_filter_p{
     margin-bottom:30px;
-    width: 100%;
-    word-spacing: 3px;
+    word-spacing: 2px;
 }
 
 .btn-dark{
@@ -156,6 +156,9 @@
     padding: 3px 0;
     border: none;
     cursor: pointer;
+}
+.btn-dark:hover{
+    background-color: #1a272f;
 }
 
 .paginacina_container{
@@ -307,7 +310,7 @@
     margin-left: 3px;
     color: var(--red-color);
     font-size: 0.85em;
-    transform: 0.2s;
+    transition: 0.2s;
 }
 .Pajamos-modal-form .error-mess-icon{
     margin-right: 5px;

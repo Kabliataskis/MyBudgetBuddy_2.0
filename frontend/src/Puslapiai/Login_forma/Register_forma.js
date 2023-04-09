@@ -4,8 +4,12 @@ import "./Register_forma";
 import { useFormik } from "formik";
 import { AiFillWarning } from "react-icons/ai";
 
-export const Login = (props) => {
+const Register = (props) => {
   const { setShowLogin } = props;
+
+  const handleSubmit = (e) => {
+    e.preventDefault(console.log);
+  };
 
   const initialValues = {
     name: "",
@@ -23,9 +27,9 @@ export const Login = (props) => {
       errors.name = "Prašome užpildyti laukelį (Slapyvardis)";
     }
     if (!values.email) {
-    
+      errors.email = "Prašome užpildyti laukelį (El. paštas)";
     } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.text(values.email)
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
     ) {
       errors.email = "Neteisingas El. pašto formatas";
     }
@@ -36,32 +40,38 @@ export const Login = (props) => {
     return errors;
   };
 
+  //function formValidation() {
   const formik = useFormik({
     initialValues,
     onSubmit,
     validate,
   });
+  console.log("Visited fields", formik.touched);
+
+  //}
 
   return (
     <div className="forma">
-      <form onSubmit={formik.handleSubmit}>
-        <h2 className="form-title">Prisijungimas</h2>
+      <form noValidate onSubmit={formik.handleSubmit}>
+        <h2 className="form-title">Registracija</h2>
+
         <div className="row">
           <label htmlFor="name" className="text2">
             Slapyvardis
           </label>
+
           <input
-            className={formik.touched.name && formik.errors.name ? "error" : ""}
             onChange={formik.handleChange}
             value={formik.values.name}
             onBlur={formik.handleBlur}
-            type="name"
+            type="text"
             placeholder="Vardenis"
             id="name"
             name="name"
+            className={formik.touched.name && formik.errors.name ? "error" : ""}
             
           />
-          <div className="form-control">
+          <div className="form-control2">
             {formik.touched.name && formik.errors.name ? (
               <div className="error">
                 <AiFillWarning className="error-mess-icon" />
@@ -72,13 +82,37 @@ export const Login = (props) => {
         </div>
 
         <div className="row">
+          <label htmlFor="email" className="text2">
+            El. paštas
+          </label>
+          <input
+            onChange={formik.handleChange}
+            value={formik.values.email}
+            onBlur={formik.handleBlur}
+            type="email"
+            placeholder="El. paštas"
+            id="email"
+            name="email"
+            className={
+              formik.touched.email && formik.errors.email ? "error" : ""
+            }
+            
+          />
+          <div className="form-control2">
+            {formik.touched.email && formik.errors.email ? (
+              <div className="error">
+                <AiFillWarning className="error-mess-icon" />
+                <span>{formik.errors.email} </span>
+              </div>
+            ) : null}
+          </div>
+        </div>
+
+        <div className="row">
           <label htmlFor="password" className="text2">
             Slaptažodis
           </label>
           <input
-            className={
-              formik.touched.password && formik.errors.password ? "error" : ""
-            }
             onChange={formik.handleChange}
             value={formik.values.password}
             onBlur={formik.handleBlur}
@@ -86,9 +120,13 @@ export const Login = (props) => {
             placeholder="**********"
             id="password"
             name="password"
+            className={
+              formik.touched.password && formik.errors.password ? "error" : ""
+            }
+            
             
           />
-          <div className="form-control">
+          <div className="form-control2">
             {formik.touched.password && formik.errors.password ? (
               <div className="error">
                 <AiFillWarning className="error-mess-icon" />
@@ -98,28 +136,22 @@ export const Login = (props) => {
           </div>
         </div>
 
-        <button
-          className="btn"
-          type="submit"
-          variant="contained"
-          onClick={() => Login}
-        >
-          Prisijungti
+        <button className="btn" type="submit" variant="contained">
+          Užsiregistruoti
         </button>
       </form>
-
-      <h3 className="textinfo">Dar neturite paskyros ?</h3>
+      <h3 className="textinfo">Jau turite paskyrą ?</h3>
 
       <button
+        onClick={() => setShowLogin(true)}
         className="btn2"
-        onClick={() => setShowLogin(false)}
         type="submit"
         variant="contained"
       >
-        Registracija
+        Prisijungti
       </button>
     </div>
   );
 };
 
-export default Login;
+export default Register;
