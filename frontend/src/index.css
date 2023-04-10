@@ -1,4 +1,9 @@
 @font-face {
+  font-family: 'BalooThambi2';
+  font-weight: 500;
+  src: url('./Assets/Fonts/BalooThambi2.ttf');
+}
+@font-face {
   font-family: 'Baloo Thambi 2';
   src: url('./Assets/Fonts/BalooThambi2.ttf');
 }

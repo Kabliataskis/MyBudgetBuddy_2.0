@@ -20,7 +20,7 @@ function Pirmas_puslapis() {
         <div className="stats-containers">
           <div className="stat-container">
             <p>
-              Biudžetas: <span className="green">5954.94€</span>
+              Likutis: <span className="green">5954.94€</span>
             </p>
           </div>
           <div className="stat-container isleista-per-men">
