@@ -3,7 +3,6 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-
 export const data = {
     labels: ['Transportas', 'Maistas', 'Mokesčiai', 'Laisvalaikis', 'Parduotuvė'],
     datasets: [
@@ -28,12 +27,17 @@ export const data = {
       },
     ],
   };
-
 export default function DoughnutChart () {
   const options = {
     plugins: {
       legend: {
         position: 'left',
+        labels: {
+          color: "#243743",
+          font: {
+            family: "BalooThambi2" // Add your font here to change the font of your legend label
+          }
+        },
       },
       tooltip: {
         callbacks: {
