@@ -20,7 +20,7 @@ const incomeSchema = mongoose.Schema(
             type: Date
         }
     },
-    {tyimestamps: true}
+    {timestamps: true}
 );
 
 module.exports = mongoose.model("income", incomeSchema);
