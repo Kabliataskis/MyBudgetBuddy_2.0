@@ -2,6 +2,9 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 
+
+const incomeRouter = require("./routes/incomeRoutes");
+
 dotenv.config();
 
 app.use(express.json());
@@ -13,6 +16,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/api/v1/income", incomeRouter);
 
 
 
