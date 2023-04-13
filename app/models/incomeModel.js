@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const incomeSchema = mongoose.Schema(
     {
         user_id: {
-            type: ObjectId,
+            // type: ObjectID,
+            type: Number,
             required: true
         }, 
         title: {
