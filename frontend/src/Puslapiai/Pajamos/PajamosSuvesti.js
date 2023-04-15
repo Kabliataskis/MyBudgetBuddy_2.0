@@ -1,7 +1,7 @@
-/* eslint-disable linebreak-style */
-import React, {/* useState,*/ useContext } from "react";
+import React, {useContext } from "react";
 import { ContextProvider } from "../../App";
-// import { toast } from "react-toastify";
+import axios from "../../axios";
+import { toast } from "react-toastify";
 import { AiOutlineClose, AiFillWarning } from "react-icons/ai";
 import "./Pajamos_dizainas.css";
 import swal from "sweetalert2";
@@ -10,7 +10,7 @@ import { useFormik } from "formik";
 function PajamosSuvesti(props) {
   const { modal_PajamosSuvesti, setModal_PajamosSuvesti } =
     useContext(ContextProvider);
-  const max_amount = 9999999; // Maksimali suma €
+  const max_sum = 9999999; // Maksimali suma €
 
   const validate = (values) => {
     let selected_time = new Date(values.date).getTime();
@@ -29,40 +29,49 @@ function PajamosSuvesti(props) {
       errors.date = "Data negali būti vėlesnė nei ši diena";
     }
 
-    if (!values.amount) {
-      errors.amount = "Prašome užpildyti laukelį (Suma)";
-    } else if (values.amount <= 0) {
-      errors.amount = "Minimali suma 0.01 €";
-    } else if (values.amount > max_amount) {
-      errors.amount = `Suma negali viršyti ${max_amount} €`;
-    } else if (values.amount && !/^\d+(\.\d{1,2})?$/.test(values.amount)) {
-      errors.amount = "Neteisingas formatas. Pvz: 10.21€";
+    if (!values.sum) {
+      errors.sum = "Prašome užpildyti laukelį (Suma)";
+    } else if (values.sum <= 0) {
+      errors.sum = "Minimali suma 0.01 €";
+    } else if (values.sum > max_sum) {
+      errors.sum = `Suma negali viršyti ${max_sum} €`;
+    } else if (values.sum && !/^\d+(\.\d{1,2})?$/.test(values.sum)) {
+      errors.sum = "Neteisingas formatas. Pvz: 10.21€";
     }
     return errors;
   };
 
-  const onSubmit = (values) => {
-    // Užklausa į backend
-
-    // Jei backend grąžina success
-    setModal_PajamosSuvesti(false);
-    swal.fire({
-      title: "Sėkmingai",
-      text: "Įrašas pridėtas",
-      icon: "success",
-      confirmButtonColor: "#28b78d",
-    });
-    formik.resetForm();
+  const onSubmit = async (values) => {
+    try{
+      let {title, date, sum} = values;
+      const res = await axios.post("/income", {
+        title, date, sum
+      });
+      console.log(res);
+      //Jei backend grąžina success
+      setModal_PajamosSuvesti(false);
+      swal.fire({
+        title: "Sėkmingai",
+        text: res.data.mess,
+        icon: "success",
+        confirmButtonColor: "#28b78d",
+      });
+      formik.resetForm();
+    } catch (err){
+      console.log(err);
+      toast.error('Klaida');
+    }
   };
 
   const formik = useFormik({
     initialValues: {
       title: "",
       date: "",
-      amount: "",
+      sum: "",
     },
-    onSubmit,
     validate,
+    onSubmit,
+
   });
 
   const handleKeyDown = (event) => {
@@ -162,28 +171,28 @@ function PajamosSuvesti(props) {
               <p className="eur">
                 <input
                   className={
-                    formik.touched.amount && formik.errors.amount ? "error" : ""
+                    formik.touched.sum && formik.errors.sum ? "error" : ""
                   }
                   type="number"
-                  name="amount"
-                  id="amount"
+                  name="sum"
+                  id="sum"
                   placeholder="Suma"
                   min="0.01"
-                  max={max_amount}
+                  max={max_sum}
                   step="0.01"
                   autoComplete="off"
                   required
                   onKeyDown={handleKeyDown}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.amount}
+                  value={formik.values.sum}
                 />
                 <br />
               </p>
-              {formik.touched.amount && formik.errors.amount ? (
+              {formik.touched.sum && formik.errors.sum ? (
                 <div className="error-mess-box">
                   <AiFillWarning className="error-mess-icon" />
-                  <span>{formik.errors.amount}</span>
+                  <span>{formik.errors.sum}</span>
                 </div>
               ) : null}
 
