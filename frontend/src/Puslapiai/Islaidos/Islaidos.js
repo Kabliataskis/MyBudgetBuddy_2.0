@@ -70,7 +70,7 @@ function Islaidos () {
 		<div className='main_back'>	
 
 		<div className='container_pajamos'>
-			<h3 className="h3-text">Pajamos</h3>
+			<h3 className="h3-text">Išlaidos</h3>
 			<div className="block_pajamos">
 				<p className="block_pajamo">Mėnesio pajamos: <span className='red-eur'>5956€</span></p>
 				<button  className='btn-gren'>Įvesti Išlaidos</button>
@@ -126,14 +126,6 @@ function Islaidos () {
 								<option value="mokesciai">Mokesčiai</option>
 								<option value="sveikata">Sveikata</option>
 							</select>
-							{/* <div class="dropdown">
-							<button>Kategorija </button>
-							<div class="dropdown-options">
-								<a href="#">Dashboard</a>
-								<a href="#">Setting</a>
-								<a href="#">Logout</a>
-							</div>
-							</div> */}
 							<p className="data_filter_p"><label htmlFor="nuo_data" >Nuo</label> <input className="data_filter" type="date" id="nuo_data"/> <label htmlFor="iki_data">iki</label> <input className="data_filter" type="date" id="iki_data"/></p>
 							<button className="btn-dark">Ieškoti</button>
 						</form>

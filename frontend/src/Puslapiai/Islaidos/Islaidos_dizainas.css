@@ -202,35 +202,3 @@
     font-size: 15px;
     border: none;
 }
-
-
-/* 
-.dropdown {
-    display: inline-block;
-    position: relative;
-}
-
-.dropdown-options {
-    display: none;
-    position: absolute;
-    overflow: auto;
-    background-color:var(--dark-color);
-    border-radius:5px;
-}
-
-.dropdown:hover .dropdown-options {
-    display: block;
-}
-  
-.dropdown-options a {
-    display: block;
-    color: var(--white-color);
-    padding: 5px;
-    text-decoration: none;
-}
-  
-.dropdown-options a:hover {
-    color: var(--white-color);
-    background-color: #1a272f;
-    border-radius:5px;
-} */
