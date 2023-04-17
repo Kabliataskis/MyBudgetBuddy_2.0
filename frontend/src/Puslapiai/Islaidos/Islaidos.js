@@ -46,7 +46,7 @@ function Islaidos () {
 		const[value,setValue] = useState('')
 
 		const filterTask = tasks.filter(taskss =>{
-			return taskss.kategorija.toLocaleLowerCase().includes(value.toLocaleLowerCase()) 
+			return taskss.pavadinimas.toLocaleLowerCase().includes(value.toLocaleLowerCase()) 
 		})
 
 	let tasks_list = filterTask.map((el) =>{
@@ -72,7 +72,7 @@ function Islaidos () {
 		<div className='container_pajamos'>
 			<h3 className="h3-text">Išlaidos</h3>
 			<div className="block_pajamos">
-				<p className="block_pajamo">Mėnesio pajamos: <span className='red-eur'>5956€</span></p>
+				<p className="block_pajamo">Mėnesio išlaidos: <span className='red-eur'>5956€</span></p>
 				<button  className='btn-gren'>Įvesti Išlaidos</button>
 			</div>
 		</div >
@@ -121,6 +121,7 @@ function Islaidos () {
 
 							/>
 							<select className="dropdown-kategorija" name="Kategorija" id="Kategorija">
+								<option value="kategorija">Kategorija</option>
 								<option value="transportas">Transportas</option>
 								<option value="parduotuve">Parduotuvė</option>
 								<option value="mokesciai">Mokesčiai</option>
