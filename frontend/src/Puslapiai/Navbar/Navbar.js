@@ -34,7 +34,7 @@ function Navbar(props) {
 			<BsGraphUpArrow className='nav_icon'/> Pajamos     
 		</li>
 		</Link>
-		<Link to="/islaidos" id='nav_islaidos'>
+		<Link to="/income" id='nav_islaidos'>
         <li className="navbar-item">
 		<BsGraphDownArrow className='nav_icon'/> Išlaidos</li>
 		</Link>
