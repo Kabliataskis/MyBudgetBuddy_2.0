@@ -1,4 +1,4 @@
-import React, { useState, useContext, createContext } from "react";
+import React, { useState,  createContext } from "react";
 import Navbar from "./Puslapiai/Navbar/Navbar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -24,7 +24,7 @@ function App() {
           <Route path='/auth' element={<Auth />} />
           <Route path='/pagrindinis' element={<><Pirmas_puslapis/> <PajamosSuvesti/></>} />
           <Route path='/pajamos' element={<><Pajamos/> <PajamosSuvesti/> </>}/>
-          <Route path='/islaidos' element={<Islaidos />} />
+          <Route path='/income' element={<Islaidos />} />
           <Route path='/biudzetas' element={<Biudzetas />} />
           {/* <Route path='/admin' element={<Admin />} /> */}
           <Route path='/istorija' element={<Istorija />} />
