@@ -24,7 +24,7 @@ function Navbar(props) {
 	<ul className= "navbar-links">
         
 		<div className='firt_order'>
-			<Link to="/pagrindinis" id='nav_apzvalga'>
+			<Link to="/" id='nav_apzvalga'>
             <li className="navbar-item">
 			<AiOutlineHome className='nav_icon' />Bendra apžvalga</li>
             </Link>
