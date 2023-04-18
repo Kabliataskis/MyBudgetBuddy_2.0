@@ -37,7 +37,7 @@ function ExpenseModal() {
             <span className="close" onClick={() => setIsOpen(false)}>
               &times;
             </span>
-            <form class onSubmit={handleSubmit}>
+            <form className="flex_form" onSubmit={handleSubmit}>
               <h2>Pridėti išlaidas</h2>
             
               <select className="boxOptions" id="options" value={selectedOption} onChange={handleOptionChange}>

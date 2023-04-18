@@ -24,7 +24,7 @@ function App() {
           <Route path='/auth' element={<Auth />} />
           <Route path='/pagrindinis' element={<><Pirmas_puslapis/> <PajamosSuvesti/></>} />
           <Route path='/pajamos' element={<><Pajamos/> <PajamosSuvesti/> </>}/>
-          <Route path='/income' element={<Islaidos />} />
+          <Route path='/islaidos' element={<Islaidos />} />
           <Route path='/biudzetas' element={<Biudzetas />} />
           {/* <Route path='/admin' element={<Admin />} /> */}
           <Route path='/istorija' element={<Istorija />} />
