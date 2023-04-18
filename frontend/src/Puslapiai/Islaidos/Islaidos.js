@@ -6,8 +6,9 @@ import swal from 'sweetalert2'
 import '../../index.css';
 import {AiOutlineDown} from "react-icons/ai";
 import { MdKeyboardDoubleArrowLeft ,MdKeyboardDoubleArrowRight ,MdOutlineKeyboardArrowRight ,MdKeyboardArrowLeft} from "react-icons/md";
-import ExpenseModal from "./ExpenseModal";
+import { ContextProvider } from "../../App";
 function Islaidos () {
+	const { modal_ExpenseModal, setModal_ExpenseModal} = useContext(ContextProvider);
 	const [tasks,setTasks] = useState([
 		{id:1, data: "2023-03-28",kategorija: "Transportas", pavadinimas: "Remontas", suma: "200€"},
 		{id:2, data: "2023-03-28",kategorija: "Mokesčiai", pavadinimas: "Elektra", suma: "500€"},
@@ -74,7 +75,7 @@ function Islaidos () {
 			<h3 className="h3-text">Išlaidos</h3>
 			<div className="block_pajamos">
 				<p className="block_pajamo">Mėnesio išlaidos: <span className='red-eur'>5956€</span></p>
-				<ExpenseModal />
+				<button className="btnAdd" onClick={() => setModal_ExpenseModal(true)}>Įvesti išlaidas</button>
 			</div>
 		</div >
 

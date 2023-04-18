@@ -1,128 +1,29 @@
-.modal {
-    position:fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 800px;
-    height: 800px;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0, 0.4);
-    margin-left: 500px;
-    margin-top: 180px;
-    
-   }
-   
-   .modal-content {
-    background-color: #fefefe;
-    margin: 40px;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 500px;
-    position: relative;
-    border-radius: 8px;
-   }
-   
-   .close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    right: 0;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-   }
-   
-   form {
-    display: flex;
-    flex-direction: column;
-   }
-   
-   label {
-    font-weight: bold;
-    margin-bottom: 5px;
-   }
-   
-   .inputs,
-   input[type="text"],
-   input[type="date"],
-   input[type="number"] {
-    border:none;
-    margin-bottom: 10px;
-    font-size: 16px;
-    border-bottom: 2px solid #28b78d;
-    
-    
-    
-   }
-   textarea:focus, input:focus{
-    outline: none;
+.ExpenseModal .boxOptions {
+  color: var(--main-color);
+  margin-bottom: 20px;
+  font-size: 16px;
 }
 
-
-   select,
-   input[type="text"]{
-    padding: 8px;
-    margin-bottom: 10px;
-    font-size: 16px;
-   }
-
-
-   .category{
-    border:none;
-    padding: 8px;
-    margin-bottom: 10px;
-    font-size: 16px;
-    outline: none;
-    
-
-   }
-   
-   
-
-   
-   button[type="submit"],
-   button[type="button"] {
-    border: none;
-    border-radius: 3px;
-    padding: 8px 8px 16px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-right: 10px;
-   }
-   
-   .button-container {
-    display: flex;
-    justify-content: flex-end;
-   }
-
-
-
-
-.Pridėti{
-    background-color:#28b78d;
-    color:white;
-    width: 300px;
-    border-radius: 8px;
+.ExpenseModal .category {
+  border: none;
+  padding: 8px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  outline: none;
 }
-
-.Atsaukti{
-    background-color:#243743;
-    color: white;
-    width: 100px;
-    border-radius: 8px;
-
+.ExpenseModal .boxOptions {
+  background-color: var(--dark-color);
+  color: var(--white-color);
+  outline: none;
+  border-radius: 8px;
+  width: 220px;
+  text-align: center;
+  height: 40px;
 }
-
-
-
-.boxOptions{
-    background-color: #243743;
-    color: #fafafa;
-    outline: none;
-    border-radius: 8px;
-    width: 240px;
-    text-align: center;
+.ExpenseModal select {
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+  }
+.ExpenseModal option{
+    background-color: #8a949b;
 }
-
-
