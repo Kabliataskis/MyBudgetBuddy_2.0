@@ -23,11 +23,10 @@ function App() {
       <Router>
       <Navbar />
         <Routes>
-          <Route path='/' element={<PajamosSuvesti />} />
+          <Route path='/' element={<><Pirmas_puslapis/> <PajamosSuvesti/> <ExpenseModal/></>} />
           <Route path='/auth' element={<Auth />} />
-          <Route path='/pagrindinis' element={<><Pirmas_puslapis/> <PajamosSuvesti/> <ExpenseModal/></>} />
           <Route path='/pajamos' element={<><Pajamos/> <PajamosSuvesti/></>}/>
-          <Route path='/income' element={<><Islaidos /> <ExpenseModal/></>} />
+          <Route path='/islaidos' element={<><Islaidos /> <ExpenseModal/></>} />
           <Route path='/biudzetas' element={<Biudzetas />} />
           {/* <Route path='/admin' element={<Admin />} /> */}
           <Route path='/istorija' element={<Istorija />} />

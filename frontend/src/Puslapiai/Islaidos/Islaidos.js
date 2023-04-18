@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from "uuid";
 import Task from "./Islaidos_funk";
 import swal from 'sweetalert2'
 import '../../index.css';
-import {AiOutlineDown} from "react-icons/ai";
 import { MdKeyboardDoubleArrowLeft ,MdKeyboardDoubleArrowRight ,MdOutlineKeyboardArrowRight ,MdKeyboardArrowLeft} from "react-icons/md";
 import { ContextProvider } from "../../App";
 function Islaidos () {
@@ -103,12 +102,13 @@ function Islaidos () {
 							<li>3</li>
 							<li>4</li>
 							<li>5</li>
-							<li>6</li>
-							<li>7</li>
 							<li><MdOutlineKeyboardArrowRight/></li>
 							<li ><MdKeyboardDoubleArrowRight/></li>
+							
 						</ul>
+						<button className="btn_csv">Eksportuoti .CSV</button>
 					</div>
+					
 				</div>
 
 				<div className="block_filtro">
@@ -136,6 +136,7 @@ function Islaidos () {
 				</div>
 				
 		</div>
+		
 	</div>
 	);
 }

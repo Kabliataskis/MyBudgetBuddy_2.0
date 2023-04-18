@@ -101,14 +101,10 @@ function PajamosSuvesti(props) {
   // Modal close
   const closeModal = () => {
     setModal_PajamosSuvesti(false);
-    //formik.resetForm(); // reset forma
   };
 
   return (
     <>
-      <button onClick={() => setModal_PajamosSuvesti(true)}>
-        Pridėti pajamas
-      </button>
       {modal_PajamosSuvesti ? (
         <div className="Pajamos-modal-container" onMouseDown={onMouseDown}>
           <div className="modal-content">

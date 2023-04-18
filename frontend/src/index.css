@@ -21,6 +21,7 @@
   margin: 0;
   padding: 0;
   font-family: 'Baloo Thambi 2', cursive;
+  font-weight: 500;
 }
 body{
   background-color: var(--grey-color);
