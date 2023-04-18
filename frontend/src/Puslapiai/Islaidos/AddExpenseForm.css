@@ -33,20 +33,20 @@
     cursor: pointer;
    }
    
-   form {
+   .flex_form{
     display: flex;
     flex-direction: column;
    }
    
-   label {
+   .flex_form label {
     font-weight: bold;
     margin-bottom: 5px;
    }
    
    .inputs,
-   input[type="text"],
-   input[type="date"],
-   input[type="number"] {
+   .inputs[type="text"],
+   .inputs[type="date"],
+   .inputs[type="number"] {
     border:none;
     margin-bottom: 10px;
     font-size: 16px;
@@ -60,7 +60,7 @@
 }
 
 
-   select,
+   .flex_form select, .flex_form
    input[type="text"]{
     padding: 8px;
     margin-bottom: 10px;
@@ -81,8 +81,7 @@
    
 
    
-   button[type="submit"],
-   button[type="button"] {
+   .flex_form button[type="submit"], .flex_form button[type="button"] {
     border: none;
     border-radius: 3px;
     padding: 8px 8px 16px;

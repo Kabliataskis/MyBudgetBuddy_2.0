@@ -1,6 +1,4 @@
-*{
-    box-sizing: border-box;
-}
+
 .main_back{
     padding: 20px;
     max-width: calc(100% - 250px);
@@ -80,7 +78,7 @@
 }
 
 .table_main{
-    width: 70%;
+    width: 100%;
     margin: 10px 0 0 60px;
 }
 .table_main table{
@@ -166,11 +164,13 @@
     justify-content: center;
     display: flex;
     margin-top: 20px;
+    align-items: center;
 }
 
 .paginacina_container ul{
     list-style: none;
     display: flex;
+    
 }
 
 .paginacina_container ul li{
