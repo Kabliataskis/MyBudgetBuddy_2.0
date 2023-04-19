@@ -3,7 +3,7 @@ import { FaTrash , FaPen } from "react-icons/fa";
 import './Islaidos_dizainas.css';
 
 export default function Task(props){
-    const{id,data,kategorija,pavadinimas,suma, deleteTask} = props;
+    const{id,data,kategorija,pavadinimas,suma, editing, deleteTask} = props;
     return(
         <tr className={""}>
             <td>{data}</td>
@@ -13,6 +13,7 @@ export default function Task(props){
             <td className="">
                 <button 
                 className="btn_change"
+                onClick={() => {editing(id)}}
                 >
                       <FaPen/>
                 </button>
