@@ -10,7 +10,7 @@ exports.addIncome = async (req, res) => {
             date: req.body.date
         });
         console.log(newIncome);
-        res.status(200).json({status: "success", mess: "Įrašas pridėtas sėkmingai!"});
+        res.status(200).json(newIncome);
     } catch (err){
         res.status(500).json({mess: err});
     }
