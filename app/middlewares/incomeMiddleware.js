@@ -9,11 +9,15 @@ exports.validateIncome = (req, res, next) => {
     } else if (req.body.title.length > 20) {
       errors.title = "Pavadinimo ilgis iki 20 simbolių!";
     }
-  
+
+    
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/; // Check that the date is in the format "yyyy-mm-dd"
     if (!req.body.date) {
       errors.date = "Prašome užpildyti laukelį (Data)";
     } else if (selected_time > curr_time) {
       errors.date = "Data negali būti vėlesnė nei ši diena";
+    }else if (!dateRegex.test(req.body.date)) {
+      errors.date = "Neteisingas datos formatas. Pvz: 2023-04-20";
     }
   
     if (!req.body.sum) {
