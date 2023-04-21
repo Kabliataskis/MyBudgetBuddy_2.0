@@ -1,44 +1,37 @@
+/* eslint-disable linebreak-style */
 const Income = require("../models/incomeModel");
 
 exports.addIncome = async (req, res) => {
-    console.log("new income request");
-    try{
-        const newIncome = await Income.create({
-            user_id: 1,
-            title: req.body.title,
-            sum: req.body.sum,
-            date: req.body.date
-        });
-        console.log(newIncome);
-        res.status(201).json(newIncome);
-    } catch (err){
-        res.status(500).json({mess: err});
-    }
+  console.log("new income request");
+  try {
+    const newIncome = await Income.create({
+      user_id: 1,
+      title: req.body.title,
+      sum: req.body.sum,
+      date: req.body.date,
+    });
+    console.log(newIncome);
+    res.status(201).json(newIncome);
+  } catch (err) {
+    res.status(500).json({ mess: err });
+  }
 };
-
 
 exports.deleteIncome = async (req, res) => {
-    try{
+  try {
+    const { id } = req.params;
+    const Delete_Income = await Income.findByIdAndDelete(id);
 
-    } catch (err){
-
+    if (!Delete_Income) {
+      return res.status(404).json({ msg: `No todo with id: ${id}` });
+    } else {
+      res.status(200).json({
+        status: "success",
+        message: `Incume with id: ${id} deleted successfully.`,
+        income: Delete_Income,
+      });
     }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
-exports.deletepajama = async (req, res) => {
-    try {
-      const { id } = req.params;
-      const task = await Task.findByIdAndDelete(id);
-  
-      if (!task) {
-        return res.status(404).json({ msg: `No todo with id: ${id}` });
-      } else {
-        res.status(200).json({
-          status: "success",
-          message: `Task with id: ${id} deleted successfully.`,
-          task: task,
-        });
-      }
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  };
