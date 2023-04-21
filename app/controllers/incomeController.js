@@ -42,11 +42,11 @@ exports.deleteIncome = async (req, res) => {
     const Delete_Income = await Income.findByIdAndDelete(id);
 
     if (!Delete_Income) {
-      return res.status(404).json({ msg: `No todo with id: ${id}` });
+      return res.status(404).json({ msg: `Pajamos nr: ${id} neegzistuoja`});
     } else {
       res.status(200).json({
         status: "success",
-        message: `Incume with id: ${id} deleted successfully.`,
+        message: `Pajamos nr: ${id} sėkmingai pašalintas.`,
         income: Delete_Income,
       });
     }

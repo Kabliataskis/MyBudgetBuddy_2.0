@@ -3,6 +3,7 @@ import { ContextProvider } from "../../App";
 import { v4 as uuidv4 } from "uuid";
 import axios from "../../axios";
 import Task from "./Pajamos_funk";
+import { toast } from "react-toastify";
 import './Pajamos_dizainas.css';
 import swal from 'sweetalert2'
 import '../../index.css';
@@ -23,7 +24,6 @@ const [tasks,setTasks] = useState([
 	{id:7, date: "2023-03-28",title: "Rimi", sum: "20€"}
 ]);
 const getIncomes = async () => {
-	console.log("income func");
 	try{
 		const res = await axios.get("/income/");
 		console.log(res.data.data.incomes);
@@ -49,11 +49,9 @@ async function deleteTask (id) {
 		cancelButtonText: "Atšaukti!"
 	  }).then(async (result) => {
 		if (result.isConfirmed) {
-			// užklausa į backend
 			try{
 				const res = await axios.delete("/income/"+id);
 				console.log(res);
-				// success
 				swal.fire({
 					title: 'Sėkmingai',
 					text: 'Įrašas ištrintas',
@@ -62,7 +60,7 @@ async function deleteTask (id) {
 				});
 				getIncomes();
 			  } catch (err){
-				console.log(err);
+				toast.error(err.response.data.msg);
 			  }
 		  }
 	  });
