@@ -24,3 +24,21 @@ exports.deleteIncome = async (req, res) => {
 
     }
 };
+exports.deletepajama = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const task = await Task.findByIdAndDelete(id);
+  
+      if (!task) {
+        return res.status(404).json({ msg: `No todo with id: ${id}` });
+      } else {
+        res.status(200).json({
+          status: "success",
+          message: `Task with id: ${id} deleted successfully.`,
+          task: task,
+        });
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
