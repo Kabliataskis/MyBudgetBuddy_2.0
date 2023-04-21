@@ -1,6 +1,25 @@
 /* eslint-disable linebreak-style */
 const Income = require("../models/incomeModel");
 
+exports.getAllIncomes = async (req, res) => {
+  try {
+    const allIncomes = await Income.find().sort({ date: -1 });
+
+    res.status(200).json({
+      status: "success",
+      results: allIncomes.length,
+      data: {
+        incomes: allIncomes,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: err.message,
+    });
+  }
+};
+
 exports.addIncome = async (req, res) => {
   console.log("new income request");
   try {

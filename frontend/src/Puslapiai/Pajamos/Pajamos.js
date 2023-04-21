@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { ContextProvider } from "../../App";
 import { v4 as uuidv4 } from "uuid";
+import axios from "../../axios";
 import Task from "./Pajamos_funk";
 import './Pajamos_dizainas.css';
 import swal from 'sweetalert2'
@@ -13,16 +14,30 @@ export default function Pajamos_idetos(){
 	const { modal_PajamosSuvesti, setModal_PajamosSuvesti } = useContext(ContextProvider);
 
 const [tasks,setTasks] = useState([
-	{id:1, data: "2023-03-28",saltynis: "Maxima", suma: "20€"},
-	{id:2, data: "2023-03-28",saltynis: "Norfa", suma: "20€"},
-	{id:3, data: "2023-03-28",saltynis: "Lidl", suma: "20€"},
-	{id:4, data: "2023-03-28",saltynis: "Maxima", suma: "20€"},
-	{id:5, data: "2023-03-28",saltynis: "Iki", suma: "20€"},
-	{id:6, data: "2023-03-28",saltynis: "Maxima", suma: "20€"},
-	{id:7, data: "2023-03-28",saltynis: "Rimi", suma: "20€"}
+	{id:1, date: "2023-03-28",title: "Maxima", sum: "20€"},
+	{id:2, date: "2023-03-28",title: "Norfa", sum: "20€"},
+	{id:3, date: "2023-03-28",title: "Lidl", sum: "20€"},
+	{id:4, date: "2023-03-28",title: "Maxima", sum: "20€"},
+	{id:5, date: "2023-03-28",title: "Iki", sum: "20€"},
+	{id:6, date: "2023-03-28",title: "Maxima", sum: "20€"},
+	{id:7, date: "2023-03-28",title: "Rimi", sum: "20€"}
 ]);
+const getIncomes = async () => {
+	console.log("income func");
+	try{
+		const res = await axios.get("/income/");
+		console.log(res.data.data.incomes);
+		setTasks(res.data.data.incomes);
+	} catch (err){
+		console.log("error!!!");
+		console.log(err);
+	}
+}
+useEffect(() => {
+	getIncomes();
+}, []);
 
-function deleteTask (id) {
+async function deleteTask (id) {
 	swal.fire({
 		title: "Veiksmo patvirtinimas",
 		text: "Ar tikrai norite ištrinti įrašą?",
@@ -32,18 +47,23 @@ function deleteTask (id) {
 		cancelButtonColor: '#243743',
 		confirmButtonText: 'Ištrinti',
 		cancelButtonText: "Atšaukti!"
-
-	  }).then((result) => {
+	  }).then(async (result) => {
 		if (result.isConfirmed) {
 			// užklausa į backend
-
-			// success
-			swal.fire({
-				title: 'Sėkmingai',
-				text: 'Įrašas ištrintas',
-				icon: 'success',
-				confirmButtonColor: '#28b78d',
-			 });
+			try{
+				const res = await axios.delete("/income/"+id);
+				console.log(res);
+				// success
+				swal.fire({
+					title: 'Sėkmingai',
+					text: 'Įrašas ištrintas',
+					icon: 'success',
+					confirmButtonColor: '#28b78d',
+				});
+				getIncomes();
+			  } catch (err){
+				console.log(err);
+			  }
 		  }
 	  });
 	}
@@ -51,10 +71,12 @@ function deleteTask (id) {
 //     setTasks(tasks.filter((item) => item.id !== id));
 // };
 
-const[value,setValue] = useState('')
+const[value,setValue] = useState('');
 
 const filterTask = tasks.filter(taskss =>{
-	return taskss.saltynis.toLocaleLowerCase().includes(value.toLocaleLowerCase()) 
+	const title = taskss.title || ''; // fallback to an empty string if title is undefined or null
+	const lowercaseValue = value ? value.toLocaleLowerCase() : ''; // fallback to an empty string if value is undefined or null
+	return title.toLocaleLowerCase().includes(lowercaseValue);
 })
 
 const keitimas = (id) => {
@@ -73,10 +95,10 @@ let tasks_list = filterTask.map((el) =>{
         <Task
         key={uuidv4()}
 		obj={el}
-        id={el.id}
-        data={el.data}
-        saltynis={el.saltynis}
-		suma={el.suma}
+        id={el._id}
+        // date={el.data}
+        // title={el.title}
+		// sum={el.sum}
 		setEditPajamos={setEditPajamos}
 		keitimas={keitimas}
         deleteTask={deleteTask}
