@@ -13,6 +13,7 @@ import PajamosIstorija from "./Pajamos_istorija/PajamosIstorija";
 
 
 function Pirmas_puslapis() {
+  const { modal_ExpenseModal, setModal_ExpenseModal} = useContext(ContextProvider);
   const { modal_PajamosSuvesti, setModal_PajamosSuvesti } = useContext(ContextProvider);
   return (
     <div className="Pagrindinis-container">
@@ -43,7 +44,7 @@ function Pirmas_puslapis() {
       </div>
       <div className="history-containers">
         <div className="history-container">
-          <button type="button">Įvesti išlaidas</button>
+          <button type="button" onClick={() => setModal_ExpenseModal(true)}>Įvesti išlaidas</button>
           <div className="history-top-line"></div>
           
          <IslaidosIstorija/>

@@ -1,0 +1,29 @@
+.ExpenseModal .boxOptions {
+  color: var(--main-color);
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.ExpenseModal .category {
+  border: none;
+  padding: 8px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  outline: none;
+}
+.ExpenseModal .boxOptions {
+  background-color: var(--dark-color);
+  color: var(--white-color);
+  outline: none;
+  border-radius: 8px;
+  width: 220px;
+  text-align: center;
+  height: 40px;
+}
+.ExpenseModal select {
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+  }
+.ExpenseModal option{
+    background-color: #8a949b;
+}

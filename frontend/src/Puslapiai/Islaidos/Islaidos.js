@@ -4,9 +4,13 @@ import { v4 as uuidv4 } from "uuid";
 import Task from "./Islaidos_funk";
 import swal from 'sweetalert2'
 import '../../index.css';
-import {AiOutlineDown} from "react-icons/ai";
+import ExpenseModalEditing from './ExpenseModalEditing'
 import { MdKeyboardDoubleArrowLeft ,MdKeyboardDoubleArrowRight ,MdOutlineKeyboardArrowRight ,MdKeyboardArrowLeft} from "react-icons/md";
+import { ContextProvider } from "../../App";
 function Islaidos () {
+	const [editExpens, setEditExpens] = useState ({});
+	const [modal_ExpenseModalEditing, setModal_ExpenseModalEditing] = useState(false);
+	const { modal_ExpenseModal, setModal_ExpenseModal} = useContext(ContextProvider);
 	const [tasks,setTasks] = useState([
 		{id:1, data: "2023-03-28",kategorija: "Transportas", pavadinimas: "Remontas", suma: "200€"},
 		{id:2, data: "2023-03-28",kategorija: "Mokesčiai", pavadinimas: "Elektra", suma: "500€"},
@@ -49,6 +53,18 @@ function Islaidos () {
 			return taskss.pavadinimas.toLocaleLowerCase().includes(value.toLocaleLowerCase()) 
 		})
 
+		const editing = (id) => {
+			console.log(id);
+			let item_index; 
+			tasks.forEach((el, index) => {
+				if(el.id == id){
+					item_index = index;
+				}
+			});
+			setEditExpens(tasks[item_index]);
+			setModal_ExpenseModalEditing(true);
+		}
+
 	let tasks_list = filterTask.map((el) =>{
 		return(
 			<Task
@@ -59,6 +75,8 @@ function Islaidos () {
 			kategorija={el.kategorija}
 			pavadinimas={el.pavadinimas}
 			suma={el.suma}
+			setEditExpens = {setEditExpens}
+			editing = {editing}
 			deleteTask={deleteTask}
 			/>
 		);
@@ -68,12 +86,12 @@ function Islaidos () {
 
 	return (
 		<div className='main_back'>	
-
+		<ExpenseModalEditing modal_ExpenseModalEditing={modal_ExpenseModalEditing} setModal_ExpenseModalEditing={setModal_ExpenseModalEditing} editExpens={editExpens} />
 		<div className='container_pajamos'>
 			<h3 className="h3-text">Išlaidos</h3>
 			<div className="block_pajamos">
 				<p className="block_pajamo">Mėnesio išlaidos: <span className='red-eur'>5956€</span></p>
-				<button  className='btn-gren'>Įvesti Išlaidos</button>
+				<button className="btnAdd" onClick={() => setModal_ExpenseModal(true)}>Įvesti išlaidas</button>
 			</div>
 		</div >
 
@@ -101,12 +119,13 @@ function Islaidos () {
 							<li>3</li>
 							<li>4</li>
 							<li>5</li>
-							<li>6</li>
-							<li>7</li>
 							<li><MdOutlineKeyboardArrowRight/></li>
 							<li ><MdKeyboardDoubleArrowRight/></li>
+							
 						</ul>
+						<button className="btn_csv">Eksportuoti .CSV</button>
 					</div>
+					
 				</div>
 
 				<div className="block_filtro">
@@ -134,6 +153,7 @@ function Islaidos () {
 				</div>
 				
 		</div>
+		
 	</div>
 	);
 }

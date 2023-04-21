@@ -1,4 +1,4 @@
-import React, { useState, useContext, createContext } from "react";
+import React, { useState,  createContext } from "react";
 import Navbar from "./Puslapiai/Navbar/Navbar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,20 +11,22 @@ import Pirmas_puslapis from "./Puslapiai/Pagrindinis_puslapis/Pagrindinis_puslap
 import Islaidos from "./Puslapiai/Islaidos/Islaidos";
 import Biudzetas from "./Puslapiai/Biudzetas/Biudzietas";
 import Istorija from "./Puslapiai/Istorija/Istorija";
+/*Modals*/
+import ExpenseModal from "./Puslapiai/Islaidos/ExpenseModal";
 export const ContextProvider = createContext();
 function App() {
+  const [modal_ExpenseModal, setModal_ExpenseModal] = useState(false);
   const [modal_PajamosSuvesti, setModal_PajamosSuvesti] = useState(false);
   return (
     <div className="App">
-      <ContextProvider.Provider value={{ modal_PajamosSuvesti, setModal_PajamosSuvesti}}>
+      <ContextProvider.Provider value={{ modal_PajamosSuvesti, setModal_PajamosSuvesti, modal_ExpenseModal, setModal_ExpenseModal }}>
       <Router>
       <Navbar />
         <Routes>
-          <Route path='/' element={<PajamosSuvesti />} />
+          <Route path='/' element={<><Pirmas_puslapis/> <PajamosSuvesti/> <ExpenseModal/></>} />
           <Route path='/auth' element={<Auth />} />
-          <Route path='/pagrindinis' element={<><Pirmas_puslapis/> <PajamosSuvesti/></>} />
-          <Route path='/pajamos' element={<><Pajamos/> <PajamosSuvesti/> </>}/>
-          <Route path='/islaidos' element={<Islaidos />} />
+          <Route path='/pajamos' element={<><Pajamos/> <PajamosSuvesti/></>}/>
+          <Route path='/islaidos' element={<><Islaidos /> <ExpenseModal/></>} />
           <Route path='/biudzetas' element={<Biudzetas />} />
           {/* <Route path='/admin' element={<Admin />} /> */}
           <Route path='/istorija' element={<Istorija />} />

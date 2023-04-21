@@ -1,14 +1,14 @@
-import React, {useContext } from "react";
+import React, { useContext } from "react";
 import { ContextProvider } from "../../App";
 import axios from "../../axios";
 import { toast } from "react-toastify";
 import { AiOutlineClose, AiFillWarning } from "react-icons/ai";
-import "./Pajamos_dizainas.css";
+import "../Pajamos/Pajamos_dizainas.css";
 import swal from "sweetalert2";
 import { useFormik } from "formik";
-
-function PajamosSuvesti(props) {
-  const { modal_PajamosSuvesti, setModal_PajamosSuvesti } =
+import "./AddExpenseForm.css";
+function ExpenseModal(props) {
+  const { modal_ExpenseModal, setModal_ExpenseModal } =
     useContext(ContextProvider);
   const max_sum = 9999999; // Maksimali suma €
 
@@ -16,6 +16,10 @@ function PajamosSuvesti(props) {
     let selected_time = new Date(values.date).getTime();
     let curr_time = new Date().getTime();
     let errors = {};
+
+    if (!values.category) {
+      errors.category = "Prašome pasirinkti kategoriją";
+    }
 
     if (!values.title) {
       errors.title = "Prašome užpildyti laukelį (Pavadinimas)";
@@ -40,16 +44,17 @@ function PajamosSuvesti(props) {
     }
     return errors;
   };
-
   const onSubmit = async (values) => {
-    try{
-      let {title, date, sum} = values;
+    try {
+      let { title, date, sum } = values;
       const res = await axios.post("/income", {
-        title, date, sum
+        title,
+        date,
+        sum,
       });
       console.log(res);
       //Jei backend grąžina success
-      setModal_PajamosSuvesti(false);
+      setModal_ExpenseModal(false);
       swal.fire({
         title: "Sėkmingai",
         text: res.data.mess,
@@ -57,23 +62,22 @@ function PajamosSuvesti(props) {
         confirmButtonColor: "#28b78d",
       });
       formik.resetForm();
-    } catch (err){
+    } catch (err) {
       console.log(err);
-      toast.error('Klaida');
+      toast.error("Klaida");
     }
   };
 
   const formik = useFormik({
     initialValues: {
+      category: "",
       title: "",
       date: "",
       sum: "",
     },
     validate,
     onSubmit,
-
   });
-
   const handleKeyDown = (event) => {
     if (
       !(
@@ -100,15 +104,18 @@ function PajamosSuvesti(props) {
   };
   // Modal close
   const closeModal = () => {
-    setModal_PajamosSuvesti(false);
+    setModal_ExpenseModal(false);
   };
 
   return (
     <>
-      {modal_PajamosSuvesti ? (
-        <div className="Pajamos-modal-container" onMouseDown={onMouseDown}>
+      {modal_ExpenseModal ? (
+        <div
+          className="Pajamos-modal-container ExpenseModal"
+          onMouseDown={onMouseDown}
+        >
           <div className="modal-content">
-            <h2 className="modal-title">Pridėti pajamas</h2>
+            <h2 className="modal-title">Pridėti išlaidas</h2>
             <span className="modal-close-btn" onClick={() => closeModal()}>
               <AiOutlineClose />
             </span>
@@ -117,6 +124,27 @@ function PajamosSuvesti(props) {
               noValidate
               onSubmit={formik.handleSubmit}
             >
+              <select
+                className="boxOptions"
+                id="category"
+                value={formik.values.category}
+                onChange={formik.handleChange}
+              >
+                <option className="category" value="">
+                  Pasirinkite kategoriją
+                </option>
+                <option value="Transportas">Transportas</option>
+                <option value="Maistas">Maistas</option>
+                <option value="Mokesčiai">Mokesčiai</option>
+                <option value="Laisvalaikis">Laisvalaikis</option>
+                <option value="Parduotuvė">Parduotuvė</option>
+              </select>
+              {formik.touched.category && formik.errors.category ? (
+                <div className="error-mess-box">
+                  <AiFillWarning className="error-mess-icon" />
+                  <span>{formik.errors.category}</span>
+                </div>
+              ) : null}
               <label htmlFor="title">Pavadinimas</label>
               <p>
                 <input
@@ -215,4 +243,4 @@ function PajamosSuvesti(props) {
   );
 }
 
-export default PajamosSuvesti;
+export default ExpenseModal;
