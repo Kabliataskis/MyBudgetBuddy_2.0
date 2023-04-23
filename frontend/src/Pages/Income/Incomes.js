@@ -107,13 +107,13 @@ export default function Incomes() {
   });
 
   return (
-    <div className="main_back">
+    <div className="main_back Incomes">
       <IncomeEdit_Modal
         modal_IncomeEdit={modal_IncomeEdit}
         setModal_IncomeEdit={setModal_IncomeEdit}
         editPajamos={editPajamos}
       />
-      <div className="container_pajamos">
+      <div className="container-pajamos">
         <h3 className="h3-text">Pajamos</h3>
         <div className="block_pajamos">
           <p className="block_pajamo">
@@ -125,7 +125,7 @@ export default function Incomes() {
         </div>
       </div>
 
-      <div className="container_pajamos flex_container">
+      <div className="container-pajamos flex_container">
         <div className="table_main">
           <table>
             <thead>
@@ -139,7 +139,7 @@ export default function Incomes() {
             </thead>
             <tbody>{incomes_list}</tbody>
           </table>
-          <div className="paginacina_container">
+          <div className="pagination-container">
             <ul>
               <li>
                 <MdKeyboardDoubleArrowLeft />
@@ -164,7 +164,7 @@ export default function Incomes() {
           </div>
         </div>
 
-        <div className="block_filtro">
+        <div className="filter-block">
           <h3>Filtravimas</h3>
           <div>
             <form>

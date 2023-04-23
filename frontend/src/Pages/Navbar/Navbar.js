@@ -11,7 +11,7 @@ import logo from "../../Assets/Images/logo.png";
 
 export default function Navbar() {
   return (
-    <>
+    <div className="Navbar">
       <div className="top_nav"></div>
       <nav className="navbar">
         <div className="navbar-logo">
@@ -63,6 +63,6 @@ export default function Navbar() {
           </Link>
         </ul>
       </nav>
-    </>
+    </div>
   );
 }

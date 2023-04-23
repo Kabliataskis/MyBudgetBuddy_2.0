@@ -139,7 +139,7 @@ export default function Expenses() {
         setModal_ExpenseEdit={setModal_ExpenseEdit}
         editExpens={editExpens}
       />
-      <div className="container_pajamos">
+      <div className="container-pajamos">
         <h3 className="h3-text">Išlaidos</h3>
         <div className="block_pajamos">
           <p className="block_pajamo">
@@ -151,7 +151,7 @@ export default function Expenses() {
         </div>
       </div>
 
-      <div className="container_pajamos flex_container">
+      <div className="container-pajamos flex_container">
         <div className="table_main">
           <table>
             <thead>
@@ -166,7 +166,7 @@ export default function Expenses() {
             </thead>
             <tbody>{expenses_list}</tbody>
           </table>
-          <div className="paginacina_container">
+          <div className="pagination-container">
             <ul>
               <li>
                 <MdKeyboardDoubleArrowLeft />
@@ -190,7 +190,7 @@ export default function Expenses() {
           </div>
         </div>
 
-        <div className="block_filtro">
+        <div className="filter-block">
           <h3>Filtravimas</h3>
           <div>
             <form>

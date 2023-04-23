@@ -15,7 +15,7 @@ export default function General() {
   const { setModal_ExpenseAdd } = useContext(ContextProvider);
   const { setModal_IncomeAdd } = useContext(ContextProvider);
   return (
-    <div className="Pagrindinis-container">
+    <main className="General-container General">
       <div className="top-container">
         <div className="stats-containers">
           <div className="stat-container">
@@ -57,6 +57,6 @@ export default function General() {
           <IncomeHistory />
         </div>
       </div>
-    </div>
+    </main>
   );
 }
