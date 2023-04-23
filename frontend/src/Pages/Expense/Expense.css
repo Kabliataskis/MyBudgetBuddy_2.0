@@ -1,0 +1,77 @@
+.btnAdd {
+  font-size: 17px;
+  margin-top: 13px;
+  padding: 7px 25px;
+  background: var(--main-color);
+  border: none;
+  border-radius: 5px;
+  color: var(--white-color);
+  cursor: pointer;
+}
+
+.btnAdd:hover {
+  background: var(--main-color_);
+}
+
+.red-eur {
+  color: var(--red-color);
+}
+
+.btn_csv {
+  background-color: var(--grey-color);
+  border: none;
+  color: var(--dark-color);
+  border-radius: 5px;
+  padding: 5px 20px;
+  font-size: 15px;
+  margin-left: 60px;
+  cursor: pointer;
+}
+
+.btn_csv:hover {
+  background-color: #d2d6d9;
+}
+.dropdown-kategorija {
+  background-color: var(--dark-color);
+  color: var(--white-color);
+  border-radius: 5px;
+  padding: 3px 3px 3px 20px;
+  font-size: 15px;
+  margin-bottom: 25px;
+  border: none;
+  border-right: 10px solid transparent;
+}
+.dropdown-kategorija option {
+  background-color: var(--grey-dark-color);
+}
+
+/*Modal*/
+.ExpenseModal .boxOptions {
+  color: var(--main-color);
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.ExpenseModal .category {
+  border: none;
+  padding: 8px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  outline: none;
+}
+.ExpenseModal .boxOptions {
+  background-color: var(--dark-color);
+  color: var(--white-color);
+  outline: none;
+  border-radius: 8px;
+  width: 220px;
+  text-align: center;
+  height: 40px;
+}
+.ExpenseModal select {
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+.ExpenseModal option {
+  background-color: #8a949b;
+}
