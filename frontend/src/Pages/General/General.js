@@ -41,7 +41,7 @@ export default function General() {
       </div>
       <div className="history-containers">
         <div className="history-container">
-          <button type="button" onClick={() => setModal_ExpenseAdd(true)}>
+          <button className="addBtn" type="button" onClick={() => setModal_ExpenseAdd(true)}>
             Įvesti išlaidas
           </button>
           <div className="history-top-line"></div>
@@ -50,7 +50,7 @@ export default function General() {
         </div>
 
         <div className="history-container">
-          <button type="button" onClick={() => setModal_IncomeAdd(true)}>
+          <button className="addBtn" type="button" onClick={() => setModal_IncomeAdd(true)}>
             Įvesti pajamas
           </button>
           <div className="history-top-line"></div>

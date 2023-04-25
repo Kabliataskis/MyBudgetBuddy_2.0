@@ -8,6 +8,7 @@ import "./Income.css";
 import swal from "sweetalert2";
 import "../../index.css";
 import IncomeEdit_Modal from "./IncomeEditModal.js";
+import IncomeAdd_Modal from "./IncomeAddModal";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
@@ -30,7 +31,7 @@ export default function Incomes() {
   ]);
   const getIncomes = async () => {
     try {
-      const res = await axios.get("/income/");
+      const res = await axios.get("/income?limit=10");
       setIncomes(res.data.data.incomes);
     } catch (err) {
       console.log(err);
@@ -108,6 +109,7 @@ export default function Incomes() {
 
   return (
     <div className="main_back Incomes">
+      <IncomeAdd_Modal getIncomes={getIncomes}/>
       <IncomeEdit_Modal
         modal_IncomeEdit={modal_IncomeEdit}
         setModal_IncomeEdit={setModal_IncomeEdit}

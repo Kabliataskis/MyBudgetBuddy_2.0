@@ -7,7 +7,8 @@ import "./Income.css";
 import swal from "sweetalert2";
 import { useFormik } from "formik";
 
-export default function IncomeAdd_Modal() {
+export default function IncomeAdd_Modal(props) {
+  const {getIncomes} = props;
   const { modal_IncomeAdd, setModal_IncomeAdd } =
     useContext(ContextProvider);
   const max_sum = 9999999; // Maksimali suma €
@@ -57,6 +58,7 @@ export default function IncomeAdd_Modal() {
         confirmButtonColor: "#28b78d",
       });
       formik.resetForm();
+      getIncomes();
     } catch (err){
       console.log(err);
       toast.error('Klaida');

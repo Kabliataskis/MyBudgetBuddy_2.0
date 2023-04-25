@@ -2,8 +2,11 @@
 const Income = require("../models/incomeModel");
 
 exports.getAllIncomes = async (req, res) => {
+  const {limit = 0} = req.query
   try {
-    const allIncomes = await Income.find().sort({ date: -1 });
+    const allIncomes = await Income.find()
+    .sort({ date: -1 })
+    .limit(limit);
 
     res.status(200).json({
       status: "success",
