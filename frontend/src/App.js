@@ -34,7 +34,7 @@ function App() {
               path="/"
               element={
                 <>
-                  <General /> <IncomeAddModal /> <ExpenseAddModal />
+                  <General /> <ExpenseAddModal />
                 </>
               }
             />
@@ -43,7 +43,7 @@ function App() {
               path="/income"
               element={
                 <>
-                  <Income /> <IncomeAddModal />
+                  <Income />
                 </>
               }
             />

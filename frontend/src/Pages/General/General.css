@@ -82,7 +82,7 @@
   padding: 10px 15px;
   font-size: 0.9em;
 }
-.General .history-container button {
+.General .history-container .addBtn {
   width: 50%;
   padding: 10px 15px;
   border: unset;
@@ -92,7 +92,7 @@
   cursor: pointer;
   background-color: var(--dark-color);
 }
-.General .history-container button:hover {
+.General .history-container .addBtn:hover {
   color: var(--grey-color);
 }
 .General .doughnut-chart-container {
