@@ -49,9 +49,6 @@ exports.getAllIncomes = async (req, res) => {
 exports.addIncome = async (req, res) => {
   console.log("new income request");
   try {
-
-
-
     const newIncome = await Income.create({
       user_id: 1,
       title: req.body.title,
