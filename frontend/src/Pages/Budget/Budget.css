@@ -52,10 +52,25 @@
     border-radius: 5px;
   }
   .Budget .center-container{
-    display: flex;
-    justify-content: space-between;
+    /* display: flex;
+    flex-direction: row;
+    justify-content: space-between; */
     background-color: var(--white-color);
     border-radius: 5px;
     font-weight: 600;
     margin: 10px;
+  }
+  .Budget .center-container h2{
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 30px;
+  }
+  .Budget .compares-container{
+    display: flex;
+    flex-direction: column;
+  }
+  .Budget .compare-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
   }
