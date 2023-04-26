@@ -29,5 +29,6 @@ exports.validateIncome = (req, res, next) => {
     } else if (req.body.sum && !/^\d+(\.\d{1,2})?$/.test(req.body.sum)) {
       errors.sum = "Neteisingas formatas. Pvz: 10.21€";
     }
+
     !Object.keys(errors).length ? next() : res.status(500).json({status: "error", data: errors});
   };
