@@ -22,12 +22,6 @@ export default function Incomes() {
 
   const [incomes, setIncomes] = useState([
     { id: 1, date: "2023-03-28", title: "Maxima", sum: "20€" },
-    { id: 2, date: "2023-03-28", title: "Norfa", sum: "20€" },
-    { id: 3, date: "2023-03-28", title: "Lidl", sum: "20€" },
-    { id: 4, date: "2023-03-28", title: "Maxima", sum: "20€" },
-    { id: 5, date: "2023-03-28", title: "Iki", sum: "20€" },
-    { id: 6, date: "2023-03-28", title: "Maxima", sum: "20€" },
-    { id: 7, date: "2023-03-28", title: "Rimi", sum: "20€" },
   ]);
   const getIncomes = async () => {
     try {
@@ -94,7 +88,16 @@ export default function Incomes() {
     setEditPajamos(incomes[item_index]);
     setModal_IncomeEdit(true);
   };
-  let incomes_list = filterIncome.map((el) => {
+
+  const [pageSize, setPageSize] = useState(10); // number of records per page
+  const [currentPage, setCurrentPage] = useState(1); // current page number
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  let incomes_list = filterIncome.slice(startIndex, endIndex).map((el) => {
     return (
       <Income
         key={uuidv4()}
@@ -106,6 +109,7 @@ export default function Incomes() {
       />
     );
   });
+  
 
   return (
     <div className="main_back Incomes">
@@ -142,30 +146,43 @@ export default function Incomes() {
             <tbody>{incomes_list}</tbody>
           </table>
           <div className="pagination-container">
-            <ul>
-              <li>
-                <MdKeyboardDoubleArrowLeft />
-              </li>
-              <li>
-                <MdKeyboardArrowLeft />
-              </li>
-              <li className="select">1</li>
-              <li>2</li>
-              <li>3</li>
-              <li>4</li>
-              <li>5</li>
-              <li>6</li>
-              <li>7</li>
-              <li>
-                <MdOutlineKeyboardArrowRight />
-              </li>
-              <li>
-                <MdKeyboardDoubleArrowRight />
-              </li>
-            </ul>
+          <ul>
+        <li onClick={() => handlePageChange(1)}>
+          <MdKeyboardDoubleArrowLeft  />
+        </li>
+        <li onClick={() => handlePageChange(currentPage===1 ?  currentPage-0 : currentPage-1)}>
+          <MdKeyboardArrowLeft />
+        </li>
+        <li className={currentPage === 1 ? "select" : ""} onClick={() => handlePageChange(1)}>
+          1
+        </li>
+        <li className={currentPage === 2 ? "select" : ""} onClick={() => handlePageChange(2)}>
+          2
+        </li>
+        <li className={currentPage === 3 ? "select" : ""} onClick={() => handlePageChange(3)}>
+          3
+        </li>
+        <li className={currentPage === 4 ? "select" : ""} onClick={() => handlePageChange(4)}>
+          4
+        </li>
+        <li className={currentPage === 5 ? "select" : ""} onClick={() => handlePageChange(5)}>
+          5
+        </li>
+        <li className={currentPage === 6 ? "select" : ""} onClick={() => handlePageChange(6)}>
+          6
+        </li>
+        <li className={currentPage === 7 ? "select" : ""} onClick={() => handlePageChange(7)}>
+          7
+        </li>
+        <li onClick={() => handlePageChange(currentPage===7 ?  currentPage+0 : currentPage+1)}>
+          <MdOutlineKeyboardArrowRight  />
+        </li>
+        <li onClick={() => handlePageChange(7)}>
+          <MdKeyboardDoubleArrowRight />
+        </li>
+      </ul>
           </div>
         </div>
-
         <div className="filter-block">
           <h3>Filtravimas</h3>
           <div>
