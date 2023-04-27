@@ -8,6 +8,7 @@ import "./Income.css";
 import swal from "sweetalert2";
 import "../../index.css";
 import IncomeEdit_Modal from "./IncomeEditModal.js";
+import ReactPaginate from 'react-paginate';
 import IncomeAdd_Modal from "./IncomeAddModal";
 import {
   MdKeyboardDoubleArrowLeft,
@@ -25,7 +26,7 @@ export default function Incomes() {
   ]);
   const getIncomes = async () => {
     try {
-      const res = await axios.get("/income?limit=10");
+      const res = await axios.get("/income?");
       setIncomes(res.data.data.incomes);
     } catch (err) {
       console.log(err);
@@ -146,41 +147,78 @@ export default function Incomes() {
             <tbody>{incomes_list}</tbody>
           </table>
           <div className="pagination-container">
-          <ul>
-        <li onClick={() => handlePageChange(1)}>
-          <MdKeyboardDoubleArrowLeft  />
-        </li>
-        <li onClick={() => handlePageChange(currentPage===1 ?  currentPage-0 : currentPage-1)}>
-          <MdKeyboardArrowLeft />
-        </li>
-        <li className={currentPage === 1 ? "select" : ""} onClick={() => handlePageChange(1)}>
-          1
-        </li>
-        <li className={currentPage === 2 ? "select" : ""} onClick={() => handlePageChange(2)}>
-          2
-        </li>
-        <li className={currentPage === 3 ? "select" : ""} onClick={() => handlePageChange(3)}>
-          3
-        </li>
-        <li className={currentPage === 4 ? "select" : ""} onClick={() => handlePageChange(4)}>
-          4
-        </li>
-        <li className={currentPage === 5 ? "select" : ""} onClick={() => handlePageChange(5)}>
-          5
-        </li>
-        <li className={currentPage === 6 ? "select" : ""} onClick={() => handlePageChange(6)}>
-          6
-        </li>
-        <li className={currentPage === 7 ? "select" : ""} onClick={() => handlePageChange(7)}>
-          7
-        </li>
-        <li onClick={() => handlePageChange(currentPage===7 ?  currentPage+0 : currentPage+1)}>
-          <MdOutlineKeyboardArrowRight  />
-        </li>
-        <li onClick={() => handlePageChange(7)}>
-          <MdKeyboardDoubleArrowRight />
-        </li>
-      </ul>
+  
+          <button
+    disabled={currentPage === 1}
+    onClick={() => setCurrentPage()}
+  >
+    <MdKeyboardArrowLeft />
+    <MdKeyboardDoubleArrowLeft />
+    Ankstesnis
+  </button>
+  <span>
+    {startIndex + 1}-{Math.min(endIndex, filterIncome.length)} iš{" "}
+    {filterIncome.length}
+  </span>
+  <button
+    disabled={endIndex >= filterIncome.length}
+    onClick={() => setCurrentPage(currentPage + 1)}
+  >
+    Kitas
+    <MdOutlineKeyboardArrowRight />
+    <MdKeyboardDoubleArrowRight />
+  </button>
+
+
+  <ul>
+  <li disabled={currentPage === 1} onClick={() => setCurrentPage(1)}>
+   <MdKeyboardDoubleArrowLeft  />
+  </li>
+  <li   onClick={() => setCurrentPage(currentPage===1 ? currentPage-0 : currentPage-1)}>
+  <MdKeyboardArrowLeft />
+  </li>
+
+
+  <li onClick={() => setCurrentPage(currentPage===endIndex ? currentPage-0 : currentPage+1)}>
+   <MdOutlineKeyboardArrowRight />
+  </li>
+  <li   disabled={currentPage === endIndex} onClick={() => setCurrentPage(endIndex)}>
+  <MdKeyboardDoubleArrowRight />
+  </li>
+</ul>
+      {/* //   </li>
+      //   <li onClick={() => handlePageChange(currentPage===1 ?  currentPage-0 : currentPage-1)}>
+      //     <MdKeyboardArrowLeft />
+      //   </li>
+      //   <li className={currentPage === 1 ? "select" : ""} onClick={() => handlePageChange(1)}>
+      //     1
+      //   </li>
+      //   <li className={currentPage === 2 ? "select" : ""} onClick={() => handlePageChange(2)}>
+      //     2
+      //   </li>
+      //   <li className={currentPage === 3 ? "select" : ""} onClick={() => handlePageChange(3)}>
+      //     3
+      //   </li>
+      //   <li className={currentPage === 4 ? "select" : ""} onClick={() => handlePageChange(4)}>
+      //     4
+      //   </li>
+      //   <li className={currentPage === 5 ? "select" : ""} onClick={() => handlePageChange(5)}>
+      //     5
+      //   </li>
+      //   <li className={currentPage === 6 ? "select" : ""} onClick={() => handlePageChange(6)}>
+      //     6
+      //   </li>
+      //   <li className={currentPage === 7 ? "select" : ""} onClick={() => handlePageChange(7)}>
+      //     7
+      //   </li>
+      //   <li onClick={() => handlePageChange(currentPage===7 ?  currentPage+0 : currentPage+1)}>
+      //     <MdOutlineKeyboardArrowRight  />
+      //   </li>
+      //   <li onClick={() => handlePageChange(7)}>
+      //     <MdKeyboardDoubleArrowRight />
+      //   </li>
+      // </ul> */}
+
           </div>
         </div>
         <div className="filter-block">
