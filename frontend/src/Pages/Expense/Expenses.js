@@ -1,6 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Expense from "./Expense";
+import axios from "../../axios";
+import { toast } from "react-toastify";
 import swal from "sweetalert2";
 import ExpenseEditModal from "./ExpenseEditModal";
 import {
@@ -68,31 +70,78 @@ export default function Expenses() {
     },
   ]);
 
-  function deleteExpense(id) {
-    swal
-      .fire({
-        title: "Veiksmo patvirtinimas",
-        text: "Ar tikrai norite ištrinti įrašą?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#d33",
-        cancelButtonColor: "#243743",
-        confirmButtonText: "Ištrinti",
-        cancelButtonText: "Atšaukti!",
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          // užklausa į backend
+  // function deleteExpense(id) {
+  //   swal
+  //     .fire({
+  //       title: "Veiksmo patvirtinimas",
+  //       text: "Ar tikrai norite ištrinti įrašą?",
+  //       icon: "warning",
+  //       showCancelButton: true,
+  //       confirmButtonColor: "#d33",
+  //       cancelButtonColor: "#243743",
+  //       confirmButtonText: "Ištrinti",
+  //       cancelButtonText: "Atšaukti!",
+  //     })
+  //     .then((result) => {
+  //       if (result.isConfirmed) {
+  //         // užklausa į backend
 
-          // success
-          swal.fire({
-            title: "Sėkmingai",
-            text: "Įrašas ištrintas",
-            icon: "success",
-            confirmButtonColor: "#28b78d",
+  //         // success
+  //         swal.fire({
+  //           title: "Sėkmingai",
+  //           text: "Įrašas ištrintas",
+  //           icon: "success",
+  //           confirmButtonColor: "#28b78d",
+  //         });
+  //       }
+  //     });
+
+
+
+  const getExpense = async () => {
+    try {
+      const res = await axios.get("/expense?limit=10");
+      setExpenses(res.data.data.expenses);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getExpense();
+  }, []);
+
+      
+
+      async function deleteExpense(id) {
+        swal
+          .fire({
+            title: "Veiksmo patvirtinimas",
+            text: "Ar tikrai norite ištrinti įrašą?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#243743",
+            confirmButtonText: "Ištrinti",
+            cancelButtonText: "Atšaukti!",
+          })
+          .then(async (result) => {
+            if (result.isConfirmed) {
+              try {
+                const res = await axios.delete("/Expense/" + id);
+                console.log(res);
+                swal.fire({
+                  title: "Sėkmingai",
+                  text: "Įrašas ištrintas",
+                  icon: "success",
+                  confirmButtonColor: "#28b78d",
+                });
+                getExpense();
+              } catch (err) {
+                toast.error(err.response.data.msg);
+              }
+            }
           });
-        }
-      });
+
   }
 
   const [value, setValue] = useState("");

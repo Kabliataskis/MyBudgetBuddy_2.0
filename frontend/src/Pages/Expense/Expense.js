@@ -3,6 +3,7 @@ import { FaTrash, FaPen } from "react-icons/fa";
 import "./Expense.css";
 
 export default function Expense(props) {
+  
   const {
     id,
     data,
