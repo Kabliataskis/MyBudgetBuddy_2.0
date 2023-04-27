@@ -8,6 +8,7 @@ const Register = (props) => {
     name: "",
     email: "",
     password: "",
+    password_repeat: "",
   };
 
   const onSubmit = async (values) => {
@@ -18,6 +19,12 @@ const Register = (props) => {
     let errors = {};
     if (!values.name) {
       errors.name = "Prašome užpildyti laukelį (Slapyvardis)";
+    } else if (values.name.length < 2) {
+      errors.name = "Slapyvardis turi būti min. 2 simbolių!";
+    } else if (values.name.length > 15) {
+      errors.name = "Slapyvardis turi būti max. 15 simbolių!";
+    } else if (!/^[a-zA-Z0-9 ]+$/.test(values.name)) {
+      errors.name = "Slapyvardis turi būti sudarytas tik iš lotyniškų raidžių";
     }
     if (!values.email) {
       errors.email = "Prašome užpildyti laukelį (El. paštas)";
@@ -28,6 +35,16 @@ const Register = (props) => {
     }
     if (!values.password) {
       errors.password = "Prašome užpildyti laukelį (Slaptažodis)";
+    } else if (values.password.length < 6) {
+      errors.password = "Slaptažodis turi būti min. 6 simbolių!";
+    } else if (!/\d/.test(values.password)) {
+      errors.password = "Slaptažodis turi turėti min. 1 skaičių";
+    }
+    if (!values.password_repeat) {
+      errors.password_repeat =
+        "Prašome užpildyti laukelį (Patvirtinti naują slatažodį)";
+    } else if (values.password_repeat != values.password) {
+      errors.password_repeat = "Slaptažodžiai nesutampa";
     }
 
     return errors;
@@ -116,6 +133,34 @@ const Register = (props) => {
               <div className="error">
                 <AiFillWarning className="error-mess-icon" />
                 <span>{formik.errors.password} </span>
+              </div>
+            ) : null}
+          </div>
+        </div>
+
+        <div className="row">
+          <label htmlFor="password_repeat" className="text2">
+            Patvirtinti naują slatažodį
+          </label>
+          <input
+            onChange={formik.handleChange}
+            value={formik.values.password_repeat}
+            onBlur={formik.handleBlur}
+            type="password"
+            placeholder="**********"
+            id="password_repeat"
+            name="password_repeat"
+            className={
+              formik.touched.password_repeat && formik.errors.password_repeat
+                ? "error"
+                : ""
+            }
+          />
+          <div className="form-control2">
+            {formik.touched.password_repeat && formik.errors.password_repeat ? (
+              <div className="error">
+                <AiFillWarning className="error-mess-icon" />
+                <span>{formik.errors.password_repeat} </span>
               </div>
             ) : null}
           </div>
