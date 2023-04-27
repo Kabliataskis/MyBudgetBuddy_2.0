@@ -4,8 +4,7 @@ import "./Expense.css";
 
 export default function Expense(props) {
   const{obj, editExpense, deleteExpense} = props;
-  const {_id, date, title, sum} = obj;
-  let kategorija="eletra";
+  const {_id, category, date, title, sum} = obj;
 
   const formatDate = (date) => {
     date =  new Date(date);
@@ -18,7 +17,7 @@ export default function Expense(props) {
   return (
     <tr>
       <td>{formatDate(date)}</td>
-      <td>{kategorija}</td>
+      <td>{category}</td>
       <td>{title}</td>
       <td className="red-eur">-{sum}€</td>
       <td>

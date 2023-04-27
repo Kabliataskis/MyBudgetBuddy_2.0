@@ -54,6 +54,7 @@ exports.addExpense = async (req, res) => {
 
     const newExpense = await Expense.create({
       user_id: 1,
+      category: req.body.category,
       title: req.body.title,
       sum: req.body.sum,
       date: addTime(req.body.date),

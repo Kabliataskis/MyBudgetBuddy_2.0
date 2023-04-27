@@ -44,8 +44,9 @@ export default function ExpenseAddModal(props) {
   };
   const onSubmit = async (values) => {
     try {
-      let { title, date, sum } = values;
+      let { category, title, date, sum } = values;
       const res = await axios.post("/expense", {
+        category,
         title,
         date,
         sum,
@@ -125,6 +126,7 @@ export default function ExpenseAddModal(props) {
               <select
                 className="boxOptions"
                 id="category"
+                name="category"
                 value={formik.values.category}
                 onChange={formik.handleChange}
               >

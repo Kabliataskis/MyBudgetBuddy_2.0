@@ -7,6 +7,10 @@ const expenseSchema = mongoose.Schema(
             type: Number,
             required: true
         }, 
+        category:{
+            type: String,
+            required: true,
+        },
         title: {
             type: String,
             maxLength: 20,

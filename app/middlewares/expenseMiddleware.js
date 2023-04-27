@@ -4,12 +4,18 @@ exports.validateExpense = (req, res, next) => {
     let curr_time = new Date().getTime();
     let errors = {};
     let max_sum = 9999999;
+     
+   
+
     if (!req.body.title) {
       errors.title = "Prašome užpildyti laukelį (Pavadinimas)";
     } else if (req.body.title.length > 20) {
       errors.title = "Pavadinimo ilgis iki 20 simbolių!";
     }
 
+    // if (!values.category) {
+    //     errors.category = "Prašome pasirinkti kategoriją";
+    // }
     
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/; // Check that the date is in the format "yyyy-mm-dd"
     if (!req.body.date) {
