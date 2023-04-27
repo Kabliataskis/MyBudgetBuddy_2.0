@@ -1,8 +1,10 @@
 import { useFormik } from "formik";
 import { AiFillWarning } from "react-icons/ai";
+import { useAuth } from "../../Context/auth";
 
 export const Login = (props) => {
   const { setShowLogin } = props;
+  const auth = useAuth();
 
   const initialValues = {
     name: "",
@@ -12,6 +14,7 @@ export const Login = (props) => {
 
   const onSubmit = (values) => {
     console.log("Form data", values);
+    auth.login("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDk2NTkyM2I3ZGQ0ZjYxMzQ3OTVmYyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjgyNjI1Mzc3LCJleHAiOjE2ODI3MTE3Nzd9.SDNkOAEZHzMbdRl7Co3WH3QZvIzRoLdH6Ve5cQo32fs");
   };
 
   const validate = (values) => {
