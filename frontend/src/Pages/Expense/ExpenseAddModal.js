@@ -45,7 +45,7 @@ export default function ExpenseAddModal(props) {
   const onSubmit = async (values) => {
     try {
       let { title, date, sum } = values;
-      const res = await axios.post("/income", {
+      const res = await axios.post("/expense", {
         title,
         date,
         sum,

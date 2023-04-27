@@ -70,33 +70,6 @@ export default function Expenses() {
     },
   ]);
 
-  // function deleteExpense(id) {
-  //   swal
-  //     .fire({
-  //       title: "Veiksmo patvirtinimas",
-  //       text: "Ar tikrai norite ištrinti įrašą?",
-  //       icon: "warning",
-  //       showCancelButton: true,
-  //       confirmButtonColor: "#d33",
-  //       cancelButtonColor: "#243743",
-  //       confirmButtonText: "Ištrinti",
-  //       cancelButtonText: "Atšaukti!",
-  //     })
-  //     .then((result) => {
-  //       if (result.isConfirmed) {
-  //         // užklausa į backend
-
-  //         // success
-  //         swal.fire({
-  //           title: "Sėkmingai",
-  //           text: "Įrašas ištrintas",
-  //           icon: "success",
-  //           confirmButtonColor: "#28b78d",
-  //         });
-  //       }
-  //     });
-
-
 
   const getExpense = async () => {
     try {
@@ -112,45 +85,45 @@ export default function Expenses() {
 
       
 
-      async function deleteExpense(id) {
-        swal
-          .fire({
-            title: "Veiksmo patvirtinimas",
-            text: "Ar tikrai norite ištrinti įrašą?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#d33",
-            cancelButtonColor: "#243743",
-            confirmButtonText: "Ištrinti",
-            cancelButtonText: "Atšaukti!",
-          })
-          .then(async (result) => {
-            if (result.isConfirmed) {
-              try {
-                const res = await axios.delete("/Expense/" + id);
-                console.log(res);
-                swal.fire({
-                  title: "Sėkmingai",
-                  text: "Įrašas ištrintas",
-                  icon: "success",
-                  confirmButtonColor: "#28b78d",
-                });
-                getExpense();
-              } catch (err) {
-                toast.error(err.response.data.msg);
-              }
-            }
-          });
+  async function deleteExpense(id) {
+    swal
+      .fire({
+        title: "Veiksmo patvirtinimas",
+        text: "Ar tikrai norite ištrinti įrašą?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#243743",
+        confirmButtonText: "Ištrinti",
+        cancelButtonText: "Atšaukti!",
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            const res = await axios.delete("/Expense/" + id);
+            console.log(res);
+            swal.fire({
+              title: "Sėkmingai",
+              text: "Įrašas ištrintas",
+              icon: "success",
+              confirmButtonColor: "#28b78d",
+            });
+            getExpense();
+          } catch (err) {
+            toast.error(err.response.data.msg);
+          }
+        }
+      });
 
   }
 
   const [value, setValue] = useState("");
 
-  const filterExpense = expenses.filter((el) => {
-    return el.pavadinimas
-      .toLocaleLowerCase()
-      .includes(value.toLocaleLowerCase());
-  });
+  // const filterExpense = expenses.filter((el) => {
+  //   return el.title
+  //     .toLocaleLowerCase()
+  //     .includes(value.toLocaleLowerCase());
+  // });
 
   const editExpense = (id) => {
     console.log(id);
@@ -164,16 +137,17 @@ export default function Expenses() {
     setModal_ExpenseEdit(true);
   };
 
+  const filterExpense = expenses.filter((el) => {
+    const title = el.title || ""; // fallback to an empty string if title is undefined or null
+    const lowercaseValue = value ? value.toLocaleLowerCase() : ""; // fallback to an empty string if value is undefined or null
+    return title.toLocaleLowerCase().includes(lowercaseValue);
+  });
+
   let expenses_list = filterExpense.map((el) => {
     return (
       <Expense
         key={uuidv4()}
         obj={el}
-        id={el.id}
-        data={el.data}
-        kategorija={el.kategorija}
-        pavadinimas={el.pavadinimas}
-        suma={el.suma}
         setEditExpens={setEditExpens}
         editExpense={editExpense}
         deleteExpense={deleteExpense}
