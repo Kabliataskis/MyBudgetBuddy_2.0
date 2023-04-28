@@ -1,6 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Expense from "./Expense";
+import axios from "../../axios";
+import { toast } from "react-toastify";
 import swal from "sweetalert2";
 import ExpenseEditModal from "./ExpenseEditModal";
 import {
@@ -68,7 +70,22 @@ export default function Expenses() {
     },
   ]);
 
-  function deleteExpense(id) {
+
+  const getExpense = async () => {
+    try {
+      const res = await axios.get("/expense?limit=10");
+      setExpenses(res.data.data.expenses);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getExpense();
+  }, []);
+
+      
+
+  async function deleteExpense(id) {
     swal
       .fire({
         title: "Veiksmo patvirtinimas",
@@ -80,28 +97,33 @@ export default function Expenses() {
         confirmButtonText: "Ištrinti",
         cancelButtonText: "Atšaukti!",
       })
-      .then((result) => {
+      .then(async (result) => {
         if (result.isConfirmed) {
-          // užklausa į backend
-
-          // success
-          swal.fire({
-            title: "Sėkmingai",
-            text: "Įrašas ištrintas",
-            icon: "success",
-            confirmButtonColor: "#28b78d",
-          });
+          try {
+            const res = await axios.delete("/Expense/" + id);
+            console.log(res);
+            swal.fire({
+              title: "Sėkmingai",
+              text: "Įrašas ištrintas",
+              icon: "success",
+              confirmButtonColor: "#28b78d",
+            });
+            getExpense();
+          } catch (err) {
+            toast.error(err.response.data.msg);
+          }
         }
       });
+
   }
 
   const [value, setValue] = useState("");
 
-  const filterExpense = expenses.filter((el) => {
-    return el.pavadinimas
-      .toLocaleLowerCase()
-      .includes(value.toLocaleLowerCase());
-  });
+  // const filterExpense = expenses.filter((el) => {
+  //   return el.title
+  //     .toLocaleLowerCase()
+  //     .includes(value.toLocaleLowerCase());
+  // });
 
   const editExpense = (id) => {
     console.log(id);
@@ -115,16 +137,17 @@ export default function Expenses() {
     setModal_ExpenseEdit(true);
   };
 
+  const filterExpense = expenses.filter((el) => {
+    const title = el.title || ""; // fallback to an empty string if title is undefined or null
+    const lowercaseValue = value ? value.toLocaleLowerCase() : ""; // fallback to an empty string if value is undefined or null
+    return title.toLocaleLowerCase().includes(lowercaseValue);
+  });
+
   let expenses_list = filterExpense.map((el) => {
     return (
       <Expense
         key={uuidv4()}
         obj={el}
-        id={el.id}
-        data={el.data}
-        kategorija={el.kategorija}
-        pavadinimas={el.pavadinimas}
-        suma={el.suma}
         setEditExpens={setEditExpens}
         editExpense={editExpense}
         deleteExpense={deleteExpense}
