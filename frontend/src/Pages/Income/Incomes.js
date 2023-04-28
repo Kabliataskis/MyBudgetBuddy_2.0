@@ -92,6 +92,13 @@ export default function Incomes() {
 
   const [pageSize, setPageSize] = useState(10); // number of records per page
   const [currentPage, setCurrentPage] = useState(1); // current page number
+  const totalItems = filterIncome.length;
+  const totalPages = Math.ceil(totalItems / pageSize);
+  const pages = [];
+for (let i = 1; i <= totalPages; i++) {
+  pages.push(i);
+}
+
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const handlePageChange = (pageNumber) => {
@@ -147,42 +154,26 @@ export default function Incomes() {
             <tbody>{incomes_list}</tbody>
           </table>
           <div className="pagination-container">
-  
-          <button
-    disabled={currentPage === 1}
-    onClick={() => setCurrentPage()}
-  >
-    <MdKeyboardArrowLeft />
-    <MdKeyboardDoubleArrowLeft />
-    Ankstesnis
-  </button>
-  <span>
-    {startIndex + 1}-{Math.min(endIndex, filterIncome.length)} iš{" "}
-    {filterIncome.length}
-  </span>
-  <button
-    disabled={endIndex >= filterIncome.length}
-    onClick={() => setCurrentPage(currentPage + 1)}
-  >
-    Kitas
-    <MdOutlineKeyboardArrowRight />
-    <MdKeyboardDoubleArrowRight />
-  </button>
-
-
   <ul>
-  <li disabled={currentPage === 1} onClick={() => setCurrentPage(1)}>
-   <MdKeyboardDoubleArrowLeft  />
-  </li>
-  <li   onClick={() => setCurrentPage(currentPage===1 ? currentPage-0 : currentPage-1)}>
-  <MdKeyboardArrowLeft />
-  </li>
+    <li disabled={currentPage === 1} onClick={() => setCurrentPage(1)}>
+    <MdKeyboardDoubleArrowLeft  />
+    </li>
+    <li   onClick={() => setCurrentPage(currentPage===1 ? currentPage-0 : currentPage-1)}>
+    <MdKeyboardArrowLeft />
+    </li>
+
+    {pages.map(page => (
+    <li className={currentPage === page ? "select" : ""} key={page} onClick={() => setCurrentPage(page)}>
+      {page}
+    </li>
+  ))}
 
 
-  <li onClick={() => setCurrentPage(currentPage===endIndex ? currentPage-0 : currentPage+1)}>
+
+  <li onClick={() => setCurrentPage(endIndex >= filterIncome.length ? currentPage-0 : currentPage+1)}>
    <MdOutlineKeyboardArrowRight />
   </li>
-  <li   disabled={currentPage === endIndex} onClick={() => setCurrentPage(endIndex)}>
+  <li    onClick={() => setCurrentPage(endIndex >= filterIncome.length ? currentPage-0 : totalPages)}>
   <MdKeyboardDoubleArrowRight />
   </li>
 </ul>
