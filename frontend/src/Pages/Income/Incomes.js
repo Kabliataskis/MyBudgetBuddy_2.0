@@ -167,9 +167,7 @@ for (let i = 1; i <= totalPages; i++) {
       {page}
     </li>
   ))}
-
-
-
+  
   <li onClick={() => setCurrentPage(endIndex >= filterIncome.length ? currentPage-0 : currentPage+1)}>
    <MdOutlineKeyboardArrowRight />
   </li>
@@ -177,39 +175,6 @@ for (let i = 1; i <= totalPages; i++) {
   <MdKeyboardDoubleArrowRight />
   </li>
 </ul>
-      {/* //   </li>
-      //   <li onClick={() => handlePageChange(currentPage===1 ?  currentPage-0 : currentPage-1)}>
-      //     <MdKeyboardArrowLeft />
-      //   </li>
-      //   <li className={currentPage === 1 ? "select" : ""} onClick={() => handlePageChange(1)}>
-      //     1
-      //   </li>
-      //   <li className={currentPage === 2 ? "select" : ""} onClick={() => handlePageChange(2)}>
-      //     2
-      //   </li>
-      //   <li className={currentPage === 3 ? "select" : ""} onClick={() => handlePageChange(3)}>
-      //     3
-      //   </li>
-      //   <li className={currentPage === 4 ? "select" : ""} onClick={() => handlePageChange(4)}>
-      //     4
-      //   </li>
-      //   <li className={currentPage === 5 ? "select" : ""} onClick={() => handlePageChange(5)}>
-      //     5
-      //   </li>
-      //   <li className={currentPage === 6 ? "select" : ""} onClick={() => handlePageChange(6)}>
-      //     6
-      //   </li>
-      //   <li className={currentPage === 7 ? "select" : ""} onClick={() => handlePageChange(7)}>
-      //     7
-      //   </li>
-      //   <li onClick={() => handlePageChange(currentPage===7 ?  currentPage+0 : currentPage+1)}>
-      //     <MdOutlineKeyboardArrowRight  />
-      //   </li>
-      //   <li onClick={() => handlePageChange(7)}>
-      //     <MdKeyboardDoubleArrowRight />
-      //   </li>
-      // </ul> */}
-
           </div>
         </div>
         <div className="filter-block">
