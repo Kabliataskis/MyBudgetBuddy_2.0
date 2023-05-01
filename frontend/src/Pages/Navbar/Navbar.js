@@ -60,7 +60,7 @@ export default function Navbar() {
               Istorija
             </li>
           </Link>
-          <Link to="/logout" id="nav_atsijungti">
+          <Link to="/logout" id="nav_atsijungti" onClick={() => auth.logout()}>
             <li className="navbar-item">
               <IoIosLogOut className="nav_icon" /> Atsijungti
             </li>

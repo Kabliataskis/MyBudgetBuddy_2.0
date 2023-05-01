@@ -1,30 +1,48 @@
 import { useFormik } from "formik";
 import { AiFillWarning } from "react-icons/ai";
-
+import { useAuth } from "../../Context/auth";
+import axios from "../../axios";
+import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
 const Register = (props) => {
   const { setShowLogin } = props;
+  const navigate = useNavigate();
+  const auth = useAuth();
 
   const initialValues = {
-    name: "",
+    username: "",
     email: "",
     password: "",
     password_repeat: "",
   };
 
   const onSubmit = async (values) => {
-    console.log("Form data", values);
+    try {
+      let { username, email, password, password_repeat } = values;
+      const res = await axios.post("/auth/register", {
+        username,
+        email,
+        password,
+        password_repeat
+      });
+      formik.resetForm();
+      auth.login(res.data.data.token);
+      navigate('/', {replace: true});
+    } catch (err) {
+      toast.error(err.response.data.mess);
+    }
   };
 
   const validate = (values) => {
     let errors = {};
-    if (!values.name) {
-      errors.name = "Prašome užpildyti laukelį (Slapyvardis)";
-    } else if (values.name.length < 2) {
-      errors.name = "Slapyvardis turi būti min. 2 simbolių!";
-    } else if (values.name.length > 15) {
-      errors.name = "Slapyvardis turi būti max. 15 simbolių!";
-    } else if (!/^[a-zA-Z0-9 ]+$/.test(values.name)) {
-      errors.name = "Slapyvardis turi būti sudarytas tik iš lotyniškų raidžių";
+    if (!values.username) {
+      errors.username = "Prašome užpildyti laukelį (Slapyvardis)";
+    } else if (values.username.length < 2) {
+      errors.username = "Slapyvardis turi būti min. 2 simbolių!";
+    } else if (values.username.length > 15) {
+      errors.username = "Slapyvardis turi būti max. 15 simbolių!";
+    } else if (!/^[a-zA-Z0-9 ]+$/.test(values.username)) {
+      errors.username = "Slapyvardis turi būti sudarytas tik iš lotyniškų raidžių";
     }
     if (!values.email) {
       errors.email = "Prašome užpildyti laukelį (El. paštas)";
@@ -68,19 +86,19 @@ const Register = (props) => {
 
           <input
             onChange={formik.handleChange}
-            value={formik.values.name}
+            value={formik.values.username}
             onBlur={formik.handleBlur}
             type="text"
             placeholder="Vardenis"
-            id="name"
-            name="name"
-            className={formik.touched.name && formik.errors.name ? "error" : ""}
+            id="username"
+            name="username"
+            className={formik.touched.username && formik.errors.username ? "error" : ""}
           />
           <div className="form-control2">
-            {formik.touched.name && formik.errors.name ? (
+            {formik.touched.username && formik.errors.username ? (
               <div className="error">
                 <AiFillWarning className="error-mess-icon" />
-                <span>{formik.errors.name} </span>
+                <span>{formik.errors.username} </span>
               </div>
             ) : null}
           </div>

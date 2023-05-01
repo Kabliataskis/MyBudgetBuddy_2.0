@@ -1,29 +1,42 @@
 import { useFormik } from "formik";
 import { AiFillWarning } from "react-icons/ai";
 import { useAuth } from "../../Context/auth";
+import axios from "../../axios";
+import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
 
 export const Login = (props) => {
   const { setShowLogin } = props;
+  const navigate = useNavigate();
   const auth = useAuth();
 
   const initialValues = {
-    name: "",
+    username: "",
     email: "",
     password: "",
   };
 
-  const onSubmit = (values) => {
-    console.log("Form data", values);
-    auth.login("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDk2NTkyM2I3ZGQ0ZjYxMzQ3OTVmYyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjgyNjI1Mzc3LCJleHAiOjE2ODI3MTE3Nzd9.SDNkOAEZHzMbdRl7Co3WH3QZvIzRoLdH6Ve5cQo32fs");
+  const onSubmit = async (values) => {
+    try {
+      let { username, password } = values;
+      const res = await axios.post("/auth/login", {
+        username,
+        password,
+      });
+      formik.resetForm();
+      auth.login(res.data.data.token);
+      navigate('/', {replace: true});
+    } catch (err) {
+      toast.error(err.response.data.mess);
+    }
   };
 
   const validate = (values) => {
     let errors = {};
-    if (!values.name) {
-      errors.name = "Prašome užpildyti laukelį (Slapyvardis)";
+    if (!values.username) {
+      errors.username = "Prašome užpildyti laukelį (Slapyvardis)";
     }
     if (!values.email) {
-    
     } else if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.text(values.email)
     ) {
@@ -47,25 +60,26 @@ export const Login = (props) => {
       <form onSubmit={formik.handleSubmit}>
         <h2 className="form-title">Prisijungimas</h2>
         <div className="row">
-          <label htmlFor="name" className="text2">
+          <label htmlFor="username" className="text2">
             Slapyvardis
           </label>
           <input
-            className={formik.touched.name && formik.errors.name ? "error" : ""}
+            className={
+              formik.touched.username && formik.errors.username ? "error" : ""
+            }
             onChange={formik.handleChange}
-            value={formik.values.name}
+            value={formik.values.username}
             onBlur={formik.handleBlur}
-            type="name"
+            type="text"
             placeholder="Vardenis"
-            id="name"
-            name="name"
-            
+            id="username"
+            name="username"
           />
           <div className="form-control">
-            {formik.touched.name && formik.errors.name ? (
+            {formik.touched.username && formik.errors.username ? (
               <div className="error">
                 <AiFillWarning className="error-mess-icon" />
-                <span>{formik.errors.name} </span>
+                <span>{formik.errors.username} </span>
               </div>
             ) : null}
           </div>
@@ -86,7 +100,6 @@ export const Login = (props) => {
             placeholder="**********"
             id="password"
             name="password"
-            
           />
           <div className="form-control">
             {formik.touched.password && formik.errors.password ? (

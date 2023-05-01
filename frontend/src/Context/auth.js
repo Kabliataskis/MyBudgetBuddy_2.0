@@ -46,6 +46,14 @@ export const RequireAuth = ({children}) => {
     return children;
 }
 
+export const AuthorizedRedirect = ({children}) => {
+  const auth = useAuth();
+  if(auth.user){
+      return <Navigate to='/' replace/>
+  }
+  return children;
+}
+
 
 
 function isValidBase64(str) {

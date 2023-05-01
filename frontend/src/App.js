@@ -3,7 +3,7 @@ import {Navigate, BrowserRouter as Router, Route, Routes } from "react-router-do
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
-import { AuthProvider, RequireAuth } from "./Context/auth";
+import { AuthProvider, RequireAuth, AuthorizedRedirect } from "./Context/auth";
 import Budget from "./Pages/Budget/Budget";
 import Expense from "./Pages/Expense/Expenses";
 import History from "./Pages/History/History";
@@ -11,13 +11,14 @@ import Auth from "./Pages/Auth/Auth";
 import Navbar from "./Pages/Navbar/Navbar";
 import General from "./Pages/General/General";
 import Income from "./Pages/Income/Incomes";
+import { useAuth } from "./Context/auth";
 /*Modals*/
 import ExpenseAddModal from "./Pages/Expense/ExpenseAddModal";
-import IncomeAddModal from "./Pages/Income/IncomeAddModal";
 export const ContextProvider = createContext();
 function App() {
   const [modal_ExpenseAdd, setModal_ExpenseAdd] = useState(false);
   const [modal_IncomeAdd, setModal_IncomeAdd] = useState(false);
+  const auth = useAuth();
   return (
     <div className="App">
       <AuthProvider>
@@ -41,7 +42,7 @@ function App() {
                   </RequireAuth>
                 }
               />
-              <Route path="/auth" element={<Auth />} />
+               <Route path="/auth" element={<AuthorizedRedirect><Auth /></AuthorizedRedirect>} />
               <Route
                 path="/income"
                 element={
