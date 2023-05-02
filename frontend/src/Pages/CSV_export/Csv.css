@@ -1,0 +1,12 @@
+.csv-btn{
+    padding: 2px;
+    background-color: rgb(224, 228, 231);
+    color: #243743;
+    border-radius: 6px;
+
+}
+
+.csv-btn:hover{
+    color: white;
+    background-color: #8a949b;
+}

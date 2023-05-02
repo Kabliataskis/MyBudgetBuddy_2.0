@@ -5,6 +5,7 @@ import axios from "../../axios";
 import { toast } from "react-toastify";
 import swal from "sweetalert2";
 import ExpenseEditModal from "./ExpenseEditModal";
+import DownloadCSVButton from "../CSV_export/Csv";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
@@ -183,8 +184,8 @@ export default function Expenses() {
                 <th>Kategorija</th>
                 <th>Pavadinimas</th>
                 <th>Suma</th>
-                <th>Redaguoti</th>
-                <th>Pašalinti</th>
+                <th className="csvDel">Redaguoti</th>
+                <th className="csvDel">Pašalinti</th>
               </tr>
             </thead>
             <tbody>{expenses_list}</tbody>
@@ -209,7 +210,9 @@ export default function Expenses() {
                 <MdKeyboardDoubleArrowRight />
               </li>
             </ul>
+            <DownloadCSVButton>
             <button className="btn_csv">Eksportuoti .CSV</button>
+            </DownloadCSVButton>
           </div>
         </div>
 
