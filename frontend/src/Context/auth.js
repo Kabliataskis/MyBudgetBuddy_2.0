@@ -4,12 +4,16 @@ import axios from "../axios";
 const AuthContext = createContext(null)
 
 export const AuthProvider = ({children}) => {
-    const [user, setUser] = useState();
+    let data = JSON.parse(localStorage.getItem("data")) || null;
+    const [user, setUser] = useState(data);
     let token = localStorage.getItem("token") || null;
+
     const getInfo = async () => {
       if(token){        
         try {
         const res = await axios.get("/auth/me");
+        const {username, role} = res.data.data;
+        localStorage.setItem("data", JSON.stringify({username: username, role: role}));
         setUser(res.data.data);
       } catch (err) {
         console.log(err.response.data.mess);
@@ -23,6 +27,8 @@ export const AuthProvider = ({children}) => {
         
     const login = (data) => {
         localStorage.setItem("token", data.token);
+        const {username, role} = data;
+        localStorage.setItem("data", JSON.stringify({username: username, role: role}));
         setUser(data);
     }
     

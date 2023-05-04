@@ -3,8 +3,9 @@ const router = express.Router();
 
 const {getAllIncomes, addIncome, deleteIncome} = require("../controllers/incomeController");
 const {validateIncome} = require("../middlewares/incomeMiddleware");
-router.route("/").get(getAllIncomes);
-router.route("/").post(validateIncome, addIncome);
-router.route("/:id").delete(deleteIncome);
+const {checkAuth} = require("../middlewares/authMiddleware");
+router.route("/").get(checkAuth, getAllIncomes);
+router.route("/").post(checkAuth, validateIncome, addIncome);
+router.route("/:id").delete(checkAuth, deleteIncome);
 
 module.exports = router;
