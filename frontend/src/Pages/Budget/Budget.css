@@ -22,7 +22,8 @@
     gap: 25px;
   }
   .Budget .stats-containers .stat-container,
-  .Budget .compare-container{
+  .Budget .compare-container,
+  .Budget .budget-history{
     padding: 15px;
     color: var(--dark-color);
     background-color: var(--grey-color);
@@ -77,7 +78,6 @@
   }
   .Budget .multiaxis-chart-container{
     width: 800px;
-    transition: 0.2s;
   }
 
   .Budget .inside-container{
@@ -164,4 +164,16 @@
     width: 30%;
     background-color: var(--red-color);
     border-radius: 0px 5px 5px 0px;
+  }
+  .Budget .dropdown-history-month{
+    background-color: var(--dark-color);
+    color: var(--white-color);
+    border-radius: 5px;
+    padding: 3px 3px 3px 20px;
+    font-size: 15px;
+    border: none;
+    border-right: 10px solid transparent;
+  }
+  .Budget .dropdown-history-month option{
+    background-color: var(--grey-dark-color);
   }
