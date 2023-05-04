@@ -8,15 +8,7 @@ import { FaPiggyBank } from "react-icons/fa";
 
 
 export default function ExpenseHistory() {
-  const [expenses, setExpenses] = useState([
-    { id: 1, date: "2023-03-28", title: "Maxima", sum: "20€" },
-    { id: 2, date: "2023-03-28", title: "Norfa", sum: "20€" },
-    { id: 3, date: "2023-03-28", title: "Lidl", sum: "20€" },
-    { id: 4, date: "2023-03-28", title: "Maxima", sum: "20€" },
-    { id: 5, date: "2023-03-28", title: "Iki", sum: "20€" },
-    { id: 6, date: "2023-03-28", title: "Maxima", sum: "20€" },
-    { id: 7, date: "2023-03-28", title: "Rimi", sum: "20€" },
-  ]);
+  const [expenses, setExpenses] = useState([]);
 
   const getExpenses = async () => {
     try {

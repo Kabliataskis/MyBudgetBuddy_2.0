@@ -4,7 +4,7 @@ const incomeSchema = mongoose.Schema(
     {
         user_id: {
             // type: ObjectID,
-            type: Number,
+            type: String,
             required: true
         }, 
         title: {
