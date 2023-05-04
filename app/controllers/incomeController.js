@@ -92,3 +92,24 @@ exports.deleteIncome = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.editIncome = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await incomeModel.updateOne({
+      _id: id,
+    },{
+      user_id: 1,
+      title: req.body.title,
+      sum: req.body.sum,
+      date: addTime(req.body.date),
+    }
+    );
+    res.json({
+      success: true,
+    })
+  } catch(err) {
+    console.log(err);
+    res.status(500).json({ error: error.message });
+  }
+}
