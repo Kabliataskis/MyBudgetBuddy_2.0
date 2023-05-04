@@ -14,10 +14,11 @@ export default function Navbar() {
   const auth = useAuth();
   return (
     <div className="Navbar">
-      <div className="top_nav"></div>
+      <div className="top_nav">{auth.user && auth.user['username']}</div>
       <nav className="navbar">
         <div className="navbar-logo">
           <img src={logo} alt="Logo" />
+          
         </div>
         
           {auth.user && (

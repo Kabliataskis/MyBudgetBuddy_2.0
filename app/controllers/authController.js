@@ -9,26 +9,37 @@ const signToken = (data) => {
 };
 
 exports.authRegister = async (req, res) => {
-  try {
-    const salt = await bcrypt.genSalt(10);
-    const hashedPass = await bcrypt.hash(req.body.password, salt);
-    const newUser = await User.create({
-      username: req.body.username,
-      email: req.body.email,
-      password: hashedPass,
+  const userExists = await User.exists({
+    $or: [{ username: req.body.username }, { email: req.body.email }],
+  });
+  if (userExists) {
+    res.status(401).json({
+      status: "error",
+      mess: "Slapyvardis arba el.paštas užimtas!",
     });
-    const token = signToken({
-      id: newUser._id,
-      role: newUser.role,
-    });
-    const { password, ...data } = newUser._doc;
-    data.token = token;
-    res.status(201).json({
-      status: "success",
-      data: data,
-    });
-  } catch (err) {
-    res.status(500).json({ status: "error", mess: err });
+  } else {
+    try {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPass = await bcrypt.hash(req.body.password, salt);
+      const newUser = await User.create({
+        username: req.body.username,
+        email: req.body.email,
+        password: hashedPass,
+      });
+      const token = signToken({
+        id: newUser._id,
+        username: newUser.username,
+        role: newUser.role,
+      });
+      const { password, ...data } = newUser._doc;
+      data.token = token;
+      res.status(201).json({
+        status: "success",
+        data: data,
+      });
+    } catch (err) {
+      res.status(500).json({ status: "error", mess: err });
+    }
   }
 };
 
@@ -36,24 +47,20 @@ exports.authLogin = async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
     !user &&
-      res
-        .status(400)
-        .json({
-          status: "error",
-          mess: "Neteisingas slapyvardis arba slaptažodis",
-        });
+      res.status(400).json({
+        status: "error",
+        mess: "Neteisingas slapyvardis arba slaptažodis",
+      });
     if (user) {
       const validatePass = await bcrypt.compare(
         req.body.password,
         user.password
       );
       !validatePass &&
-        res
-          .status(400)
-          .json({
-            status: "error",
-            mess: "Neteisingas slapyvardis arba slaptažodis",
-          });
+        res.status(400).json({
+          status: "error",
+          mess: "Neteisingas slapyvardis arba slaptažodis",
+        });
       if (validatePass) {
         // const token = jwt.sign(
         //   {
@@ -73,6 +80,27 @@ exports.authLogin = async (req, res) => {
           data: { ...data, token },
         });
       }
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ status: "error", data: err });
+  }
+};
+
+exports.authMe = async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.userInfo.id });
+    !user &&
+      res.status(400).json({
+        status: "error",
+        mess: "Vartotojas nerastas",
+      });
+    if (user) {
+      const { password, ...data } = user._doc;
+      res.status(200).json({
+        status: "success",
+        data: { ...data },
+      });
     }
   } catch (err) {
     console.log(err);

@@ -24,7 +24,8 @@ export const Login = (props) => {
         password,
       });
       formik.resetForm();
-      auth.login(res.data.data.token);
+      //auth.login(res.data.data.token);
+      auth.login(res.data.data);
       navigate('/', {replace: true});
     } catch (err) {
       toast.error(err.response.data.mess);

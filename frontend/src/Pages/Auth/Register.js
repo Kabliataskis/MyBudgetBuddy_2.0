@@ -26,7 +26,9 @@ const Register = (props) => {
         password_repeat
       });
       formik.resetForm();
-      auth.login(res.data.data.token);
+      // auth.login(res.data.data.token);
+      auth.login(res.data.data);
+      toast.success("Paskyra sėkmingai sukurta");
       navigate('/', {replace: true});
     } catch (err) {
       toast.error(err.response.data.mess);
