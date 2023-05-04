@@ -51,6 +51,11 @@
   position: fixed;
   top: 0;
   background-color: var(--dark-color);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0px 50px;
+  color: var(--white-color);
 }
 
 .Navbar .navbar-logo img {

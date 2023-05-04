@@ -18,57 +18,7 @@ export default function Expenses() {
   const [editExpens, setEditExpens] = useState({});
   const [modal_ExpenseEdit, setModal_ExpenseEdit] = useState(false);
   const { setModal_ExpenseAdd } = useContext(ContextProvider);
-  const [expenses, setExpenses] = useState([
-    {
-      id: 1,
-      data: "2023-03-28",
-      kategorija: "Transportas",
-      pavadinimas: "Remontas",
-      suma: "200€",
-    },
-    {
-      id: 2,
-      data: "2023-03-28",
-      kategorija: "Mokesčiai",
-      pavadinimas: "Elektra",
-      suma: "500€",
-    },
-    {
-      id: 3,
-      data: "2023-03-28",
-      kategorija: "Parduotuvė",
-      pavadinimas: "Norfa",
-      suma: "20€",
-    },
-    {
-      id: 4,
-      data: "2023-03-28",
-      kategorija: "Sveikata",
-      pavadinimas: "Vaistai",
-      suma: "30€",
-    },
-    {
-      id: 5,
-      data: "2023-03-28",
-      kategorija: "Parduotuvė",
-      pavadinimas: "Maxima",
-      suma: "100€",
-    },
-    {
-      id: 6,
-      data: "2023-03-28",
-      kategorija: "Transportas",
-      pavadinimas: "Kuras",
-      suma: "80€",
-    },
-    {
-      id: 7,
-      data: "2023-03-28",
-      kategorija: "Mokesčiai",
-      pavadinimas: "Vanduo",
-      suma: "150€",
-    },
-  ]);
+  const [expenses, setExpenses] = useState([]);
 
 
   const getExpense = async () => {
