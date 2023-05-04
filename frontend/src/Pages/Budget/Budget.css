@@ -1,0 +1,76 @@
+.Budget-container{
+        padding: 20px;
+        max-width: calc(100% - 250px);
+        margin-top: 105px;
+        margin-left: 250px;
+      
+}
+.Budget .top-container {
+    display: flex;
+    justify-content: space-between;
+    /* padding: 25px; */
+    padding: 25px 50px;
+    background-color: var(--white-color);
+    border-radius: 5px;
+    font-weight: 600;
+    margin: 10px;
+  }
+  .Budget .stats-containers {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    gap: 25px;
+  }
+  .Budget .stats-containers .stat-container {
+    padding: 15px;
+    color: var(--dark-color);
+    background-color: var(--grey-color);
+    border-radius: 5px;
+    font-size: 20px;
+  }
+    .Budget .data{
+    width: 250px;
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+  }
+  .Budget .isleista-per-men,
+  .Budget .data {
+    margin-top: 20px;
+  }
+
+  .Budget .doughnut-chart-container {
+    width: 500px;
+    /* margin-right: 100px; */
+    transition: 0.2s;
+  }
+  .Budget .horizontal-bar-container {
+    display: flex;
+    margin-top: 15px;
+    /* width: 400px; */
+    height: 40px;
+    border-radius: 5px;
+  }
+  .Budget .center-container{
+    /* display: flex;
+    flex-direction: row;
+    justify-content: space-between; */
+    background-color: var(--white-color);
+    border-radius: 5px;
+    font-weight: 600;
+    margin: 10px;
+  }
+  .Budget .center-container h2{
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 30px;
+  }
+  .Budget .compares-container{
+    display: flex;
+    flex-direction: column;
+  }
+  .Budget .compare-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
