@@ -96,7 +96,7 @@ exports.deleteIncome = async (req, res) => {
 exports.editIncome = async (req, res) => {
   try {
     const { id } = req.params;
-    await incomeModel.updateOne({
+    await Income.updateOne({
       _id: id,
     },{
       user_id: req.userInfo.id,
