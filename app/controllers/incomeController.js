@@ -99,7 +99,7 @@ exports.editIncome = async (req, res) => {
     await incomeModel.updateOne({
       _id: id,
     },{
-      user_id: 1,
+      user_id: req.userInfo.id,
       title: req.body.title,
       sum: req.body.sum,
       date: addTime(req.body.date),
@@ -110,6 +110,6 @@ exports.editIncome = async (req, res) => {
     })
   } catch(err) {
     console.log(err);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: err.message });
   }
 }
