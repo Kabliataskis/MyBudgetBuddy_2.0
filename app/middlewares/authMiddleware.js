@@ -53,7 +53,7 @@ exports.validateRegister = (req, res, next) => {
   } else if (username.length > 15) {
     errors.username = "Slapyvardis turi būti max. 15 simbolių!";
   } else if (!/^[a-zA-Z0-9 ]+$/.test(username)) {
-    errors.username = "Slapyvardis turi būti sudarytas tik iš lotyniškų raidžių";
+    errors.username = "Slapyvardis turi būti sudarytas tik iš lotyniškų raidžių ir skaičių!";
   }
 
   if (!email) {

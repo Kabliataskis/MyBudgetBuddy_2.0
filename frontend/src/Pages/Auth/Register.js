@@ -43,7 +43,7 @@ const Register = (props) => {
     } else if (values.username.length > 15) {
       errors.username = "Slapyvardis turi būti max. 15 simbolių!";
     } else if (!/^[a-zA-Z0-9 ]+$/.test(values.username)) {
-      errors.username = "Slapyvardis turi būti sudarytas tik iš lotyniškų raidžių";
+      errors.username = "Slapyvardis turi būti sudarytas tik iš lotyniškų raidžių ir skaičių!";
     }
     if (!values.email) {
       errors.email = "Prašome užpildyti laukelį (El. paštas)";
