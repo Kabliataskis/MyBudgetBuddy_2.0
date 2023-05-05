@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 
 
 const incomeRouter = require("./routes/incomeRoutes");
+const authRouter = require("./routes/authRoutes")
 const expenseRouter = require("./routes/expenseRoutes");
 
 dotenv.config();
@@ -18,6 +19,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/v1/income", incomeRouter);
+app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/expense", expenseRouter);
 
 

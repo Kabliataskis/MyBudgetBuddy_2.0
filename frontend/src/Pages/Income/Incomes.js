@@ -22,9 +22,7 @@ export default function Incomes() {
   const [modal_IncomeEdit, setModal_IncomeEdit] = useState(false);
   const { setModal_IncomeAdd } = useContext(ContextProvider);
 
-  const [incomes, setIncomes] = useState([
-    { id: 1, date: "2023-03-28", title: "Maxima", sum: "20€" },
-  ]);
+  const [incomes, setIncomes] = useState([]);
   const getIncomes = async () => {
     try {
       const res = await axios.get("/income?");
