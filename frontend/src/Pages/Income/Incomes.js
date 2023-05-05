@@ -8,13 +8,12 @@ import "./Income.css";
 import swal from "sweetalert2";
 import "../../index.css";
 import IncomeEdit_Modal from "./IncomeEditModal.js";
-import ReactPaginate from 'react-paginate';
+import ReactPaginate from "react-paginate";
 import IncomeAdd_Modal from "./IncomeAddModal";
 
 import DownloadCSVButton from "../CSV_export/Csv";
 
 import { CSVLink } from "react-csv";
-
 
 import {
   MdKeyboardDoubleArrowLeft,
@@ -22,8 +21,6 @@ import {
   MdOutlineKeyboardArrowRight,
   MdKeyboardArrowLeft,
 } from "react-icons/md";
-
-
 
 export default function Incomes() {
   const [editPajamos, setEditPajamos] = useState({});
@@ -104,27 +101,44 @@ export default function Incomes() {
   const pages = [];
   const getPageNumbers = () => {
     let pages = [];
-  
+
     if (totalPages <= 4) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
     } else {
       if (currentPage <= 4) {
-        pages = [1, 2, 3, 4, 5,  "...", totalPages-1 , totalPages];
+        pages = [1, 2, 3, 4, 5, "...", totalPages - 1, totalPages];
       } else if (currentPage > 4 && currentPage < totalPages - 2) {
-        pages = [1, "...", currentPage - 2, currentPage - 1, currentPage, currentPage + 1, "...", totalPages];
+        pages = [
+          1,
+          "...",
+          currentPage - 2,
+          currentPage - 1,
+          currentPage,
+          currentPage + 1,
+          "...",
+          totalPages,
+        ];
       } else {
-        pages = [1, "...", totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+        pages = [
+          1,
+          "...",
+          totalPages - 4,
+          totalPages - 3,
+          totalPages - 2,
+          totalPages - 1,
+          totalPages,
+        ];
       }
     }
-  
+
     return pages;
   };
-  
-for (let i = 1; i <= totalPages; i++) {
-  pages.push(i);
-}
+
+  for (let i = 1; i <= totalPages; i++) {
+    pages.push(i);
+  }
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
@@ -144,11 +158,10 @@ for (let i = 1; i <= totalPages; i++) {
       />
     );
   });
-  
 
   return (
     <div className="main_back Incomes">
-      <IncomeAdd_Modal getIncomes={getIncomes}/>
+      <IncomeAdd_Modal getIncomes={getIncomes} />
       <IncomeEdit_Modal
         modal_IncomeEdit={modal_IncomeEdit}
         setModal_IncomeEdit={setModal_IncomeEdit}
@@ -166,8 +179,6 @@ for (let i = 1; i <= totalPages; i++) {
         </div>
       </div>
 
-      
-
       <div className="container-pajamos flex_container">
         <div className="table_main">
           <table>
@@ -182,44 +193,65 @@ for (let i = 1; i <= totalPages; i++) {
             </thead>
             <tbody>{incomes_list}</tbody>
           </table>
-          
-          <div className="pagination-container">
 
+          <div className="pagination-container no-copy">
+            <ul>
+              <li 
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage(1)}
+              >
+                <MdKeyboardDoubleArrowLeft />
+              </li>
+              <li
+                onClick={() =>
+                  setCurrentPage(
+                    currentPage === 1 ? currentPage - 0 : currentPage - 1
+                  )
+                }
+              >
+                <MdKeyboardArrowLeft />
+              </li>
 
-        
-         
-          
-  <ul>
-    <li disabled={currentPage === 1} onClick={() => setCurrentPage(1)}>
-    <MdKeyboardDoubleArrowLeft  />
-    </li>
-    <li   onClick={() => setCurrentPage(currentPage===1 ? currentPage-0 : currentPage-1)}>
-    <MdKeyboardArrowLeft />
-    </li>
+              {getPageNumbers().map((page, index) => (
+                <li
+                  className={currentPage === page ? "select" : ""}
+                  key={index}
+                  onClick={() => {
+                    if (page === "...") {
+                      
+                      return;
+                    }
+                    setCurrentPage(page);
+                  }}
+                  disabled={page === "..." ? false : true}
+                >
+                  {page}
+                </li>
+              ))}
 
-    {getPageNumbers().map((page, index) => (
-  <li
-    className={currentPage === page ? "select" : ""}
-    key={index}
-    onClick={() => {
-      if (page === "...") {
-        return;
-      }
-      setCurrentPage(page);
-    }}
-  >
-    {page}
-  </li>
-))}
-
-
-  <li onClick={() => setCurrentPage(endIndex >= filterIncome.length ? currentPage-0 : currentPage+1)}>
-   <MdOutlineKeyboardArrowRight />
-  </li>
-  <li    onClick={() => setCurrentPage(endIndex >= filterIncome.length ? currentPage-0 : totalPages)}>
-  <MdKeyboardDoubleArrowRight />
-  </li>
-</ul>
+              <li
+                onClick={() =>
+                  setCurrentPage(
+                    endIndex >= filterIncome.length
+                      ? currentPage - 0
+                      : currentPage + 1
+                  )
+                }
+              >
+                <MdOutlineKeyboardArrowRight />
+              </li>
+              <li
+                onClick={() =>
+                  setCurrentPage(
+                    endIndex >= filterIncome.length
+                      ? currentPage - 0
+                      : totalPages
+                  )
+                }
+              >
+                <MdKeyboardDoubleArrowRight />
+              </li>
+            </ul>
           </div>
         </div>
         <div className="filter-block">
@@ -246,4 +278,3 @@ for (let i = 1; i <= totalPages; i++) {
     </div>
   );
 }
-
