@@ -307,6 +307,11 @@ td {
 .Pajamos-modal-form .error-mess-icon {
   margin-right: 5px;
 }
+.pagination-container ul li:hover{
+  background-color: var(--main-color);
+  color: var(--white-color);
+  cursor: pointer;
+}
 @keyframes modalOpen {
   from {
     opacity: 0;

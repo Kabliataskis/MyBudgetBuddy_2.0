@@ -26,9 +26,8 @@ export default function Expenses() {
       kategorija: "Transportas",
       pavadinimas: "Remontas",
       suma: "200€",
-    }
+    },
   ]);
-
 
   const getExpense = async () => {
     try {
@@ -41,8 +40,6 @@ export default function Expenses() {
   useEffect(() => {
     getExpense();
   }, []);
-
-      
 
   async function deleteExpense(id) {
     swal
@@ -73,7 +70,6 @@ export default function Expenses() {
           }
         }
       });
-
   }
 
   const [value, setValue] = useState("");
@@ -109,27 +105,44 @@ export default function Expenses() {
   const pages = [];
   const getPageNumbers = () => {
     let pages = [];
-  
+
     if (totalPages <= 4) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
     } else {
       if (currentPage <= 4) {
-        pages = [1, 2, 3, 4, 5,  "...", totalPages-1 , totalPages];
+        pages = [1, 2, 3, 4, 5, "...", totalPages - 1, totalPages];
       } else if (currentPage > 4 && currentPage < totalPages - 2) {
-        pages = [1, "...", currentPage - 2, currentPage - 1, currentPage, currentPage + 1, "...", totalPages];
+        pages = [
+          1,
+          "...",
+          currentPage - 2,
+          currentPage - 1,
+          currentPage,
+          currentPage + 1,
+          "...",
+          totalPages,
+        ];
       } else {
-        pages = [1, "...", totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+        pages = [
+          1,
+          "...",
+          totalPages - 4,
+          totalPages - 3,
+          totalPages - 2,
+          totalPages - 1,
+          totalPages,
+        ];
       }
     }
-  
+
     return pages;
   };
-  
-for (let i = 1; i <= totalPages; i++) {
-  pages.push(i);
-}
+
+  for (let i = 1; i <= totalPages; i++) {
+    pages.push(i);
+  }
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
@@ -177,45 +190,69 @@ for (let i = 1; i <= totalPages; i++) {
                 <th>Kategorija</th>
                 <th>Pavadinimas</th>
                 <th>Suma</th>
-                <th className="csvDel">Redaguoti</th>
-                <th className="csvDel">Pašalinti</th>
+                <th>Redaguoti</th>
+                <th>Pašalinti</th>
               </tr>
             </thead>
             <tbody>{expenses_list}</tbody>
           </table>
           <div className="pagination-container">
             <ul>
-            <li disabled={currentPage === 1} onClick={() => setCurrentPage(1)}>
-    <MdKeyboardDoubleArrowLeft  />
-    </li>
-    <li   onClick={() => setCurrentPage(currentPage===1 ? currentPage-0 : currentPage-1)}>
-    <MdKeyboardArrowLeft />
-    </li>
+              <li
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage(1)}
+              >
+                <MdKeyboardDoubleArrowLeft />
+              </li>
+              <li
+                onClick={() =>
+                  setCurrentPage(
+                    currentPage === 1 ? currentPage - 0 : currentPage - 1
+                  )
+                }
+              >
+                <MdKeyboardArrowLeft />
+              </li>
 
-    {getPageNumbers().map((page, index) => (
-  <li
-    className={currentPage === page ? "select" : ""}
-    key={index}
-    onClick={() => {
-      if (page === "...") {
-        return;
-      }
-      setCurrentPage(page);
-    }}
-  >
-    {page}
-  </li>
-))}
+              {getPageNumbers().map((page, index) => (
+                <li
+                  className={currentPage === page ? "select" : ""}
+                  key={index}
+                  onClick={() => {
+                    if (page === "...") {
+                      return;
+                    }
+                    setCurrentPage(page);
+                  }}
+                >
+                  {page}
+                </li>
+              ))}
 
-<li onClick={() => setCurrentPage(endIndex >= filterExpense.length ? currentPage-0 : currentPage+1)}>
-   <MdOutlineKeyboardArrowRight />
-  </li>
-  <li    onClick={() => setCurrentPage(endIndex >= filterExpense.length ? currentPage-0 : totalPages)}>
-  <MdKeyboardDoubleArrowRight />
-  </li>
-</ul>         <DownloadCSVButton>
-            
-            </DownloadCSVButton>
+              <li
+                onClick={() =>
+                  setCurrentPage(
+                    endIndex >= filterExpense.length
+                      ? currentPage - 0
+                      : currentPage + 1
+                  )
+                }
+              >
+                <MdOutlineKeyboardArrowRight />
+              </li>
+              <li
+                onClick={() =>
+                  setCurrentPage(
+                    endIndex >= filterExpense.length
+                      ? currentPage - 0
+                      : totalPages
+                  )
+                }
+              >
+                <MdKeyboardDoubleArrowRight />
+              </li>
+            </ul>
+            <button className="btn_csv">Eksportuoti .CSV</button>
           </div>
         </div>
 
