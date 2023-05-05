@@ -26,7 +26,6 @@ const Register = (props) => {
         password_repeat
       });
       formik.resetForm();
-      // auth.login(res.data.data.token);
       auth.login(res.data.data);
       toast.success("Paskyra sėkmingai sukurta");
       navigate('/', {replace: true});
@@ -55,14 +54,16 @@ const Register = (props) => {
     }
     if (!values.password) {
       errors.password = "Prašome užpildyti laukelį (Slaptažodis)";
-    } else if (values.password.length < 6) {
-      errors.password = "Slaptažodis turi būti min. 6 simbolių!";
+    } else if (values.password.length < 7) {
+      errors.password = "Slaptažodis turi būti min. 7 simbolių!";
+    } else if (values.password.length > 50) {
+      errors.password = "Slaptažodis turi būti max. 50 simbolių!";
     } else if (!/\d/.test(values.password)) {
       errors.password = "Slaptažodis turi turėti min. 1 skaičių";
     }
     if (!values.password_repeat) {
       errors.password_repeat =
-        "Prašome užpildyti laukelį (Patvirtinti naują slatažodį)";
+        "Prašome užpildyti laukelį (Patvirtinti naują slaptažodį)";
     } else if (values.password_repeat != values.password) {
       errors.password_repeat = "Slaptažodžiai nesutampa";
     }

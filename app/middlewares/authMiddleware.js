@@ -65,14 +65,16 @@ exports.validateRegister = (req, res, next) => {
   }
   if (!password) {
     errors.password = "Prašome užpildyti laukelį (Slaptažodis)";
-  } else if (password.length < 6) {
-    errors.password = "Slaptažodis turi būti min. 6 simbolių!";
+  } else if (password.length < 7) {
+    errors.password = "Slaptažodis turi būti min. 7 simbolių!";
+  } else if (password.length > 50) {
+    errors.password = "Slaptažodis turi būti max. 50 simbolių!";
   } else if (!/\d/.test(password)) {
     errors.password = "Slaptažodis turi turėti min. 1 skaičių";
   }
   if (!password_repeat) {
     errors.password_repeat =
-      "Prašome užpildyti laukelį (Patvirtinti naują slatažodį)";
+      "Prašome užpildyti laukelį (Patvirtinti naują slaptažodį)";
   } else if (password_repeat != password) {
     errors.password_repeat = "Slaptažodžiai nesutampa";
   }
