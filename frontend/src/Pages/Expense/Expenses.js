@@ -213,8 +213,8 @@ for (let i = 1; i <= totalPages; i++) {
   <li    onClick={() => setCurrentPage(endIndex >= filterExpense.length ? currentPage-0 : totalPages)}>
   <MdKeyboardDoubleArrowRight />
   </li>
-</ul>
-            <button className="btn_csv">Eksportuoti .CSV</button>
+</ul>         <DownloadCSVButton>
+            
             </DownloadCSVButton>
           </div>
         </div>
