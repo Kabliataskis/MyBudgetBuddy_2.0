@@ -10,12 +10,21 @@ import "../../index.css";
 import IncomeEdit_Modal from "./IncomeEditModal.js";
 import ReactPaginate from 'react-paginate';
 import IncomeAdd_Modal from "./IncomeAddModal";
+
+import DownloadCSVButton from "../CSV_export/Csv";
+
+import { CSVLink } from "react-csv";
+
+
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
   MdOutlineKeyboardArrowRight,
   MdKeyboardArrowLeft,
 } from "react-icons/md";
+
+
+
 export default function Incomes() {
   const [editPajamos, setEditPajamos] = useState({});
   const [modal_IncomeEdit, setModal_IncomeEdit] = useState(false);
@@ -157,6 +166,8 @@ for (let i = 1; i <= totalPages; i++) {
         </div>
       </div>
 
+      
+
       <div className="container-pajamos flex_container">
         <div className="table_main">
           <table>
@@ -171,7 +182,13 @@ for (let i = 1; i <= totalPages; i++) {
             </thead>
             <tbody>{incomes_list}</tbody>
           </table>
+          
           <div className="pagination-container">
+
+
+        
+         
+          
   <ul>
     <li disabled={currentPage === 1} onClick={() => setCurrentPage(1)}>
     <MdKeyboardDoubleArrowLeft  />

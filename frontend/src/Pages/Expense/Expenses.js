@@ -5,6 +5,7 @@ import axios from "../../axios";
 import { toast } from "react-toastify";
 import swal from "sweetalert2";
 import ExpenseEditModal from "./ExpenseEditModal";
+import DownloadCSVButton from "../CSV_export/Csv";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
@@ -176,8 +177,8 @@ for (let i = 1; i <= totalPages; i++) {
                 <th>Kategorija</th>
                 <th>Pavadinimas</th>
                 <th>Suma</th>
-                <th>Redaguoti</th>
-                <th>Pašalinti</th>
+                <th className="csvDel">Redaguoti</th>
+                <th className="csvDel">Pašalinti</th>
               </tr>
             </thead>
             <tbody>{expenses_list}</tbody>
@@ -212,8 +213,9 @@ for (let i = 1; i <= totalPages; i++) {
   <li    onClick={() => setCurrentPage(endIndex >= filterExpense.length ? currentPage-0 : totalPages)}>
   <MdKeyboardDoubleArrowRight />
   </li>
-</ul>
-            <button className="btn_csv">Eksportuoti .CSV</button>
+</ul>         <DownloadCSVButton>
+            
+            </DownloadCSVButton>
           </div>
         </div>
 
