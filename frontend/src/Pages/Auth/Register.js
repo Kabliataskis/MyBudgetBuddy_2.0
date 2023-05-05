@@ -161,7 +161,7 @@ const Register = (props) => {
 
         <div className="row">
           <label htmlFor="password_repeat" className="text2">
-            Patvirtinti naują slatažodį
+            Patvirtinti naują slaptažodį
           </label>
           <input
             onChange={formik.handleChange}
