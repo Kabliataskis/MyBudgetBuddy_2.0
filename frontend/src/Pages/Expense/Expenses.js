@@ -196,7 +196,7 @@ export default function Expenses() {
             </thead>
             <tbody>{expenses_list}</tbody>
           </table>
-          <div className="pagination-container">
+          <div className="pagination-container no-copy">
             <ul>
               <li
                 disabled={currentPage === 1}
