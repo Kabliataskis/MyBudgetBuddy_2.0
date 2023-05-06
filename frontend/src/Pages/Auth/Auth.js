@@ -20,7 +20,7 @@ export const Auth = () => {
             <div className="box box__oportunities">
               <h2>Galimybės</h2>
               <p>
-                Kiekvienas aplikacijos vartotojas turi galimybę realiu laiku patikrinti bendro biudžeto likutį, susipažinti su jį analizuo- jančiais grafikais.
+                Kiekvienas aplikacijos vartotojas turi galimybę realiu laiku patikrinti bendro biudžeto likutį, susipažinti su jį analizuojančiais grafikais.
               </p>
             </div>
             <div className="box box__limits">
