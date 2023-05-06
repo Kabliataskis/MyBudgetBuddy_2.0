@@ -1,11 +1,39 @@
 /* eslint-disable linebreak-style */
-import React from 'react';
+import React, { useState } from 'react';
 import './Budget.css';
 import DoughnutChart from "../General/Charts/DoughnutChart";
 import MultiAxis from "./Charts/Multiaxis_Line_Chart";
+import {FaPen } from "react-icons/fa";
+import {MdDownloadDone } from "react-icons/md";
 
 
 export default function Budget () {
+
+
+	const [limit, setLimit]= useState({
+		amount: 1195,
+		status: false
+	});
+
+	function statusChange() {
+		setLimit(prevLimit => ({
+		  ...prevLimit,
+		  status: !prevLimit.status
+		}));
+	  }
+	//   const [inputLimit, setInputLimit] = useState('');
+
+	//   const handleInputChange = (event) => {
+	// 	setInputLimit(event.target.value);
+	//   };
+	
+	//   const handleButtonClick = () => {
+	// 	setLimit({ ...limit, amount: `${limit.amount}` });
+	// 	setInputLimit('');
+	//   };
+
+
+	
 	return (
 		<div className='Budget-container Budget'>
 			<div className="top-container">
@@ -121,8 +149,20 @@ export default function Budget () {
 						</div>
 					</div>
 					<div className='budget-status'>
-
-					</div>
+						<p>Nustatytas biudžėtas: <span className="green">{limit.amount}</span> € </p>
+						<button onClick={() => 
+							 statusChange(limit)}>{limit.status ? <span className="green"><MdDownloadDone /></span> : <span className="red"><FaPen /></span>}</button>
+					{/* <button onClick={() => 
+							 statusChange(limit)}>{limit.status ? <span><input
+								type='text'
+								 />
+								 <span className="green"><MdDownloadDone /></span></span> 
+							  :  <span><span className="green">{limit.amount}</span>€<span className="red"><FaPen /></span></span>}</button> */}
+						<p>
+						(Vidutiniškai išleidžiama: <span className="red">1045.45 €</span> )
+						</p>
+    				</div>
+					
 				</div>
 			</div>
 		</div>
