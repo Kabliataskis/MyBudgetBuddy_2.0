@@ -140,6 +140,7 @@ export default function IncomeEditModal(props) {
                   type="date"
                   name="date"
                   id="date"
+                  min="2022-01-01"
                   required
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
