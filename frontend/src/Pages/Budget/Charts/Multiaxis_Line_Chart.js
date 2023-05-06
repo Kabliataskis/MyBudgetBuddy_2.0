@@ -52,8 +52,8 @@ export const options = {
 };
 
 const labels = ["2023.01", "2023.02", "2023.03", "2023.04", "2023.05"];
-const data1 = [];
-const data2 = [];
+const data1 = [875, 1032, 1287, 765, 1201];
+const data2 = [924, 1157, 746, 1283, 1089];
 
 export const data = {
   labels,
