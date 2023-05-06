@@ -106,13 +106,13 @@ export default function Expenses() {
   const getPageNumbers = () => {
     let pages = [];
 
-    if (totalPages <= 4) {
+    if (totalPages <= 5) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
     } else {
-      if (currentPage <= 4) {
-        pages = [1, 2, 3, 4, 5, "...", totalPages - 1, totalPages];
+      if (currentPage <= 5) {
+        pages = [1, 2, 3, 4, 5,6, "...", totalPages];
       } else if (currentPage > 4 && currentPage < totalPages - 2) {
         pages = [
           1,
