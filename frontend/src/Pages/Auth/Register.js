@@ -3,10 +3,12 @@ import { AiFillWarning } from "react-icons/ai";
 import { useAuth } from "../../Context/auth";
 import axios from "../../axios";
 import { toast } from "react-toastify";
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
+import { useNavigate, useLocation } from 'react-router-dom';
 const Register = (props) => {
   const { setShowLogin } = props;
   const navigate = useNavigate();
+  const location = useLocation();
   const auth = useAuth();
 
   const initialValues = {
@@ -15,6 +17,15 @@ const Register = (props) => {
     password: "",
     password_repeat: "",
   };
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const type = searchParams.get('type');
+
+    if (type === 'login') {
+      setShowLogin(true);
+    }
+  }, [location.search]);
 
   const onSubmit = async (values) => {
     try {
@@ -76,6 +87,11 @@ const Register = (props) => {
     onSubmit,
     validate,
   });
+
+  const showLoginPage = () => {
+    setShowLogin(true);
+    navigate('?type=login', { replace: true }); // add URL parameter
+  }
 
   return (
     <div className="forma">
@@ -194,7 +210,7 @@ const Register = (props) => {
       <h3 className="textinfo">Jau turite paskyrą ?</h3>
 
       <button
-        onClick={() => setShowLogin(true)}
+        onClick={() => showLoginPage()}
         className="btn2"
         type="submit"
         variant="contained"
