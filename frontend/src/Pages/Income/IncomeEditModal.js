@@ -1,12 +1,13 @@
 /* eslint-disable linebreak-style */
-import React from "react";
+import React, { useEffect } from "react";
 import { AiOutlineClose, AiFillWarning } from "react-icons/ai";
 import "./Income.css";
+import axios from "../../axios";
 import swal from "sweetalert2";
 import { useFormik } from "formik";
 
 export default function IncomeEditModal(props) {
-  const {modal_IncomeEdit, setModal_IncomeEdit, editPajamos} = props;
+  const {modal_IncomeEdit, setModal_IncomeEdit, editPajamos, editItem} = props;
   const max_amount = 9999999; // Maksimali suma €
   console.log(editPajamos);
   const validate = (values) => {
@@ -43,7 +44,7 @@ export default function IncomeEditModal(props) {
 
   const onSubmit = (values) => {
     // Užklausa į backend
-
+    console.log(editItem);
     // Jei backend grąžina success
     setModal_IncomeEdit(false);
     swal.fire({
@@ -54,6 +55,7 @@ export default function IncomeEditModal(props) {
     });
     formik.resetForm();
   };
+
 
 
   const formik = useFormik({  
