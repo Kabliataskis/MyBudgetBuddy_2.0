@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 import { AuthProvider, RequireAuth, AuthorizedRedirect } from "./Context/auth";
+import Admin from "./Pages/Admin/Admin";
 import Budget from "./Pages/Budget/Budget";
 import Expense from "./Pages/Expense/Expenses";
 import History from "./Pages/History/History";
@@ -67,7 +68,7 @@ function App() {
                   </RequireAuth>
                 }
               />
-              {/* <Route path='/admin' element={<RequireAuth><Admin /></RequireAuth>} /> */}
+              <Route path='/Admin' element={<RequireAuth><Admin /></RequireAuth>} />
               <Route
                 path="/history"
                 element={

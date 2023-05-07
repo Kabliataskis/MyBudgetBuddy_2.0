@@ -1,0 +1,52 @@
+.container-admin-nav {
+    background-color: var(--white-color);
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    color: var(--dark-color);
+  }
+
+
+  .block_pajamos {
+    display: flex;
+    margin-left: 60px;
+    align-items: center;
+  }
+  
+  .block_pajamo {
+    background: var(--grey-color);
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin: 15px 40px 0 0px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .Admin-nav-items-container{
+    display: flex;
+    gap: 25px;
+    margin: 10px 40px;
+  }
+  .Admin-nav-item{
+    background-color: var(--grey-color);
+    color: var(--dark-color);
+    padding: 15px 100px;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: 500;
+    transition: 0.2s;
+  }
+  .Admin-nav-item:hover{
+    cursor: pointer;
+    background-color: var(--dark-color);
+    color: var(--white-color);
+  }
+  .Admin-nav-item.selected{
+    color: var(--white-color);
+    background-color: var(--dark-color);
+  }
+  .Admin-table-img{
+    width: 32px;
+    height: 32px;
+  }
