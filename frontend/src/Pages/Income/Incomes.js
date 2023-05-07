@@ -11,9 +11,7 @@ import IncomeEdit_Modal from "./IncomeEditModal.js";
 import ReactPaginate from "react-paginate";
 import IncomeAdd_Modal from "./IncomeAddModal";
 
-import DownloadCSVButton from "../CSV_export/Csv";
 
-import { CSVLink } from "react-csv";
 
 import {
   MdKeyboardDoubleArrowLeft,
