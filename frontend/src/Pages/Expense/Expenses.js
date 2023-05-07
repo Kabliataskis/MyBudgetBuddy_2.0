@@ -252,7 +252,7 @@ export default function Expenses() {
                 <MdKeyboardDoubleArrowRight />
               </li>
             </ul>
-            <button className="btn_csv">Eksportuoti .CSV</button>
+            <DownloadCSVButton />
           </div>
         </div>
 
