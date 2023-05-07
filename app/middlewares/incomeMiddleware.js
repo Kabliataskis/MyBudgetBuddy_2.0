@@ -2,6 +2,7 @@
 exports.validateIncome = (req, res, next) => {
     let selected_time = new Date(req.body.date).getTime();
     let curr_time = new Date().getTime();
+    const min = new Date(2022, 1, 1);
     let errors = {};
     let max_sum = 9999999;
     if (!req.body.title) {
@@ -16,6 +17,8 @@ exports.validateIncome = (req, res, next) => {
       errors.date = "Prašome užpildyti laukelį (Data)";
     } else if (selected_time > curr_time) {
       errors.date = "Data negali būti vėlesnė nei ši diena";
+    }else if (selected_time<min){
+      errors.date = "Data negali būti anktesne";
     }else if (!dateRegex.test(req.body.date)) {
       errors.date = "Neteisingas datos formatas. Pvz: 2023-04-20";
     }
