@@ -12,6 +12,7 @@ export default function IncomeEditModal(props) {
   const validate = (values) => {
     let selected_time = new Date(values.date).getTime();
     let curr_time = new Date().getTime();
+    const min = new Date(2022, 1, 1);
     let errors = {};
 
     if (!values.title) {
@@ -24,6 +25,8 @@ export default function IncomeEditModal(props) {
       errors.date = "Prašome užpildyti laukelį (Data)";
     } else if (selected_time > curr_time) {
       errors.date = "Data negali būti vėlesnė nei ši diena";
+    }else if (selected_time<min){
+      errors.date = "Data negali būti anktesne";
     }
 
     if (!values.amount) {
