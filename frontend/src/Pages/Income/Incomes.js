@@ -83,13 +83,15 @@ export default function Incomes() {
     //     item_index = index;
     //   }
     // });
-    try {
-      const res = await axios.get("/income/"+id);
-      setEditItem(res.data);
-      console.log(res.data);
-    } catch (err) {
-      console.log(err);
-    }
+
+    // try {
+    //   const res = await axios.get("/income/"+id);
+    //   setEditItem(res.data);
+    //   // console.log(res.data);
+    // } catch (err) {
+    //   console.log(err);
+    // }
+    setEditItem(id);
     // setEditPajamos(incomes[item_index]);
     setModal_IncomeEdit(true);
   };
@@ -151,6 +153,7 @@ for (let i = 1; i <= totalPages; i++) {
         modal_IncomeEdit={modal_IncomeEdit}
         setModal_IncomeEdit={setModal_IncomeEdit}
         editPajamos={editPajamos}
+        getIncomes={getIncomes}
       />
       <div className="container-pajamos">
         <h3 className="h3-text">Pajamos</h3>

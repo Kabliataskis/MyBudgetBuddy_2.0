@@ -1,13 +1,14 @@
 /* eslint-disable linebreak-style */
 import React, { useEffect } from "react";
 import { AiOutlineClose, AiFillWarning } from "react-icons/ai";
+import { toast } from "react-toastify";
 import "./Income.css";
 import axios from "../../axios";
 import swal from "sweetalert2";
 import { useFormik } from "formik";
 
 export default function IncomeEditModal(props) {
-  const {modal_IncomeEdit, setModal_IncomeEdit, editPajamos, editItem} = props;
+  const {modal_IncomeEdit, setModal_IncomeEdit, editPajamos, editItem, getIncomes} = props;
   const max_amount = 9999999; // Maksimali suma €
   console.log(editPajamos);
   const validate = (values) => {
@@ -42,20 +43,66 @@ export default function IncomeEditModal(props) {
     return errors;
   };
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values) => {
     // Užklausa į backend
-    console.log(editItem);
+    // console.log(editItem);
     // Jei backend grąžina success
-    setModal_IncomeEdit(false);
-    swal.fire({
-      title: "Sėkmingai",
-      text: "Įrašas pakeistas",
-      icon: "success",
-      confirmButtonColor: "#28b78d",
-    });
-    formik.resetForm();
+    try{
+      let {title, date, amount} = values;
+      let sum = amount;
+      const res = await axios.patch("/income/"+editItem, {
+        title, date, sum
+      });
+      console.log(res);
+      //Jei backend grąžina success
+      setModal_IncomeEdit(false);
+      getIncomes();
+      swal.fire({
+        title: "Sėkmingai",
+        text: "Įrašas pakeistas",
+        icon: "success",
+        confirmButtonColor: "#28b78d",
+      });
+      formik.resetForm();
+    } catch (err){
+      console.log(err);
+      toast.error('Klaida');
+    }
+
+
+    // formik.resetForm();
   };
 
+
+  const formatDate = (date) => {
+    date =  new Date(date);
+    let m = String(date.getMonth() + 1).padStart(2, '0'); // month with leading zero
+    let d = String(date.getDate()).padStart(2, '0'); // day with leading zero
+    let y = date.getFullYear()  // year
+    return `${y}-${m}-${d}`;
+}
+
+  useEffect(() => {
+    const getItem = async () => {
+      if(editItem){
+        try {
+          const res = await axios.get("/income/"+editItem);
+          console.log(res.data);
+          // formik.values.title = res.data.title;
+          formik.setFieldValue("title", res.data.title);
+          formik.setFieldValue("date", formatDate(res.data.date));
+          formik.setFieldValue("amount", res.data.sum);
+          // formik.values.date = date;
+          // formik.values.amount = sum;
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    }
+    getItem();
+    // setDefValues(editItem.title);
+    // formik.values.title = editItem.title;
+  }, [editItem]);
 
 
   const formik = useFormik({  
