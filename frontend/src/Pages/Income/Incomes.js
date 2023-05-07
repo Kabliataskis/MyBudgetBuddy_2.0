@@ -17,7 +17,7 @@ import {
   MdKeyboardArrowLeft,
 } from "react-icons/md";
 export default function Incomes() {
-  const [editItem, setEditItem] = useState();
+  const [editId, setEditId] = useState();
   const [editPajamos, setEditPajamos] = useState({});
   const [modal_IncomeEdit, setModal_IncomeEdit] = useState(false);
   const { setModal_IncomeAdd } = useContext(ContextProvider);
@@ -76,23 +76,7 @@ export default function Incomes() {
 
   const editIncome = async (id) => {
     console.log(id);
-    // setEditItem(id);
-    // let item_index;
-    // incomes.forEach((el, index) => {
-    //   if (el.id == id) {
-    //     item_index = index;
-    //   }
-    // });
-
-    // try {
-    //   const res = await axios.get("/income/"+id);
-    //   setEditItem(res.data);
-    //   // console.log(res.data);
-    // } catch (err) {
-    //   console.log(err);
-    // }
-    setEditItem(id);
-    // setEditPajamos(incomes[item_index]);
+    setEditId(id);
     setModal_IncomeEdit(true);
   };
 
@@ -149,7 +133,7 @@ for (let i = 1; i <= totalPages; i++) {
     <div className="main_back Incomes">
       <IncomeAdd_Modal getIncomes={getIncomes}/>
       <IncomeEdit_Modal
-        editItem={editItem}
+        editId={editId}
         modal_IncomeEdit={modal_IncomeEdit}
         setModal_IncomeEdit={setModal_IncomeEdit}
         editPajamos={editPajamos}

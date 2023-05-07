@@ -8,7 +8,7 @@ import swal from "sweetalert2";
 import { useFormik } from "formik";
 
 export default function IncomeEditModal(props) {
-  const {modal_IncomeEdit, setModal_IncomeEdit, editPajamos, editItem, getIncomes} = props;
+  const {modal_IncomeEdit, setModal_IncomeEdit, editPajamos, editId, getIncomes} = props;
   const max_amount = 9999999; // Maksimali suma €
   console.log(editPajamos);
   const validate = (values) => {
@@ -45,12 +45,10 @@ export default function IncomeEditModal(props) {
 
   const onSubmit = async (values) => {
     // Užklausa į backend
-    // console.log(editItem);
-    // Jei backend grąžina success
     try{
       let {title, date, amount} = values;
       let sum = amount;
-      const res = await axios.patch("/income/"+editItem, {
+      const res = await axios.patch("/income/"+editId, {
         title, date, sum
       });
       console.log(res);
@@ -68,9 +66,6 @@ export default function IncomeEditModal(props) {
       console.log(err);
       toast.error('Klaida');
     }
-
-
-    // formik.resetForm();
   };
 
 
@@ -84,25 +79,20 @@ export default function IncomeEditModal(props) {
 
   useEffect(() => {
     const getItem = async () => {
-      if(editItem){
+      if(editId){
         try {
-          const res = await axios.get("/income/"+editItem);
+          const res = await axios.get("/income/"+editId);
           console.log(res.data);
-          // formik.values.title = res.data.title;
           formik.setFieldValue("title", res.data.title);
           formik.setFieldValue("date", formatDate(res.data.date));
           formik.setFieldValue("amount", res.data.sum);
-          // formik.values.date = date;
-          // formik.values.amount = sum;
         } catch (err) {
           console.log(err);
         }
       }
     }
     getItem();
-    // setDefValues(editItem.title);
-    // formik.values.title = editItem.title;
-  }, [editItem]);
+  }, [editId]);
 
 
   const formik = useFormik({  
