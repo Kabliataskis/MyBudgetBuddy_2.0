@@ -6,11 +6,13 @@ const userSchema = mongoose.Schema(
             type: String,
             minLength: 2,
             maxLength: 15,
+            trim: true,
             required: true,
             unique: true
         },
         email: {
             type: String,
+            trim: true,
             required: true,
             unique: true
         },
@@ -27,5 +29,13 @@ const userSchema = mongoose.Schema(
     },
     {timestamps: true}
 );
+
+// pre-save middleware to remove all whitespace characters from the name field
+userSchema.pre('save', function(next) {
+    if (this.isModified('username')) {
+      this.username = this.username.replace(/\s/g, '');
+    }
+    next();
+  });
 
 module.exports = mongoose.model("user", userSchema);

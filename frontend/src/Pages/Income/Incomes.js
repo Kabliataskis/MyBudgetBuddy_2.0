@@ -8,21 +8,16 @@ import "./Income.css";
 import swal from "sweetalert2";
 import "../../index.css";
 import IncomeEdit_Modal from "./IncomeEditModal.js";
-import ReactPaginate from "react-paginate";
+import ReactPaginate from 'react-paginate';
 import IncomeAdd_Modal from "./IncomeAddModal";
-
-import DownloadCSVButton from "../CSV_export/Csv";
-
-import { CSVLink } from "react-csv";
-
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
   MdOutlineKeyboardArrowRight,
   MdKeyboardArrowLeft,
 } from "react-icons/md";
-
 export default function Incomes() {
+  const [editId, setEditId] = useState();
   const [editPajamos, setEditPajamos] = useState({});
   const [modal_IncomeEdit, setModal_IncomeEdit] = useState(false);
   const { setModal_IncomeAdd } = useContext(ContextProvider);
@@ -70,9 +65,6 @@ export default function Incomes() {
         }
       });
   }
-  // const deleteTask = (id) =>{
-  //     setTasks(tasks.filter((item) => item.id !== id));
-  // };
 
   const [value, setValue] = useState("");
 
@@ -82,15 +74,9 @@ export default function Incomes() {
     return title.toLocaleLowerCase().includes(lowercaseValue);
   });
 
-  const editIncome = (id) => {
+  const editIncome = async (id) => {
     console.log(id);
-    let item_index;
-    incomes.forEach((el, index) => {
-      if (el.id == id) {
-        item_index = index;
-      }
-    });
-    setEditPajamos(incomes[item_index]);
+    setEditId(id);
     setModal_IncomeEdit(true);
   };
 
@@ -102,6 +88,7 @@ export default function Incomes() {
   const getPageNumbers = () => {
     let pages = [];
 
+  
     if (totalPages <= 4) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
@@ -120,24 +107,16 @@ export default function Incomes() {
           totalPages,
         ];
       } else {
-        pages = [
-          1,
-          "...",
-          totalPages - 4,
-          totalPages - 3,
-          totalPages - 2,
-          totalPages - 1,
-          totalPages,
-        ];
+        pages = [1, "...", totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
       }
     }
-
+  
     return pages;
   };
-
-  for (let i = 1; i <= totalPages; i++) {
-    pages.push(i);
-  }
+  
+for (let i = 1; i <= totalPages; i++) {
+  pages.push(i);
+}
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
@@ -157,14 +136,17 @@ export default function Incomes() {
       />
     );
   });
+  
 
   return (
     <div className="main_back Incomes">
-      <IncomeAdd_Modal getIncomes={getIncomes} />
+      <IncomeAdd_Modal getIncomes={getIncomes}/>
       <IncomeEdit_Modal
+        editId={editId}
         modal_IncomeEdit={modal_IncomeEdit}
         setModal_IncomeEdit={setModal_IncomeEdit}
         editPajamos={editPajamos}
+        getIncomes={getIncomes}
       />
       <div className="container-pajamos">
         <h3 className="h3-text">Pajamos</h3>
@@ -192,65 +174,38 @@ export default function Incomes() {
             </thead>
             <tbody>{incomes_list}</tbody>
           </table>
+          <div className="pagination-container">
+  <ul>
+    <li disabled={currentPage === 1} onClick={() => setCurrentPage(1)}>
+    <MdKeyboardDoubleArrowLeft  />
+    </li>
+    <li   onClick={() => setCurrentPage(currentPage===1 ? currentPage-0 : currentPage-1)}>
+    <MdKeyboardArrowLeft />
+    </li>
 
-          <div className="pagination-container no-copy">
-            <ul>
-              <li 
-                disabled={currentPage === 1}
-                onClick={() => setCurrentPage(1)}
-              >
-                <MdKeyboardDoubleArrowLeft />
-              </li>
-              <li
-                onClick={() =>
-                  setCurrentPage(
-                    currentPage === 1 ? currentPage - 0 : currentPage - 1
-                  )
-                }
-              >
-                <MdKeyboardArrowLeft />
-              </li>
+    {getPageNumbers().map((page, index) => (
+  <li
+    className={currentPage === page ? "select" : ""}
+    key={index}
+    onClick={() => {
+      if (page === "...") {
+        return;
+      }
+      setCurrentPage(page);
+    }}
+  >
+    {page}
+  </li>
+))}
 
-              {getPageNumbers().map((page, index) => (
-                <li
-                  className={currentPage === page ? "select" : ""}
-                  key={index}
-                  onClick={() => {
-                    if (page === "...") {
-                      
-                      return;
-                    }
-                    setCurrentPage(page);
-                  }}
-                  disabled={page === "..." ? false : true}
-                >
-                  {page}
-                </li>
-              ))}
 
-              <li
-                onClick={() =>
-                  setCurrentPage(
-                    endIndex >= filterIncome.length
-                      ? currentPage - 0
-                      : currentPage + 1
-                  )
-                }
-              >
-                <MdOutlineKeyboardArrowRight />
-              </li>
-              <li
-                onClick={() =>
-                  setCurrentPage(
-                    endIndex >= filterIncome.length
-                      ? currentPage - 0
-                      : totalPages
-                  )
-                }
-              >
-                <MdKeyboardDoubleArrowRight />
-              </li>
-            </ul>
+  <li onClick={() => setCurrentPage(endIndex >= filterIncome.length ? currentPage-0 : currentPage+1)}>
+   <MdOutlineKeyboardArrowRight />
+  </li>
+  <li    onClick={() => setCurrentPage(endIndex >= filterIncome.length ? currentPage-0 : totalPages)}>
+  <MdKeyboardDoubleArrowRight />
+  </li>
+</ul>
           </div>
         </div>
         <div className="filter-block">
@@ -277,3 +232,4 @@ export default function Incomes() {
     </div>
   );
 }
+
