@@ -7,6 +7,7 @@ import swal from "sweetalert2";
 import { useFormik } from "formik";
 import "./Expense.css";
 export default function ExpenseAddModal(props) {
+  const {getExpense} = props;
   const { modal_ExpenseAdd, setModal_ExpenseAdd } = useContext(ContextProvider);
   const max_sum = 9999999; // Maksimali suma €
 
@@ -64,6 +65,7 @@ export default function ExpenseAddModal(props) {
         confirmButtonColor: "#28b78d",
       });
       formik.resetForm();
+      getExpense()
     } catch (err) {
       console.log(err);
       toast.error("Klaida");

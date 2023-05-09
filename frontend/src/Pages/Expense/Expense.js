@@ -24,7 +24,7 @@ export default function Expense(props) {
         <button
           className="btn_change"
           onClick={() => {
-            editExpense(_id);
+          editExpense(_id);
           }}
         >
           <FaPen />
