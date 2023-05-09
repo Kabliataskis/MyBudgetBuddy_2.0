@@ -69,36 +69,36 @@ export default function Budget () {
 				<h2>Pajamų ir išlaidų palyginimas</h2>
 				<div className='compares-container'>
 					<div className='inside-container'>
-						<div className="compare-container from">
-							<p>
-							nuo:
-							</p>
-							<select
-								className="dropdown-month"
-								name="month"
-								id="month"
-							>
-								<option value="now">Šis men.</option>
-								<option value="2023-04">04 men.</option>
-								<option value="2023-03">03 men.</option>
-								<option value="2023-02">02 men.</option>
-							<option value="2023-01">01 men.</option>
-							</select>
-						</div>	
 						<div className="compare-container until">
 							<p>
-							iki: 
+							Iki:
 							</p>
 							<select
 								className="dropdown-month"
 								name="month"
 								id="month"
 							>
-								<option value="now">Šis men.</option>
-								<option value="2023-04">04 men.</option>
-								<option value="2023-03">03 men.</option>
-								<option value="2023-02">02 men.</option>
-							<option value="2023-01">01 men.</option>
+								<option value="now">2023.05</option>
+								<option value="2023-04">2023.04</option>
+								<option value="2023-03">2023.03</option>
+								<option value="2023-02">2023.02</option>
+							<option value="2023-01">2023.01</option>
+							</select>
+						</div>	
+						<div className="compare-container from">
+							<p>
+							Nuo:
+							</p>
+							<select
+								className="dropdown-month"
+								name="month"
+								id="month"
+							>
+								<option value="now">2023.05</option>
+								<option value="2023-04">2023.04</option>
+								<option value="2023-03">2023.03</option>
+								<option value="2023-02">2023.02</option>
+							<option value="2023-01">2023.01</option>
 							</select>
 						</div>
 					</div>
@@ -117,11 +117,12 @@ export default function Budget () {
 						id="category"		
 						>
 							<option value="">Pasirinkti kategorija:</option>
-							<option value="all">Bendrai</option>
-							<option value="Shop">Parduotuvė</option>
+							<option value="all">Bendras</option>
 							<option value="transport">Transportas</option>
 							<option value="bills">Mokesčiai</option>
+							
 							<option value="health">Sveikata</option>
+							<option value="Shop">Parduotuvė</option>
 						</select>	
 					</div>
 					<div className='budget-category'>
