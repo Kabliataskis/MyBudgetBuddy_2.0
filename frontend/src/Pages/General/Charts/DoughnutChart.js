@@ -44,7 +44,7 @@ export default function DoughnutChart () {
           label: function (context) {
             const label = context.label;
             const value = context.parsed;
-            return `${label} ${value} €`;
+            return ` ${value} €`;
           },
         },
       },
