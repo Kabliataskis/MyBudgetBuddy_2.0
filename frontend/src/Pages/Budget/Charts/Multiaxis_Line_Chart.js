@@ -31,7 +31,7 @@ export const options = {
   plugins: {
     title: {
       display: true,
-      text: 'Pajamu ir Išlaidu palyginimas',
+      text: 'Pajamu ir Išlaidu palyginimo grafikas',
     },
   },
   scales: {
