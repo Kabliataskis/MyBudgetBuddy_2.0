@@ -14,12 +14,13 @@ import ExpenseHistory from "./Expense_history/ExpenseHistory";
 import IncomeHistory from "./Income_history/IncomeHistory";
 
 import calculateTotalIncome from "./Income_sum/Income_sum";
-
+import calculateTotalExpense from "./Income_sum/Expense_sum";
 
 export default function General() {
   const { setModal_ExpenseAdd } = useContext(ContextProvider);
   const { setModal_IncomeAdd } = useContext(ContextProvider);
   const [incomes, setIncomes] = useState([]);
+  const [expenses, setExpenses] = useState([]);
   const getIncomes = async () => {
     try {
       const res = await axios.get("/income?");
@@ -30,21 +31,35 @@ export default function General() {
   };
   useEffect(() => {
     getIncomes();
-  }, []);
+  }, [incomes]);
+
+  const getExpense = async () => {
+    try {
+      const res = await axios.get("/expense?");
+      setExpenses(res.data.data.expenses);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getExpense();
+  }, [expenses]);
+
   const totalIncome = calculateTotalIncome(incomes);
+  const totalExpense = calculateTotalExpense(expenses);
   return (
     <main className="General-container General">
       <div className="top-container">
         <div className="stats-containers">
           <div className="stat-container">
             <p>
-              Likutis: <span className="green">{totalIncome}€</span>
+              Likutis: <span className="green">{totalIncome-totalExpense}€</span>
             </p>
           </div>
 
           <div className="stat-container isleista-per-men">
             <p>
-              Išleista per mėn: <span className="red">1044.94€</span>
+              Išleista per mėn: <span className="red">{totalExpense}€</span>
             </p>
           </div>
 

@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import swal from "sweetalert2";
 import ExpenseEditModal from "./ExpenseEditModal";
 import DownloadCSVButton from "../CSV_export/Csv";
+import calculateTotalExpense from "../General/Income_sum/Expense_sum";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
@@ -19,16 +20,8 @@ export default function Expenses() {
   const [editExpens, setEditExpens] = useState({});
   const [modal_ExpenseEdit, setModal_ExpenseEdit] = useState(false);
   const { setModal_ExpenseAdd } = useContext(ContextProvider);
-  const [expenses, setExpenses] = useState([
-    {
-      id: 1,
-      data: "2023-03-28",
-      kategorija: "Transportas",
-      pavadinimas: "Remontas",
-      suma: "200€",
-    },
-  ]);
-
+  const [expenses, setExpenses] = useState([]);
+  const totalExpense = calculateTotalExpense(expenses);
   const getExpense = async () => {
     try {
       const res = await axios.get("/expense?");
@@ -172,7 +165,7 @@ export default function Expenses() {
         <h3 className="h3-text">Išlaidos</h3>
         <div className="block_pajamos">
           <p className="block_pajamo">
-            Mėnesio išlaidos: <span className="red-eur">5956€</span>
+            Mėnesio išlaidos: <span className="red-eur">{totalExpense}€</span>
           </p>
           <button className="btnAdd" onClick={() => setModal_ExpenseAdd(true)}>
             Įvesti išlaidas
