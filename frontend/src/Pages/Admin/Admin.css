@@ -69,6 +69,14 @@
   width: 32px;
   height: 32px;
 }
+.Admin-select-dropdown{
+  background-color: var(--grey-color);
+  border-radius: 5px;
+  color: var(--dark-color);
+  border: 1px solid transparent;
+  padding: 5px;
+  outline: none;
+}
   /* tablet */
 @media screen and (max-width: 1439px) {
   .Admin-nav-items-container{

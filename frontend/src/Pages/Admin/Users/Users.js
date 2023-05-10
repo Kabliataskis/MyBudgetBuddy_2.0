@@ -36,7 +36,7 @@ export const Users = () => {
     setEditId(id);
     setModal_UserEdit(true);
   };
-  async function deleteUser(id) {
+  const deleteUser = (id) => {
     swal
       .fire({
         title: "Veiksmo patvirtinimas",
@@ -51,8 +51,7 @@ export const Users = () => {
       .then(async (result) => {
         if (result.isConfirmed) {
           try {
-            const res = await axios.delete("/income/" + id);
-            console.log(res);
+            const res = await axios.delete("/auth/" + id);
             swal.fire({
               title: "Sėkmingai",
               text: "Vartotojas ištrintas",
@@ -65,6 +64,27 @@ export const Users = () => {
           }
         }
       });
+  }
+  const updateUserRole = async (e, id, username) => {
+    console.log(id);
+    let role = e.target.value;
+    try{
+      const res = await axios.patch("/auth/role/"+id, {
+        role
+      });
+      getUsers();
+      // swal.fire({
+      //   title: "Sėkmingai",
+      //   text: "Vartotojo rolė atnaujinta",
+      //   icon: "success",
+      //   confirmButtonColor: "#28b78d",
+      // });
+      toast.success(`Vartotojo ${username} rolė atnaujinta`);
+    } catch (err){
+      console.log(err);
+      toast.error(`Klaida. ${err.response.data.msg}`);
+    }
+
   }
   const filterUsers = users.filter((el) => {
     const title = el.title || ""; // fallback to an empty string if title is undefined or null
@@ -82,6 +102,7 @@ export const Users = () => {
         obj={el}
         editUser={editUser}
         deleteUser={deleteUser}
+        updateUserRole={updateUserRole}
       />
     );
   });
@@ -103,6 +124,7 @@ export const Users = () => {
               <th>Reg. Data</th>
               <th>Slapyvardis</th>
               <th>El. Paštas</th>
+              <th>Rolė</th>
               <th>Redaguoti</th>
               <th>Pašalinti</th>
             </tr>

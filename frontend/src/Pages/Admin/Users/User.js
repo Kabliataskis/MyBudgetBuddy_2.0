@@ -2,8 +2,8 @@ import React from "react";
 import { FaTrash, FaPen } from "react-icons/fa";
 
 export default function User(props) {
-  const { obj, editUser, deleteUser } = props;
-  const { _id, createdAt, username, email } = obj;
+  const { obj, editUser, deleteUser, updateUserRole } = props;
+  const { _id, createdAt, username, email, role } = obj;
 
   const formatDate = (date) => {
     date = new Date(date);
@@ -18,6 +18,14 @@ export default function User(props) {
       <td>{formatDate(createdAt)}</td>
       <td>{username}</td>
       <td>{email}</td>
+      <td><select className="Admin-select-dropdown" onChange={(e) => updateUserRole(e, _id, username)}>
+          <option>
+            {role}
+          </option>
+          <option>
+            {role == 'user' ? 'admin' : 'user'}
+          </option>
+        </select></td>
       <td>
         <button
           className="btn_change"

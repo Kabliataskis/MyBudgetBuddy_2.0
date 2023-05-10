@@ -143,20 +143,15 @@ export default function UserEditModal(props) {
               <label htmlFor="username">Slapyvardis</label>
               <p>
                 <input
-                  className={
-                    formik.touched.username && formik.errors.username
-                      ? "error"
-                      : ""
-                  }
+                  className="disabled-filter"
                   type="text"
                   name="username"
                   id="username"
-                  placeholder="Pavadinimas"
-                  maxLength="20"
-                  required
+                  placeholder="Slapyvardis"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.username}
+                  disabled
                 />
               </p>
               {formik.touched.username && formik.errors.username ? (
