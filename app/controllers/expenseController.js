@@ -46,6 +46,23 @@ exports.getAllExpense = async (req, res) => {
   }
 };
 
+
+exports.getExpense = async (req, res) => {
+  try {
+    const GetExpense = await Expense.findById(req.params.id);
+    if (!GetExpense) {
+      return res.status(404).json({ msg: `Pajamos nr: ${id} neegzistuoja`});
+    } else {
+      if(GetExpense.user_id == req.userInfo.id){
+        res.status(200).json(GetExpense);
+      }
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+  
+};
+
 exports.addExpense = async (req, res) => {
   console.log("new expense request");
   try {
@@ -94,3 +111,38 @@ exports.deleteExpense = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
   };
+
+
+  exports.editExpense = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const Edit_Expense = await Expense.findById(id);
+      if (!Edit_Expense) {
+        return res.status(404).json({ msg: `Pajamos nr: ${id} neegzistuoja`});
+      } else {
+  
+        if(Edit_Expense.user_id == req.userInfo.id){
+          console.log("true");
+          try{
+            await Expense.updateOne({
+                    _id: id,
+                  },{
+                    user_id: req.userInfo.id,
+                    category: req.body.category,
+                    title: req.body.title,
+                    sum: req.body.sum,
+                    date: addTime(req.body.date),
+                  }
+                  );
+                  res.json({
+                    success: true,
+                  })
+          }catch (error){
+            res.status(500).json({ error: error.message });
+          }
+        }
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
