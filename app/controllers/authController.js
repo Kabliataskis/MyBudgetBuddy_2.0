@@ -9,12 +9,12 @@ const signToken = (data) => {
 };
 
 exports.getAllUsers = async (req, res) => {
-  const {limit = 0} = req.query;
+  const { limit = 0 } = req.query;
   try {
     const allUsers = await User.find()
-    .sort({ createdAt: -1 })
-    .select('-password')
-    .limit(limit);
+      .sort({ createdAt: -1 })
+      .select("-password")
+      .limit(limit);
 
     res.status(200).json({
       status: "success",
@@ -31,7 +31,18 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-
+exports.getUser = async (req, res) => {
+  try {
+    const GetUser = await User.findById(req.params.id).select("-password");
+    if (!GetUser) {
+      return res.status(404).json({ msg: `Vartotojas id: ${id} neegzistuoja` });
+    } else {
+      res.status(200).json(GetUser);
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 exports.authRegister = async (req, res) => {
   const userExists = await User.exists({
     $or: [{ username: req.body.username }, { email: req.body.email }],
