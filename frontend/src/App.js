@@ -3,7 +3,7 @@ import {Navigate, BrowserRouter as Router, Route, Routes } from "react-router-do
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
-import { AuthProvider, RequireAuth, AuthorizedRedirect } from "./Context/auth";
+import { AuthProvider, RequireAuth, RequireAdmin, AuthorizedRedirect } from "./Context/auth";
 import Admin from "./Pages/Admin/Admin";
 import Budget from "./Pages/Budget/Budget";
 import Expense from "./Pages/Expense/Expenses";
@@ -68,15 +68,7 @@ function App() {
                   </RequireAuth>
                 }
               />
-              <Route path='/Admin' element={<RequireAuth><Admin /></RequireAuth>} />
-              <Route
-                path="/history"
-                element={
-                  <RequireAuth>
-                    <History />
-                  </RequireAuth>
-                }
-              />
+              <Route path='/Admin' element={<RequireAdmin><Admin /></RequireAdmin>} />
             </Routes>
           </Router>
           <ToastContainer

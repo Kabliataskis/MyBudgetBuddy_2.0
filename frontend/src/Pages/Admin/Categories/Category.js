@@ -3,7 +3,7 @@ import { FaTrash , FaPen } from "react-icons/fa";
 
 export default function Category(props){
     const{obj, editCategory, deleteCategory} = props;
-    const {_id, date, category, img} = obj;
+    const {_id, createdAt, title, imgSrc} = obj;
 
     const formatDate = (date) => {
         date =  new Date(date);
@@ -15,9 +15,9 @@ export default function Category(props){
 
     return(
         <tr>
-           <td>{formatDate(date)}</td>
-			<td>{category}</td>
-            <td><img src={img} alt={category} className="Admin-table-img"/></td>
+           <td>{formatDate(createdAt)}</td>
+			<td>{title}</td>
+            <td><img src={imgSrc} alt={title} className="Admin-table-img"/></td>
             <td className="">
                 <button 
                 className="btn_change"

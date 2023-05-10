@@ -18,7 +18,7 @@ export default function User(props) {
       <td>{formatDate(createdAt)}</td>
       <td>{username}</td>
       <td>{email}</td>
-      <td className="">
+      <td>
         <button
           className="btn_change"
           onClick={() => {

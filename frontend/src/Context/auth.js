@@ -57,6 +57,14 @@ export const RequireAuth = ({children}) => {
     }
     return children;
 }
+export const RequireAdmin = ({children}) => {
+  const auth = useAuth();
+  if(!auth.user || auth.user.role != 'admin'){
+      return <Navigate to='/auth' replace/>
+  }
+  return children;
+}
+
 
 export const AuthorizedRedirect = ({children}) => {
   const auth = useAuth();

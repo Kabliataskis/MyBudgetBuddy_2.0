@@ -44,39 +44,40 @@ export default function UserEditModal(props) {
 
   const onSubmit = async (values) => {
     // Užklausa į backend
-    try {
-      let { username, email, password } = values;
-      const res = await axios.patch("/income/" + editId, {
-        username,
-        email,
-        password,
-      });
-      console.log(res);
-      //Jei backend grąžina success
-      setModal_UserEdit(false);
-      getUsers();
-      swal.fire({
-        title: "Sėkmingai",
-        text: "Įrašas pakeistas",
-        icon: "success",
-        confirmButtonColor: "#28b78d",
-      });
-      formik.resetForm();
-    } catch (err) {
-      console.log(err);
-      toast.error("Klaida");
-    }
+    // try {
+    //   let { username, email, password } = values;
+    //   const res = await axios.patch("/income/" + editId, {
+    //     username,
+    //     email,
+    //     password,
+    //   });
+    //   console.log(res);
+    //   //Jei backend grąžina success
+    //   setModal_UserEdit(false);
+    //   getUsers();
+    //   swal.fire({
+    //     title: "Sėkmingai",
+    //     text: "Įrašas pakeistas",
+    //     icon: "success",
+    //     confirmButtonColor: "#28b78d",
+    //   });
+    //   formik.resetForm();
+    // } catch (err) {
+    //   console.log(err);
+    //   toast.error("Klaida");
+    // }
   };
 
   useEffect(() => {
     const getItem = async () => {
+      console.log("get item");
       if (editId) {
         try {
           const res = await axios.get("/auth/" + editId);
           console.log(res.data);
           formik.setFieldValue("username", res.data.username);
           formik.setFieldValue("email", res.data.email);
-          formik.setFieldValue("password", "");
+          formik.setFieldValue("password", "123");
         } catch (err) {
           console.log(err);
         }
@@ -122,7 +123,7 @@ export default function UserEditModal(props) {
   // Modal close
   const closeModal = () => {
     setModal_UserEdit(false);
-    formik.resetForm(); // reset forma
+    // formik.resetForm(); // reset forma
   };
 
   return (

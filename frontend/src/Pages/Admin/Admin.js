@@ -30,7 +30,7 @@ export const Admin = () => {
     <div className="main-container">
       <div className="container-admin-nav">
         <h3 className="h3-text">Admin</h3>
-        <div class="Admin-nav-items-container">
+        <div className="Admin-nav-items-container">
             <button className={showPage == "categories" ? "Admin-nav-item  selected" : "Admin-nav-item"} onClick={() => funcShowPage('categories')}>Kategorijos</button>
             <button className={showPage == "users" ? "Admin-nav-item  selected" : "Admin-nav-item"} onClick={() => funcShowPage('users')}>Vartotojai</button>
             <button className={showPage == "logs" ? "Admin-nav-item  selected" : "Admin-nav-item"} onClick={() => funcShowPage('logs')}>Įvykių žurnalas</button>
