@@ -19,6 +19,8 @@ export const AuthProvider = ({children}) => {
         console.log(err.response.data.mess);
         logout();
       }
+    }else{
+      logout();
     }
     }   
     useEffect(() =>  {
@@ -35,6 +37,7 @@ export const AuthProvider = ({children}) => {
     const logout = () => {
         setUser(null);
         localStorage.removeItem("token");
+        localStorage.removeItem("data");
       }    
     return (
         <AuthContext.Provider value={{user, login, logout}}>

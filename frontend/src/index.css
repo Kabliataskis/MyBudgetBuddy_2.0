@@ -58,6 +58,12 @@ body{
 .swal2-styled.swal2-confirm:focus{
   box-shadow: unset !important;
 }
+.Toastify__toast-theme--colored.Toastify__toast--success{
+  background: var(--main-color) !important;
+}
+.Toastify__toast-theme--colored.Toastify__toast--error{
+  background: var(--red-color) !important;
+}
 /* .swal2-styled.swal2-confirm{
   background-color: var(--main-color) !important;
 }

@@ -177,3 +177,28 @@
   .Budget .dropdown-history-month option{
     background-color: var(--grey-dark-color);
   }
+  .Budget .budget-history{
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+    width: 35%;
+
+  }
+  .Budget .budget-status{
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: flex;
+    padding: 15px;
+    color: var(--dark-color);
+    background-color: var(--grey-color);
+    border-radius: 5px;
+    font-size: 20px;
+    margin-left: 10%;
+    margin-right: 10%;
+    justify-content: center;
+    
+  }
+  .budget-status button{
+    background-color: var(--grey-color);
+    border: none;
+    }
