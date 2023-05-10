@@ -65,7 +65,7 @@ export default function ExpenseAddModal(props) {
         confirmButtonColor: "#28b78d",
       });
       formik.resetForm();
-      getExpense()
+      getExpense();
     } catch (err) {
       console.log(err);
       toast.error("Klaida");

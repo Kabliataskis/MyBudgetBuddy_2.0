@@ -146,7 +146,7 @@ export default function Expenses() {
 
   return (
     <div className="main_back">
-      <ExpenseAddModal  getExpense={getExpense}/>
+      <ExpenseAddModal getExpense={getExpense}/>
       <ExpenseEditModal
         editExpenseId={editExpenseId}
         modal_ExpenseEdit={modal_ExpenseEdit}
