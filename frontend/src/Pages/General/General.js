@@ -47,6 +47,19 @@ export default function General() {
 
   const totalIncome = calculateTotalIncome(incomes);
   const totalExpense = calculateTotalExpense(expenses);
+
+  useEffect(() => {
+    const incomeIsGreater = totalIncome > totalExpense;
+    const element = document.querySelector('.horizontal-bar__pelnas');
+    if (incomeIsGreater) {
+      element.classList.add('green');
+      element.classList.remove('red');
+    } else {
+      element.classList.add('red');
+      element.classList.remove('green');
+    }
+  }, [totalIncome, totalExpense]);
+
   return (
     <main className="General-container General">
       <div className="top-container">
@@ -64,13 +77,13 @@ export default function General() {
           </div>
 
           <div className="horizontal-bar-container">
-            <div className="horizontal-bar__pelnas">4910 €</div>
-            <div className="horizontal-bar__islaidos">1044.94 €</div>
+            <div className="horizontal-bar__pelnas">{totalIncome} €</div>
+            <div className="horizontal-bar__islaidos">{totalExpense} €</div>
           </div>
         </div>
 
         <div className="doughnut-chart-container">
-          <DoughnutChart />
+        <DoughnutChart expenses={expenses} />
         </div>
       </div>
       <div className="history-containers">
