@@ -119,15 +119,17 @@
   padding: 5px;
 }
 .General .horizontal-bar__pelnas {
-  width: 70%;
+  width: var(--pelnas-width);
   background-color: var(--main-color);
   border-radius: 5px 0px 0px 5px;
 }
+
 .General .horizontal-bar__islaidos {
-  width: 30%;
+  width: var(--islaidos-width);
   background-color: var(--red-color);
   border-radius: 0px 5px 5px 0px;
 }
+
 
 /* tablet */
 @media screen and (max-width: 1439px) {

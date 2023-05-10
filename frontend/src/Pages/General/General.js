@@ -49,15 +49,11 @@ export default function General() {
   const totalExpense = calculateTotalExpense(expenses);
 
   useEffect(() => {
-    const incomeIsGreater = totalIncome > totalExpense;
-    const element = document.querySelector('.horizontal-bar__pelnas');
-    if (incomeIsGreater) {
-      element.classList.add('green');
-      element.classList.remove('red');
-    } else {
-      element.classList.add('red');
-      element.classList.remove('green');
-    }
+    const pelnasWidth = (totalIncome / (totalIncome + totalExpense)) * 100 + "%";
+    const islaidosWidth = (totalExpense / (totalIncome + totalExpense)) * 100 + "%";
+
+    document.documentElement.style.setProperty("--pelnas-width", pelnasWidth);
+    document.documentElement.style.setProperty("--islaidos-width", islaidosWidth);
   }, [totalIncome, totalExpense]);
 
   return (
