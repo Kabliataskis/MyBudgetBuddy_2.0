@@ -11,16 +11,6 @@ export default function UserEditModal(props) {
   const validate = (values) => {
     let errors = {};
 
-    if (!values.username) {
-      errors.username = "Prašome užpildyti laukelį (Slapyvardis)";
-    } else if (values.username.length < 2) {
-      errors.username = "Slapyvardis turi būti min. 2 simbolių!";
-    } else if (values.username.length > 15) {
-      errors.username = "Slapyvardis turi būti max. 15 simbolių!";
-    } else if (!/^[a-zA-Z0-9 ]+$/.test(values.username)) {
-      errors.username =
-        "Slapyvardis turi būti sudarytas tik iš lotyniškų raidžių ir skaičių!";
-    }
     if (!values.email) {
       errors.email = "Prašome užpildyti laukelį (El. paštas)";
     } else if (
@@ -30,14 +20,15 @@ export default function UserEditModal(props) {
     ) {
       errors.email = "Neteisingas El. pašto formatas";
     }
-    if (!values.password) {
-      errors.password = "Prašome užpildyti laukelį (Slaptažodis)";
-    } else if (values.password.length < 7) {
-      errors.password = "Slaptažodis turi būti min. 7 simbolių!";
-    } else if (values.password.length > 50) {
-      errors.password = "Slaptažodis turi būti max. 50 simbolių!";
-    } else if (!/\d/.test(values.password)) {
-      errors.password = "Slaptažodis turi turėti min. 1 skaičių";
+    if (values.password) {
+      if (values.password.length < 7) {
+        errors.password = "Slaptažodis turi būti min. 7 simbolių!";
+      } else if (values.password.length > 50) {
+        errors.password = "Slaptažodis turi būti max. 50 simbolių!";
+      } else if (!/\d/.test(values.password)) {
+        errors.password = "Slaptažodis turi turėti min. 1 skaičių";
+      }
+
     }
     return errors;
   };
@@ -45,8 +36,8 @@ export default function UserEditModal(props) {
   const onSubmit = async (values) => {
     // Užklausa į backend
     // try {
-    //   let { username, email, password } = values;
-    //   const res = await axios.patch("/income/" + editId, {
+    //   let {email, password } = values;
+    //   const res = await axios.patch("/auth/" + editId, {
     //     username,
     //     email,
     //     password,
@@ -77,7 +68,7 @@ export default function UserEditModal(props) {
           console.log(res.data);
           formik.setFieldValue("username", res.data.username);
           formik.setFieldValue("email", res.data.email);
-          formik.setFieldValue("password", "123");
+          formik.setFieldValue("password", "");
         } catch (err) {
           console.log(err);
         }
@@ -96,23 +87,6 @@ export default function UserEditModal(props) {
     validate,
   });
 
-  const handleKeyDown = (event) => {
-    if (
-      !(
-        event.key === "ArrowLeft" ||
-        event.key === "ArrowRight" ||
-        event.key === "Backspace" ||
-        event.key === "Delete" ||
-        (event.key === "a" && event.ctrlKey === true) ||
-        (event.key === "c" && event.ctrlKey === true) ||
-        (event.key === "v" && event.ctrlKey === true) ||
-        (event.key === "x" && event.ctrlKey === true) ||
-        /^[0-9.,]+$/.test(event.key)
-      )
-    ) {
-      event.preventDefault();
-    }
-  };
 
   // Modal close on background click
   const onMouseDown = (e) => {
@@ -183,8 +157,8 @@ export default function UserEditModal(props) {
                 </div>
               ) : null}
 
-              <label htmlFor="password">Slaptažodis</label>
-              <p className="eur">
+              <label htmlFor="password">Naujas slaptažodis</label>
+              <p>
                 <input
                   className={
                     formik.touched.password && formik.errors.password
@@ -194,9 +168,9 @@ export default function UserEditModal(props) {
                   type="password"
                   name="password"
                   id="password"
+                  placeholder="Slaptažodis"
                   autoComplete="off"
                   required
-                  onKeyDown={handleKeyDown}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.password}
@@ -212,7 +186,7 @@ export default function UserEditModal(props) {
 
               <div className="buttons-container">
                 <button className="add-btn" type="submit">
-                  Pakeisti
+                  Atnaujinti
                 </button>
                 <button
                   className="cancel-btn"
