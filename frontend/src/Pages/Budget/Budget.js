@@ -9,7 +9,6 @@ import {MdDownloadDone } from "react-icons/md";
 
 export default function Budget () {
 
-
 	const [limit, setLimit]= useState({
 		amount: 1195,
 		status: false
@@ -131,7 +130,8 @@ export default function Budget () {
 							<p>
 							Kategorijos biudžėto istorija: 
 							</p>
-							<select
+							<input  id="bday-month" type="month" name="bday-month" value='Now'></input>
+							{/* <select
 							className="dropdown-history-month"
 							name="month"
 							id="month"
@@ -141,7 +141,7 @@ export default function Budget () {
 							<option value="2023-03">03 men.</option>
 							<option value="2023-02">02 men.</option>
 							<option value="2023-01">01 men.</option>
-							</select>
+							</select> */}
 							
 						</div>
 						<div className='budget-linechart'>
@@ -150,9 +150,12 @@ export default function Budget () {
 						</div>
 					</div>
 					<div className='budget-status'>
-						<p>Nustatytas biudžėtas: <span className="green">{limit.amount}</span> € </p>
+						<p>Nustatytas biudžėtas: {limit.status ? <span className="green">{limit.amount}</span>: <input type='number' value={limit.amount}/>} € </p>
+
 						<button onClick={() => 
-							 statusChange(limit)}>{limit.status ? <span className="green"><MdDownloadDone /></span> : <span className="red"><FaPen /></span>}</button>
+							 statusChange(limit)}>
+								{limit.status ?<span className="green"><MdDownloadDone /></span>: <span className="red"><FaPen /></span>}</button>
+
 					{/* <button onClick={() => 
 							 statusChange(limit)}>{limit.status ? <span><input
 								type='text'
