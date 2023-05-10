@@ -8,6 +8,30 @@ const signToken = (data) => {
   });
 };
 
+exports.getAllUsers = async (req, res) => {
+  const {limit = 0} = req.query;
+  try {
+    const allUsers = await User.find()
+    .sort({ createdAt: -1 })
+    .select('-password')
+    .limit(limit);
+
+    res.status(200).json({
+      status: "success",
+      results: allUsers.length,
+      data: {
+        users: allUsers,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: err.message,
+    });
+  }
+};
+
+
 exports.authRegister = async (req, res) => {
   const userExists = await User.exists({
     $or: [{ username: req.body.username }, { email: req.body.email }],
