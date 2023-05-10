@@ -47,6 +47,23 @@ exports.getAllIncomes = async (req, res) => {
   }
 };
 
+exports.getIncome = async (req, res) => {
+  try {
+    const GetIncome = await Income.findById(req.params.id);
+    if (!GetIncome) {
+      return res.status(404).json({ msg: `Pajamos nr: ${id} neegzistuoja`});
+    } else {
+      if(GetIncome.user_id == req.userInfo.id){
+        res.status(200).json(GetIncome);
+      }
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+  
+};
+
+
 exports.addIncome = async (req, res) => {
   console.log("new income request");
   try {
@@ -84,11 +101,42 @@ exports.deleteIncome = async (req, res) => {
         }catch (error){
           res.status(500).json({ error: error.message });
         }
-      }else{
-        return res.status(403).json({ msg: `Pajamos nr: ${id} priklauso kitam vartotojui`});
       }
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.editIncome = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const Edit_Income = await Income.findById(id);
+    if (!Edit_Income) {
+      return res.status(404).json({ msg: `Pajamos nr: ${id} neegzistuoja`});
+    } else {
+
+      if(Edit_Income.user_id == req.userInfo.id){
+        console.log("true");
+        try{
+          await Income.updateOne({
+                  _id: id,
+                },{
+                  user_id: req.userInfo.id,
+                  title: req.body.title,
+                  sum: req.body.sum,
+                  date: addTime(req.body.date),
+                }
+                );
+                res.json({
+                  success: true,
+                })
+        }catch (error){
+          res.status(500).json({ error: error.message });
+        }
+      }
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}

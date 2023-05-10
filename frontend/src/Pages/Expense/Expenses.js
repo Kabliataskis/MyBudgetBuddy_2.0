@@ -112,12 +112,11 @@ export default function Expenses() {
       }
     } else {
       if (currentPage <= 4) {
-        pages = [1, 2, 3, 4, 5, "...", totalPages - 1, totalPages];
+        pages = [1, 2, 3, 4, 5, "...", totalPages];
       } else if (currentPage > 4 && currentPage < totalPages - 2) {
         pages = [
           1,
           "...",
-          currentPage - 2,
           currentPage - 1,
           currentPage,
           currentPage + 1,
@@ -252,7 +251,7 @@ export default function Expenses() {
                 <MdKeyboardDoubleArrowRight />
               </li>
             </ul>
-            <button className="btn_csv">Eksportuoti .CSV</button>
+            <DownloadCSVButton />
           </div>
         </div>
 

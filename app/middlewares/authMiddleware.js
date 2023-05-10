@@ -59,7 +59,7 @@ exports.validateRegister = (req, res, next) => {
   if (!email) {
     errors.email = "Prašome užpildyti laukelį (El. paštas)";
   } else if (
-    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)
+    !/^[a-zA-Z0-9!#$%&'*+\-\/=?^_`{|}~]+(?:\.[a-zA-Z0-9!#$%&'*+\-\/=?^_`{|}~]+)*@[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9][a-zA-Z0-9\-]*)+$/.test(email)
   ) {
     errors.email = "Neteisingas El. pašto formatas";
   }
