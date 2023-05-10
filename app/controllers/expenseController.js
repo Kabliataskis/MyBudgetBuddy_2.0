@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
-const Income = require("../models/incomeModel");
-const User = require("../models/userModel");
+const Expense = require("../models/expenseModel");
+
 
 const addTime = (date) => {
   date = new Date(date);
@@ -24,20 +24,19 @@ const addTime = (date) => {
 
 
 
-exports.getAllIncomes = async (req, res) => {
-  const {limit = 0} = req.query;
-
+exports.getAllExpense = async (req, res) => {
+  const {limit = 0} = req.query
   try {
-    const allIncomes = await Income.find({user_id: req.userInfo.id})
+    const allExpenses = await Expense.find({user_id: req.userInfo.id})
     .sort({ date: -1 })
     .limit(limit);
 
     res.status(200).json({
       status: "success",
-      results: allIncomes.length,
+      results: allExpenses.length,
       data: {
-        incomes: allIncomes,
-      },
+        expenses: allExpenses
+      }
     });
   } catch (err) {
     res.status(500).json({
@@ -47,39 +46,42 @@ exports.getAllIncomes = async (req, res) => {
   }
 };
 
-exports.addIncome = async (req, res) => {
-  console.log("new income request");
+exports.addExpense = async (req, res) => {
+  console.log("new expense request");
   try {
-    const newIncome = await Income.create({
+
+
+
+    const newExpense = await Expense.create({
       user_id: req.userInfo.id,
+      category: req.body.category,
       title: req.body.title,
       sum: req.body.sum,
       date: addTime(req.body.date),
     });
-    console.log(newIncome);
-    res.status(201).json(newIncome);
+    console.log(newExpense);
+    res.status(201).json(newExpense);
   } catch (err) {
-    console.log(err);
     res.status(500).json({ mess: err });
   }
 };
 
-exports.deleteIncome = async (req, res) => {
+exports.deleteExpense = async (req, res) => {
   try {
     const { id } = req.params;
-    const Delete_Income = await Income.findById(id);
-    if (!Delete_Income) {
+    const Delete_Expense = await Expense.findById(id);
+    if (!Delete_Expense) {
       return res.status(404).json({ msg: `Pajamos nr: ${id} neegzistuoja`});
     } else {
 
-      if(Delete_Income.user_id == req.userInfo.id){
+      if(Delete_Expense.user_id == req.userInfo.id){
         console.log("true");
         try{
-          const delete_ = await Income.findByIdAndDelete(id);
+          const delete_ = await Expense.findByIdAndDelete(id);
           res.status(200).json({
             status: "success",
             message: `Pajamos nr: ${id} sėkmingai pašalintas.`,
-            income: Delete_Income,
+            expense: Delete_Expense,
           });
         }catch (error){
           res.status(500).json({ error: error.message });
@@ -91,4 +93,4 @@ exports.deleteIncome = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-};
+  };
