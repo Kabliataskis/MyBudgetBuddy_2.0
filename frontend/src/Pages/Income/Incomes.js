@@ -9,6 +9,7 @@ import swal from "sweetalert2";
 import "../../index.css";
 import IncomeEdit_Modal from "./IncomeEditModal.js";
 import IncomeAdd_Modal from "./IncomeAddModal";
+import calculateTotalIncome from "../General/Income_sum/Income_sum";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
@@ -33,7 +34,7 @@ export default function Incomes() {
   useEffect(() => {
     getIncomes();
   }, []);
-
+  const totalIncome = calculateTotalIncome(incomes);
   async function deleteIncome(id) {
     swal
       .fire({
@@ -151,7 +152,7 @@ for (let i = 1; i <= totalPages; i++) {
         <h3 className="h3-text">Pajamos</h3>
         <div className="block_pajamos">
           <p className="block_pajamo">
-            Mėnesio pajamos: <span className="color-eur">5956€</span>
+            Mėnesio pajamos: <span className="color-eur">{totalIncome}€</span>
           </p>
           <button className="btn-gren" onClick={() => setModal_IncomeAdd(true)}>
             Įvesti pajamas
