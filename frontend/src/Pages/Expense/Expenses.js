@@ -7,6 +7,7 @@ import swal from "sweetalert2";
 import ExpenseEditModal from "./ExpenseEditModal";
 import DownloadCSVButton from "../CSV_export/Csv";
 import calculateTotalExpense from "../General/Income_sum/Expense_sum";
+import ExpenseAddModal from "./ExpenseAddModal";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
@@ -17,11 +18,13 @@ import { ContextProvider } from "../../App";
 import "./Expense.css";
 import "../../index.css";
 export default function Expenses() {
+  const [editExpenseId, setEditExpenseId] = useState();
   const [editExpens, setEditExpens] = useState({});
   const [modal_ExpenseEdit, setModal_ExpenseEdit] = useState(false);
   const { setModal_ExpenseAdd } = useContext(ContextProvider);
   const [expenses, setExpenses] = useState([]);
   const totalExpense = calculateTotalExpense(expenses);
+
   const getExpense = async () => {
     try {
       const res = await axios.get("/expense?");
@@ -67,21 +70,9 @@ export default function Expenses() {
 
   const [value, setValue] = useState("");
 
-  // const filterExpense = expenses.filter((el) => {
-  //   return el.title
-  //     .toLocaleLowerCase()
-  //     .includes(value.toLocaleLowerCase());
-  // });
-
   const editExpense = (id) => {
     console.log(id);
-    let item_index;
-    expenses.forEach((el, index) => {
-      if (el.id == id) {
-        item_index = index;
-      }
-    });
-    setEditExpens(expenses[item_index]);
+    setEditExpenseId(id)
     setModal_ExpenseEdit(true);
   };
 
@@ -147,6 +138,7 @@ export default function Expenses() {
       <Expense
         key={uuidv4()}
         obj={el}
+        id={el._id}
         setEditExpens={setEditExpens}
         editExpense={editExpense}
         deleteExpense={deleteExpense}
@@ -156,10 +148,13 @@ export default function Expenses() {
 
   return (
     <div className="main_back">
+      <ExpenseAddModal getExpense={getExpense}/>
       <ExpenseEditModal
+        editExpenseId={editExpenseId}
         modal_ExpenseEdit={modal_ExpenseEdit}
         setModal_ExpenseEdit={setModal_ExpenseEdit}
         editExpens={editExpens}
+        getExpense={getExpense}
       />
       <div className="container-pajamos">
         <h3 className="h3-text">Išlaidos</h3>

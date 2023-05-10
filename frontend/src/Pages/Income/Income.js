@@ -22,7 +22,8 @@ export default function Income(props){
             <td className="">
                 <button 
                 className="btn_change"
-                onClick={() => {editIncome(_id)}}
+                onClick={() => {
+                editIncome(_id)}}
                 >
                       <FaPen/>
                 </button>
@@ -31,8 +32,7 @@ export default function Income(props){
             <td>
                 <button
                 className="btn_trash"
-                onClick={() => deleteIncome(_id)}
-                >
+                onClick={() => deleteIncome(_id)}>
                     <FaTrash/>
                 </button>
             </td>

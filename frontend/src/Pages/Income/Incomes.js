@@ -8,7 +8,6 @@ import "./Income.css";
 import swal from "sweetalert2";
 import "../../index.css";
 import IncomeEdit_Modal from "./IncomeEditModal.js";
-import ReactPaginate from 'react-paginate';
 import IncomeAdd_Modal from "./IncomeAddModal";
 import calculateTotalIncome from "../General/Income_sum/Income_sum";
 import {
