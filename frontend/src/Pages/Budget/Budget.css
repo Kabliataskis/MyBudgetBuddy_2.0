@@ -196,9 +196,14 @@
     margin-left: 10%;
     margin-right: 10%;
     justify-content: center;
+    gap: 20px;
     
   }
   .budget-status button{
     background-color: var(--grey-color);
     border: none;
+    }
+    .budget-status input{
+      width: 50px;
+      background-color: var(--grey-color);
     }
