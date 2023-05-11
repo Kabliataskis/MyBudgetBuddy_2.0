@@ -143,7 +143,7 @@ export default function Expenses() {
 
 
 
-  const [pageSize, setPageSize] = useState(10); // number of records per page
+  const [pageSize, setPageSize] = useState(5); // number of records per page
   const [currentPage, setCurrentPage] = useState(1); // current page number
   const totalItems = filterExpense.length;
   const totalPages = Math.ceil(totalItems / pageSize);
