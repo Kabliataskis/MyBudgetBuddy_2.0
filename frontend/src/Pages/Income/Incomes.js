@@ -275,7 +275,7 @@ export default function Incomes() {
                 value={value}
               />
               <p className="data_filter_p">
-                <label htmlFor="nuo_data">Nuo</label>
+                <label className="word" htmlFor="nuo_data">Nuo</label>
                 <input
                   onChange={(event) => setStartDate(event.target.value)}
                   className="data_filter"
@@ -284,7 +284,7 @@ export default function Incomes() {
                   value={startDate}
                 />
 
-                <label htmlFor="iki_data">iki</label>
+                <label className="word2" htmlFor="iki_data">iki</label>
                 <input
                   onChange={(event) => setEndDate(event.target.value)}
                   className="data_filter"

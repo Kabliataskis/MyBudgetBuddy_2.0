@@ -134,6 +134,7 @@ td {
   color: var(--main-color);
   outline: none;
   text-align: center;
+  
 }
 
 .data_filter:focus {
@@ -143,6 +144,13 @@ td {
 .data_filter_p {
   margin-bottom: 30px;
   word-spacing: 2px;
+  
+}
+.word{
+  margin-right: 5px;
+}
+.word2{
+  margin:6px;
 }
 
 .btn-dark {
