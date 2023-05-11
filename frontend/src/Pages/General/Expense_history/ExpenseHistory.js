@@ -10,7 +10,7 @@ import { FaPiggyBank } from "react-icons/fa";
 export default function ExpenseHistory() {
   const [expenses, setExpenses] = useState([]);
 
-  const getExpenses = async () => {
+  const getExpense = async () => {
     try {
       const res = await axios.get("/expense?limit=5");
       setExpenses(res.data.data.expenses);
@@ -19,7 +19,7 @@ export default function ExpenseHistory() {
     }
   };
   useEffect(() => {
-    getExpenses();
+    getExpense();
   }, []);
 
   let expenses_list = expenses.map((el) => {
@@ -33,7 +33,7 @@ export default function ExpenseHistory() {
   });
   return (
     <>
-    <ExpenseAddModal getExpenses={getExpenses} />
+     <ExpenseAddModal getExpense={getExpense}/>
     <table>
       <thead>
         <tr>

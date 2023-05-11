@@ -8,7 +8,7 @@ import swal from "sweetalert2";
 import { useFormik } from "formik";
 
 export default function IncomeEditModal(props) {
-  const {modal_IncomeEdit, setModal_IncomeEdit, editPajamos, editId, getIncomes} = props;
+  const {modal_IncomeEdit, setModal_IncomeEdit, editId, getIncomes} = props;
   const max_amount = 9999999; // Maksimali suma €
   const validate = (values) => {
     let selected_time = new Date(values.date).getTime();
@@ -76,7 +76,7 @@ export default function IncomeEditModal(props) {
 }
 
   useEffect(() => {
-    const getItem = async () => {
+    const getIncomeItem = async () => {
       if(editId){
         try {
           const res = await axios.get("/income/"+editId);
@@ -88,7 +88,7 @@ export default function IncomeEditModal(props) {
         }
       }
     }
-    getItem();
+    getIncomeItem();
   }, [editId]);
 
 

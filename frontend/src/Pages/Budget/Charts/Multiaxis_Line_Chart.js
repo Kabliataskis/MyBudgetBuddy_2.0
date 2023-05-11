@@ -28,12 +28,6 @@ export const options = {
     intersect: false,
   },
   stacked: false,
-  plugins: {
-    title: {
-      display: true,
-      text: 'Pajamu ir Išlaidu palyginimas',
-    },
-  },
   scales: {
     y: {
       type: 'linear' ,
