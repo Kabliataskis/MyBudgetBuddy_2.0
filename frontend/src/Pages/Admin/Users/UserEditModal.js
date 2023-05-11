@@ -28,40 +28,36 @@ export default function UserEditModal(props) {
       } else if (!/\d/.test(values.password)) {
         errors.password = "Slaptažodis turi turėti min. 1 skaičių";
       }
-
     }
     return errors;
   };
 
   const onSubmit = async (values) => {
-    // Užklausa į backend
-    // try {
-    //   let {email, password } = values;
-    //   const res = await axios.patch("/auth/" + editId, {
-    //     username,
-    //     email,
-    //     password,
-    //   });
-    //   console.log(res);
-    //   //Jei backend grąžina success
-    //   setModal_UserEdit(false);
-    //   getUsers();
-    //   swal.fire({
-    //     title: "Sėkmingai",
-    //     text: "Įrašas pakeistas",
-    //     icon: "success",
-    //     confirmButtonColor: "#28b78d",
-    //   });
-    //   formik.resetForm();
-    // } catch (err) {
-    //   console.log(err);
-    //   toast.error("Klaida");
-    // }
+    try {
+      let { email, password } = values;
+      const res = await axios.patch("/user/" + editId, {
+        email,
+        password,
+      });
+      console.log(res);
+      //Jei backend grąžina success
+      setModal_UserEdit(false);
+      getUsers();
+      swal.fire({
+        title: "Sėkmingai",
+        text: "Vartotojas atnaujintas",
+        icon: "success",
+        confirmButtonColor: "#28b78d",
+      });
+      formik.resetForm();
+    } catch (err) {
+      console.log(err);
+      toast.error(`Klaida. ${err.response.data.msg}`);
+    }
   };
 
   useEffect(() => {
     const getItem = async () => {
-      console.log("get item");
       if (editId) {
         try {
           const res = await axios.get("/auth/" + editId);
@@ -86,7 +82,6 @@ export default function UserEditModal(props) {
     onSubmit,
     validate,
   });
-
 
   // Modal close on background click
   const onMouseDown = (e) => {

@@ -32,63 +32,6 @@ exports.getAllUsers = async (req, res) => {
     });
   }
 };
-exports.deleteUser = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const Delete_User = await User.findById(id);
-    if (!Delete_User) {
-      return res.status(404).json({ msg: `Vartotojas nr: ${id} neegzistuoja`});
-    } else {
-      if(Delete_User._id != req.userInfo.id){
-        try{
-          const delete_ = await User.findByIdAndDelete(id);
-          const deleteUserIncomes = await Income.deleteMany({user_id: id});
-          const deleteUserExpenses = await Expense.deleteMany({user_id: id});
-          res.status(200).json({
-            status: "success",
-            message: `Vartotojas nr: ${id} sėkmingai pašalintas.`,
-            user: Delete_User,
-          });
-        }catch (error){
-          res.status(500).json({ error: error.message });
-        }
-      }else{
-        return res.status(404).json({ msg: `Negali ištrinti savo paskyros!`});
-      }
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-exports.updateUserRole = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const findUser = await User.findById(id);
-    if (!findUser) {
-      return res.status(404).json({ msg: `Vartotojas nr: ${id} neegzistuoja`});
-    } else {
-      if(req.userInfo.id != findUser._id){
-        try{
-          await User.updateOne({
-                  _id: id,
-                },{
-                  role: req.body.role
-                }
-                );
-                res.json({
-                  success: true,
-                })
-        }catch (error){
-          res.status(500).json({ error: error.message });
-        }
-      }else{
-        return res.status(404).json({ msg: `Negali redaguoti savo rolės`});
-      }
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
 exports.getUser = async (req, res) => {
   try {
     const GetUser = await User.findById(req.params.id).select("-password");
@@ -155,14 +98,6 @@ exports.authLogin = async (req, res) => {
           mess: "Neteisingas slapyvardis arba slaptažodis",
         });
       if (validatePass) {
-        // const token = jwt.sign(
-        //   {
-        //     id: user._id,
-        //     role: user.role,
-        //   },
-        //   "secret_1D3._0A$)!_)N@!#()!I*E(AD<02L>?",
-        //   { expiresIn: "1d" }
-        // );
         token = signToken({
           id: user._id,
           role: user.role,

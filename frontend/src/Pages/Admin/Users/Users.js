@@ -9,14 +9,7 @@ export const Users = () => {
   const [value, setValue] = useState("");
   const [pageSize, setPageSize] = useState(10); // number of records per page
   const [currentPage, setCurrentPage] = useState(1); // current page number
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      date: "2023-03-28",
-      username: "Vardenis",
-      email: "slapyvardis123@gmail.com",
-    },
-  ]);
+  const [users, setUsers] = useState([]);
   const [editId, setEditId] = useState();
   const [modal_UserEdit, setModal_UserEdit] = useState(false);
   const getUsers = async () => {
@@ -51,7 +44,7 @@ export const Users = () => {
       .then(async (result) => {
         if (result.isConfirmed) {
           try {
-            const res = await axios.delete("/auth/" + id);
+            const res = await axios.delete("/user/" + id);
             swal.fire({
               title: "Sėkmingai",
               text: "Vartotojas ištrintas",
@@ -64,13 +57,13 @@ export const Users = () => {
           }
         }
       });
-  }
+  };
   const updateUserRole = async (e, id, username) => {
     console.log(id);
     let role = e.target.value;
-    try{
-      const res = await axios.patch("/auth/role/"+id, {
-        role
+    try {
+      const res = await axios.patch("/user/role/" + id, {
+        role,
       });
       getUsers();
       // swal.fire({
@@ -80,12 +73,11 @@ export const Users = () => {
       //   confirmButtonColor: "#28b78d",
       // });
       toast.success(`Vartotojo ${username} rolė atnaujinta`);
-    } catch (err){
+    } catch (err) {
       console.log(err);
       toast.error(`Klaida. ${err.response.data.msg}`);
     }
-
-  }
+  };
   const filterUsers = users.filter((el) => {
     const title = el.title || ""; // fallback to an empty string if title is undefined or null
     const lowercaseValue = value ? value.toLocaleLowerCase() : ""; // fallback to an empty string if value is undefined or null
@@ -106,8 +98,6 @@ export const Users = () => {
       />
     );
   });
-
-
 
   return (
     <div className="container-pajamos flex_container">
