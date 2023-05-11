@@ -14,7 +14,6 @@ import General from "./Pages/General/General";
 import Income from "./Pages/Income/Incomes";
 import { useAuth } from "./Context/auth";
 /*Modals*/
-import ExpenseAddModal from "./Pages/Expense/ExpenseAddModal";
 export const ContextProvider = createContext();
 function App() {
   const [modal_ExpenseAdd, setModal_ExpenseAdd] = useState(false);
@@ -39,7 +38,7 @@ function App() {
                 path="/"
                 element={
                   <RequireAuth>
-                    <General /> <ExpenseAddModal />
+                    <General />
                   </RequireAuth>
                 }
               />
@@ -56,7 +55,7 @@ function App() {
                 path="/expense"
                 element={
                   <RequireAuth>
-                    <Expense /> <ExpenseAddModal />
+                    <Expense />
                   </RequireAuth>
                 }
               />

@@ -1,5 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext,useState,useEffect } from "react";
 import { ContextProvider } from "../../App";
+import axios from "../../axios";
+
 
 //Css
 import "./General.css";
@@ -11,37 +13,82 @@ import DoughnutChart from "./Charts/DoughnutChart";
 import ExpenseHistory from "./Expense_history/ExpenseHistory";
 import IncomeHistory from "./Income_history/IncomeHistory";
 
+import calculateTotalIncome from "./Income_sum/Income_sum";
+import calculateTotalExpense from "./Income_sum/Expense_sum";
+
 export default function General() {
   const { setModal_ExpenseAdd } = useContext(ContextProvider);
   const { setModal_IncomeAdd } = useContext(ContextProvider);
+  const [incomes, setIncomes] = useState([]);
+  const [expenses, setExpenses] = useState([]);
+  const getIncomes = async () => {
+    try {
+      const res = await axios.get("/income?");
+      setIncomes(res.data.data.incomes);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getIncomes();
+  }, [incomes]);
+
+  const getExpense = async () => {
+    try {
+      const res = await axios.get("/expense?");
+      setExpenses(res.data.data.expenses);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getExpense();
+  }, [expenses]);
+
+  const totalIncome = calculateTotalIncome(incomes);
+  const totalExpense = calculateTotalExpense(expenses);
+
+  useEffect(() => {
+    const pelnasWidth = (totalIncome / (totalIncome + totalExpense)) * 100 + "%";
+    const islaidosWidth = (totalExpense / (totalIncome + totalExpense)) * 100 + "%";
+
+    document.documentElement.style.setProperty("--pelnas-width", pelnasWidth);
+    document.documentElement.style.setProperty("--islaidos-width", islaidosWidth);
+  }, [totalIncome, totalExpense]);
+
   return (
     <main className="General-container General">
       <div className="top-container">
         <div className="stats-containers">
           <div className="stat-container">
             <p>
-              Likutis: <span className="green">5954.94€</span>
+              Likutis: <span className="green">{totalIncome-totalExpense}€</span>
             </p>
           </div>
+
           <div className="stat-container isleista-per-men">
             <p>
-              Išleista per mėn: <span className="red">1044.94€</span>
+              Išleista per mėn: <span className="red">{totalExpense}€</span>
             </p>
           </div>
 
           <div className="horizontal-bar-container">
-            <div className="horizontal-bar__pelnas">4910 €</div>
-            <div className="horizontal-bar__islaidos">1044.94 €</div>
+            <div className="horizontal-bar__pelnas">{totalIncome} €</div>
+            <div className="horizontal-bar__islaidos">{totalExpense} €</div>
           </div>
         </div>
 
         <div className="doughnut-chart-container">
-          <DoughnutChart />
+        <DoughnutChart expenses={expenses} />
         </div>
       </div>
       <div className="history-containers">
         <div className="history-container">
-          <button className="addBtn" type="button" onClick={() => setModal_ExpenseAdd(true)}>
+          <button
+            className="addBtn"
+            type="button"
+            onClick={() => setModal_ExpenseAdd(true)}
+          >
             Įvesti išlaidas
           </button>
           <div className="history-top-line"></div>
@@ -50,7 +97,11 @@ export default function General() {
         </div>
 
         <div className="history-container">
-          <button className="addBtn" type="button" onClick={() => setModal_IncomeAdd(true)}>
+          <button
+            className="addBtn"
+            type="button"
+            onClick={() => setModal_IncomeAdd(true)}
+          >
             Įvesti pajamas
           </button>
           <div className="history-top-line"></div>

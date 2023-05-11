@@ -2,6 +2,18 @@ import React from "react";
 import { FaTrash, FaPen } from "react-icons/fa";
 import "./Expense.css";
 
+export function getCategories(expenses) {
+  const categories = [...new Set(expenses.map(expense => expense.category))];
+  return categories;
+}
+
+export function getCategoryTotal(expenses, category) {
+  const total = expenses
+    .filter(expense => expense.category === category)
+    .reduce((sum, expense) => sum + expense.sum, 0);
+  return total;
+}
+
 export default function Expense(props) {
   const{obj, editExpense, deleteExpense} = props;
   const {_id, category, date, title, sum} = obj;
@@ -24,7 +36,7 @@ export default function Expense(props) {
         <button
           className="btn_change"
           onClick={() => {
-            editExpense(_id);
+          editExpense(_id);
           }}
         >
           <FaPen />
