@@ -64,6 +64,9 @@ body{
 .Toastify__toast-theme--colored.Toastify__toast--error{
   background: var(--red-color) !important;
 }
+.disabled-filter{
+  filter: grayscale(100);
+}
 /* .swal2-styled.swal2-confirm{
   background-color: var(--main-color) !important;
 }

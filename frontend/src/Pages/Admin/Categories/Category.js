@@ -1,10 +1,9 @@
 import React from "react";
 import { FaTrash , FaPen } from "react-icons/fa";
-import './Income.css';
 
-export default function Income(props){
-    const{obj, editIncome, deleteIncome} = props;
-    const {_id, date, title, sum} = obj;
+export default function Category(props){
+    const{obj, editCategory, deleteCategory} = props;
+    const {_id, createdAt, title, imgSrc} = obj;
 
     const formatDate = (date) => {
         date =  new Date(date);
@@ -16,14 +15,13 @@ export default function Income(props){
 
     return(
         <tr>
-           <td>{formatDate(date)}</td>
+           <td>{formatDate(createdAt)}</td>
 			<td>{title}</td>
-			<td className='color-eur'>+{sum}€</td>
+            <td><img src={imgSrc} alt={title} className="Admin-table-img"/></td>
             <td className="">
                 <button 
                 className="btn_change"
-                onClick={() => {
-                editIncome(_id)}}
+                onClick={() => {editCategory(_id)}}
                 >
                       <FaPen/>
                 </button>
@@ -32,7 +30,8 @@ export default function Income(props){
             <td>
                 <button
                 className="btn_trash"
-                onClick={() => deleteIncome(_id)}>
+                onClick={() => deleteCategory(_id)}
+                >
                     <FaTrash/>
                 </button>
             </td>

@@ -6,11 +6,9 @@ import { AiOutlineClose, AiFillWarning } from "react-icons/ai";
 import "./Income.css";
 import swal from "sweetalert2";
 import { useFormik } from "formik";
-
 export default function IncomeAdd_Modal(props) {
   const {getIncomes} = props;
-  const { modal_IncomeAdd, setModal_IncomeAdd } =
-    useContext(ContextProvider);
+  const { modal_IncomeAdd, setModal_IncomeAdd } = useContext(ContextProvider);
   const max_sum = 9999999; // Maksimali suma €
 
   const validate = (values) => {
@@ -51,7 +49,6 @@ export default function IncomeAdd_Modal(props) {
       const res = await axios.post("/income", {
         title, date, sum
       });
-      console.log(res);
       //Jei backend grąžina success
       setModal_IncomeAdd(false);
       swal.fire({

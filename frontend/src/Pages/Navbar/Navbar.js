@@ -55,12 +55,6 @@ export default function Navbar() {
           </li>
           </Link>
           )}
-          <Link to="/history" id="nav_istorija">
-            <li className="navbar-item">
-              <VscHistory className="nav_icon" />
-              Istorija
-            </li>
-          </Link>
           <Link to="/logout" id="nav_atsijungti" onClick={() => auth.logout()}>
             <li className="navbar-item">
               <IoIosLogOut className="nav_icon" /> Atsijungti

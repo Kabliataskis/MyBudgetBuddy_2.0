@@ -8,14 +8,15 @@ import "./Income.css";
 import swal from "sweetalert2";
 import "../../index.css";
 import IncomeEdit_Modal from "./IncomeEditModal.js";
-import ReactPaginate from 'react-paginate';
 import IncomeAdd_Modal from "./IncomeAddModal";
+import calculateTotalIncome from "../General/Income_sum/Income_sum";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
   MdOutlineKeyboardArrowRight,
   MdKeyboardArrowLeft,
 } from "react-icons/md";
+
 export default function Incomes() {
   const [editId, setEditId] = useState();
   const [editPajamos, setEditPajamos] = useState({});
@@ -34,7 +35,7 @@ export default function Incomes() {
   useEffect(() => {
     getIncomes();
   }, []);
-
+  const totalIncome = calculateTotalIncome(incomes);
   async function deleteIncome(id) {
     swal
       .fire({
@@ -51,7 +52,6 @@ export default function Incomes() {
         if (result.isConfirmed) {
           try {
             const res = await axios.delete("/income/" + id);
-            console.log(res);
             swal.fire({
               title: "Sėkmingai",
               text: "Įrašas ištrintas",
@@ -67,15 +67,28 @@ export default function Incomes() {
   }
 
   const [value, setValue] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   const filterIncome = incomes.filter((el) => {
-    const title = el.title || ""; // fallback to an empty string if title is undefined or null
-    const lowercaseValue = value ? value.toLocaleLowerCase() : ""; // fallback to an empty string if value is undefined or null
-    return title.toLocaleLowerCase().includes(lowercaseValue);
+    const title = el.title || "";
+    const date = el.date || "";
+    const lowercaseValue = value ? value.toLocaleLowerCase() : "";
+
+  
+    const startDateObj = startDate ? new Date(startDate) : null;
+    const endDateObj = endDate ? new Date(endDate) : null;
+    const incomeDateObj = date ? new Date(date) : null;
+
+    const dateInRange =
+      (!startDateObj ||
+        startDateObj <= incomeDateObj.setHours(0, 0, 0, 0) + 86400000) &&
+      (!endDateObj || endDateObj >= incomeDateObj.setHours(0, 0, 0, 0));
+
+    return title.toLocaleLowerCase().includes(lowercaseValue) && dateInRange;
   });
 
   const editIncome = async (id) => {
-    console.log(id);
     setEditId(id);
     setModal_IncomeEdit(true);
   };
@@ -85,17 +98,17 @@ export default function Incomes() {
   const totalItems = filterIncome.length;
   const totalPages = Math.ceil(totalItems / pageSize);
   const pages = [];
+
   const getPageNumbers = () => {
     let pages = [];
 
-  
     if (totalPages <= 4) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
     } else {
       if (currentPage <= 4) {
-        pages = [1, 2, 3, 4, 5, "...",  totalPages];
+        pages = [1, 2, 3, 4, 5, "...", totalPages];
       } else if (currentPage > 4 && currentPage < totalPages - 2) {
         pages = [
           1,
@@ -107,16 +120,24 @@ export default function Incomes() {
           totalPages,
         ];
       } else {
-        pages = [1, "...", totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+        pages = [
+          1,
+          "...",
+          totalPages - 4,
+          totalPages - 3,
+          totalPages - 2,
+          totalPages - 1,
+          totalPages,
+        ];
       }
     }
-  
+
     return pages;
   };
-  
-for (let i = 1; i <= totalPages; i++) {
-  pages.push(i);
-}
+
+  for (let i = 1; i <= totalPages; i++) {
+    pages.push(i);
+  }
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
@@ -136,11 +157,21 @@ for (let i = 1; i <= totalPages; i++) {
       />
     );
   });
-  
 
+  const handleSearchChange = (e) => {
+    setValue(e.target.value);
+    setCurrentPage(1);
+  };
+  const removeFilter = (event) => {
+    event.preventDefault();
+    setCurrentPage(1);
+    setValue("");
+    setStartDate("");
+    setEndDate("");
+  };
   return (
     <div className="main_back Incomes">
-      <IncomeAdd_Modal getIncomes={getIncomes}/>
+      <IncomeAdd_Modal getIncomes={getIncomes} />
       <IncomeEdit_Modal
         editId={editId}
         modal_IncomeEdit={modal_IncomeEdit}
@@ -152,7 +183,7 @@ for (let i = 1; i <= totalPages; i++) {
         <h3 className="h3-text">Pajamos</h3>
         <div className="block_pajamos">
           <p className="block_pajamo">
-            Mėnesio pajamos: <span className="color-eur">5956€</span>
+            Mėnesio pajamos: <span className="color-eur">{totalIncome}€</span>
           </p>
           <button className="btn-gren" onClick={() => setModal_IncomeAdd(true)}>
             Įvesti pajamas
@@ -175,37 +206,61 @@ for (let i = 1; i <= totalPages; i++) {
             <tbody>{incomes_list}</tbody>
           </table>
           <div className="pagination-container">
-  <ul>
-    <li disabled={currentPage === 1} onClick={() => setCurrentPage(1)}>
-    <MdKeyboardDoubleArrowLeft  />
-    </li>
-    <li   onClick={() => setCurrentPage(currentPage===1 ? currentPage-0 : currentPage-1)}>
-    <MdKeyboardArrowLeft />
-    </li>
+            <ul>
+              <li
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage(1)}
+              >
+                <MdKeyboardDoubleArrowLeft />
+              </li>
+              <li
+                onClick={() =>
+                  setCurrentPage(
+                    currentPage === 1 ? currentPage - 0 : currentPage - 1
+                  )
+                }
+              >
+                <MdKeyboardArrowLeft />
+              </li>
 
-    {getPageNumbers().map((page, index) => (
-  <li
-    className={currentPage === page ? "select" : ""}
-    key={index}
-    onClick={() => {
-      if (page === "...") {
-        return;
-      }
-      setCurrentPage(page);
-    }}
-  >
-    {page}
-  </li>
-))}
+              {getPageNumbers().map((page, index) => (
+                <li
+                  className={currentPage === page ? "select" : ""}
+                  key={index}
+                  onClick={() => {
+                    if (page === "...") {
+                      return;
+                    }
+                    setCurrentPage(page);
+                  }}
+                >
+                  {page}
+                </li>
+              ))}
 
-
-  <li onClick={() => setCurrentPage(endIndex >= filterIncome.length ? currentPage-0 : currentPage+1)}>
-   <MdOutlineKeyboardArrowRight />
-  </li>
-  <li    onClick={() => setCurrentPage(endIndex >= filterIncome.length ? currentPage-0 : totalPages)}>
-  <MdKeyboardDoubleArrowRight />
-  </li>
-</ul>
+              <li
+                onClick={() =>
+                  setCurrentPage(
+                    endIndex >= filterIncome.length
+                      ? currentPage - 0
+                      : currentPage + 1
+                  )
+                }
+              >
+                <MdOutlineKeyboardArrowRight />
+              </li>
+              <li
+                onClick={() =>
+                  setCurrentPage(
+                    endIndex >= filterIncome.length
+                      ? currentPage - 0
+                      : totalPages
+                  )
+                }
+              >
+                <MdKeyboardDoubleArrowRight />
+              </li>
+            </ul>
           </div>
         </div>
         <div className="filter-block">
@@ -216,15 +271,34 @@ for (let i = 1; i <= totalPages; i++) {
                 type="text"
                 placeholder="Paieška..."
                 className="paieska_filter"
-                onChange={(event) => setValue(event.target.value)}
+                onChange={(e) => handleSearchChange(e)}
+                value={value}
               />
               <p className="data_filter_p">
                 <label htmlFor="nuo_data">Nuo</label>
-                <input className="data_filter" type="date" id="nuo_data" />
+                <input
+                  onChange={(event) => setStartDate(event.target.value)}
+                  className="data_filter"
+                  type="date"
+                  id="nuo_data"
+                  value={startDate}
+                />
+
                 <label htmlFor="iki_data">iki</label>
-                <input className="data_filter" type="date" id="iki_data" />
+                <input
+                  onChange={(event) => setEndDate(event.target.value)}
+                  className="data_filter"
+                  type="date"
+                  id="iki_data"
+                  value={endDate}
+                />
               </p>
-              <button className="btn-dark">Ieškoti</button>
+              <button
+                onClick={(event) => removeFilter(event)}
+                className="btn-dark"
+              >
+                Išvalyti
+              </button>
             </form>
           </div>
         </div>
@@ -232,4 +306,3 @@ for (let i = 1; i <= totalPages; i++) {
     </div>
   );
 }
-
