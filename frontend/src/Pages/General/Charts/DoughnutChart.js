@@ -6,9 +6,16 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function DoughnutChart(props) {
   const { expenses } = props;
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1; 
+  const filteredExpenses = expenses.filter(expense => {
+    const expenseDate = new Date(expense.date);
+    const expenseMonth = expenseDate.getMonth() + 1;
+    return expenseMonth === currentMonth;
+  });
 
-  const categories = getCategories(expenses);
-  const categoryTotals = categories.map(category => getCategoryTotal(expenses, category));
+  const categories = getCategories(filteredExpenses);
+  const categoryTotals = categories.map(category => getCategoryTotal(filteredExpenses, category));
 
   const data = {
     labels: categories,
