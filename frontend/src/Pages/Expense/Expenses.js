@@ -25,6 +25,18 @@ export default function Expenses() {
   const [expenses, setExpenses] = useState([]);
   const totalExpense = calculateTotalExpense(expenses);
 
+
+  const [categories, setCategories] = useState([])
+
+  let categories_list = categories.map((el) =>{
+    return(
+     <option value= {el.title} key={el._id+el.title}> 
+       {el.title}
+     </option>
+    )
+   });
+
+
   const getExpense = async () => {
     try {
       const res = await axios.get("/expense?");
@@ -33,9 +45,26 @@ export default function Expenses() {
       console.log(err);
     }
   };
+  const getCategories = async () => {
+    try {
+      const res = await axios.get("/category?");
+      setCategories(res.data.data.categories);
+      // console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     getExpense();
+    getCategories();
   }, []);
+
+
+
+
+
+
 
   async function deleteExpense(id) {
     swal
@@ -68,7 +97,43 @@ export default function Expenses() {
       });
   }
 
+
   const [value, setValue] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [categoryFilter, setCategoryFilter]= useState("");
+  const filterExpense = expenses.filter((el) => {
+    const title = el.title || "";
+    const date = el.date || "";
+    const category= el.category|| "";
+    const lowercaseValue = value ? value.toLocaleLowerCase() : "";
+
+  
+    const startDateObj = startDate ? new Date(startDate) : null;
+    const endDateObj = endDate ? new Date(endDate) : null;
+    const ExpenseDateObj = date ? new Date(date) : null;
+
+    const dateInRange =
+      (!startDateObj ||
+        startDateObj <= ExpenseDateObj.setHours(0, 0, 0, 0) + 86400000) &&
+      (!endDateObj || endDateObj >= ExpenseDateObj.setHours(0, 0, 0, 0));
+
+    return title.toLocaleLowerCase().includes(lowercaseValue) && dateInRange && category.includes(categoryFilter);
+  });
+
+  const handleSearchChange = (e) => {
+    setValue(e.target.value);
+    setCurrentPage(1);
+  };
+
+    const removeFilter = (event) => {
+    event.preventDefault();
+    setCurrentPage(1);
+    setValue("");
+    setStartDate("");
+    setEndDate("");
+    setCategoryFilter("");
+  };
 
   const editExpense = (id) => {
     console.log(id);
@@ -76,11 +141,7 @@ export default function Expenses() {
     setModal_ExpenseEdit(true);
   };
 
-  const filterExpense = expenses.filter((el) => {
-    const title = el.title || ""; // fallback to an empty string if title is undefined or null
-    const lowercaseValue = value ? value.toLocaleLowerCase() : ""; // fallback to an empty string if value is undefined or null
-    return title.toLocaleLowerCase().includes(lowercaseValue);
-  });
+
 
   const [pageSize, setPageSize] = useState(10); // number of records per page
   const [currentPage, setCurrentPage] = useState(1); // current page number
@@ -146,6 +207,7 @@ export default function Expenses() {
     );
   });
 
+ 
   return (
     <div className="main_back">
       <ExpenseAddModal getExpense={getExpense}/>
@@ -251,26 +313,26 @@ export default function Expenses() {
                 type="text"
                 placeholder="Paieška..."
                 className="paieska_filter"
-                onChange={(event) => setValue(event.target.value)}
+                onChange={(e) => handleSearchChange(e)}
+                value={value}
               />
               <select
                 className="dropdown-kategorija"
                 name="Kategorija"
                 id="Kategorija"
+                onChange={(event) => setCategoryFilter(event.target.value)}
               >
-                <option value="kategorija">Kategorija</option>
-                <option value="transportas">Transportas</option>
-                <option value="parduotuve">Parduotuvė</option>
-                <option value="mokesciai">Mokesčiai</option>
-                <option value="sveikata">Sveikata</option>
+                <option value="">Kategorija</option>
+                {categories_list}
+             
               </select>
               <p className="data_filter_p">
                 <label htmlFor="nuo_data">Nuo</label>{" "}
-                <input className="data_filter" type="date" id="nuo_data" />{" "}
+                <input onChange={(event) => setStartDate(event.target.value)}  className="data_filter" type="date" id="nuo_data" value={startDate} />{" "}
                 <label htmlFor="iki_data">iki</label>{" "}
-                <input className="data_filter" type="date" id="iki_data" />
+                <input onChange={(event) => setEndDate(event.target.value)} className="data_filter" type="date" id="iki_data" value={endDate} />
               </p>
-              <button className="btn-dark">Ieškoti</button>
+              <button  onClick={(event) => removeFilter(event)} className="btn-dark">Išvalyti</button>
             </form>
           </div>
         </div>
