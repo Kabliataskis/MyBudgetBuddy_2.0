@@ -1,5 +1,6 @@
 /* eslint-disable linebreak-style */
 const Expense = require("../models/expenseModel");
+const Category = require("../models/categoryModel");
 
 
 const addTime = (date) => {
@@ -27,7 +28,7 @@ const addTime = (date) => {
 exports.getAllExpense = async (req, res) => {
   const {limit = 0} = req.query
   try {
-    const allExpenses = await Expense.find({user_id: req.userInfo.id})
+    const allExpenses = await Expense.find({user_id: req.userInfo.id}).populate('category')
     .sort({ date: -1 })
     .limit(limit);
 
@@ -49,12 +50,14 @@ exports.getAllExpense = async (req, res) => {
 
 exports.getExpense = async (req, res) => {
   try {
-    const GetExpense = await Expense.findById(req.params.id);
+    const GetExpense = await Expense.findById(req.params.id).populate('category');
     if (!GetExpense) {
       return res.status(404).json({ msg: `Pajamos nr: ${id} neegzistuoja`});
     } else {
       if(GetExpense.user_id == req.userInfo.id){
         res.status(200).json(GetExpense);
+      }else{
+        // other user err
       }
     }
   } catch (error) {
@@ -67,17 +70,20 @@ exports.addExpense = async (req, res) => {
   console.log("new expense request");
   try {
 
-
-
-    const newExpense = await Expense.create({
-      user_id: req.userInfo.id,
-      category: req.body.category,
-      title: req.body.title,
-      sum: req.body.sum,
-      date: addTime(req.body.date),
-    });
-    console.log(newExpense);
-    res.status(201).json(newExpense);
+    const getCategory = await Category.findOne({title: req.body.category});
+    if(getCategory){
+      const newExpense = await Expense.create({
+        user_id: req.userInfo.id,
+        category: getCategory._id,
+        title: req.body.title,
+        sum: req.body.sum,
+        date: addTime(req.body.date),
+      });
+      console.log(newExpense);
+      res.status(201).json(newExpense);
+    }else{
+      return res.status(404).json({ msg: `Kategorija neegzistuoja`});
+    }
   } catch (err) {
     res.status(500).json({ mess: err });
   }

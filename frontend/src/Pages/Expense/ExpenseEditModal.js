@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "../../axios";
 import { toast } from "react-toastify";
 import { AiOutlineClose, AiFillWarning } from "react-icons/ai";
@@ -129,7 +129,29 @@ export default function ExpenseEditModal(props) {
   const closeModal = () => {
     setModal_ExpenseEdit(false);
   };
+  const getCategories = async () => {
+    try {
+      const res = await axios.get("/category?");
+      setCategories(res.data.data.categories);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+
+  const [categories, setCategories] = useState([])
+
+  let categories_list = categories.map((el) =>{
+    return(
+     <option value= {el.title} key={el._id+el.title}> 
+       {el.title}
+     </option>
+    )
+   });
   return (
     <>
       {modal_ExpenseEdit ? (
@@ -147,7 +169,7 @@ export default function ExpenseEditModal(props) {
               noValidate
               onSubmit={formik.handleSubmit}
             >
-              <select
+              {/* <select
                 className="boxOptions"
                 id="category"
                 value={formik.values.category}
@@ -161,6 +183,18 @@ export default function ExpenseEditModal(props) {
                 <option value="Mokesčiai">Mokesčiai</option>
                 <option value="Laisvalaikis">Laisvalaikis</option>
                 <option value="Parduotuvė">Parduotuvė</option>
+              </select> */}
+
+              <select
+                className="boxOptions"
+                id="category"
+                name="category"
+                value={formik.values.category}
+                onChange={formik.handleChange}
+              >
+                <option value="">Pasirinkite kategoriją</option>
+                {categories_list}
+             
               </select>
               {formik.touched.category && formik.errors.category ? (
                 <div className="error-mess-box">
