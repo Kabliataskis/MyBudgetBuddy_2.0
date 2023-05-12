@@ -7,7 +7,6 @@ import { AuthProvider, RequireAuth, RequireAdmin, AuthorizedRedirect } from "./C
 import Admin from "./Pages/Admin/Admin";
 import Budget from "./Pages/Budget/Budget";
 import Expense from "./Pages/Expense/Expenses";
-import History from "./Pages/History/History";
 import Auth from "./Pages/Auth/Auth";
 import Navbar from "./Pages/Navbar/Navbar";
 import General from "./Pages/General/General";

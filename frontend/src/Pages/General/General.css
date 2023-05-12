@@ -95,6 +95,10 @@
 .General .history-container .addBtn:hover {
   color: var(--grey-color);
 }
+.General-category-img{
+  width: 15px;
+  height: 15px;
+}
 .General .doughnut-chart-container {
   width: 500px;
   /* margin-right: 100px; */
