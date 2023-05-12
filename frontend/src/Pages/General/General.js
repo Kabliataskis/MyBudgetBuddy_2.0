@@ -21,29 +21,32 @@ export default function General() {
   const { setModal_IncomeAdd } = useContext(ContextProvider);
   const [incomes, setIncomes] = useState([]);
   const [expenses, setExpenses] = useState([]);
-  const getIncomes = async () => {
-    try {
-      const res = await axios.get("/income?");
-      setIncomes(res.data.data.incomes);
-    } catch (err) {
-      console.log(err);
-    }
-  };
   useEffect(() => {
-    getIncomes();
-  }, []);
+    const getIncomes = async () => {
+      try {
+        const res = await axios.get("/income?");
+        setIncomes(res.data.data.incomes);
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-  const getExpense = async () => {
-    try {
-      const res = await axios.get("/expense?");
-      setExpenses(res.data.data.expenses);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    getIncomes();
+  }, [setIncomes]);
+
   useEffect(() => {
+    const getExpense = async () => {
+      try {
+        const res = await axios.get("/expense?");
+        setExpenses(res.data.data.expenses);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     getExpense();
-  }, []);
+  }, [setExpenses]);
+
 
   const totalIncome = calculateTotalIncome(incomes);
   const totalExpense = calculateTotalExpense(expenses);
