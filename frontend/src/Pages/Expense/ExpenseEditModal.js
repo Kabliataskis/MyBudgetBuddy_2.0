@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "../../axios";
 import { toast } from "react-toastify";
 import { AiOutlineClose, AiFillWarning } from "react-icons/ai";
 import swal from "sweetalert2";
 import { useFormik } from "formik";
 export default function ExpenseEditModal(props) {
-  const { modal_ExpenseEdit, setModal_ExpenseEdit, editExpense } = props;
+  const { modal_ExpenseEdit, setModal_ExpenseEdit, editExpenseId } = props;
   const max_sum = 9999999; // Maksimali suma €
+
   const validate = (values) => {
     let selected_time = new Date(values.date).getTime();
     let curr_time = new Date().getTime();
@@ -43,12 +44,10 @@ export default function ExpenseEditModal(props) {
     return errors;
   };
   const onSubmit = async (values) => {
-    try {
-      let { title, date, sum } = values;
-      const res = await axios.post("/income", {
-        title,
-        date,
-        sum,
+    try{
+      let {category, title, date, sum} = values;
+      const res = await axios.patch("/expense/"+editExpenseId, {
+        category, title, date, sum
       });
       console.log(res);
       //Jei backend grąžina success
@@ -65,6 +64,32 @@ export default function ExpenseEditModal(props) {
       toast.error("Klaida");
     }
   };
+
+  const formatDate = (date) => {
+    date =  new Date(date);
+    let m = String(date.getMonth() + 1).padStart(2, '0'); // month with leading zero
+    let d = String(date.getDate()).padStart(2, '0'); // day with leading zero
+    let y = date.getFullYear()  // year
+    return `${y}-${m}-${d}`;
+}
+
+  useEffect(() => {
+    const getExpenseItem = async () => {
+      if(editExpenseId){
+        try {
+          const res = await axios.get("/expense/"+editExpenseId);
+          console.log(res.data);
+          formik.setFieldValue("category", res.data.category);
+          formik.setFieldValue("title", res.data.title);
+          formik.setFieldValue("date", formatDate(res.data.date));
+          formik.setFieldValue("sum", res.data.sum);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    }
+    getExpenseItem();
+  }, [editExpenseId]);
 
   const formik = useFormik({
     initialValues: {

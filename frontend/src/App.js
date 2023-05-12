@@ -7,14 +7,12 @@ import { AuthProvider, RequireAuth, RequireAdmin, AuthorizedRedirect } from "./C
 import Admin from "./Pages/Admin/Admin";
 import Budget from "./Pages/Budget/Budget";
 import Expense from "./Pages/Expense/Expenses";
-import History from "./Pages/History/History";
 import Auth from "./Pages/Auth/Auth";
 import Navbar from "./Pages/Navbar/Navbar";
 import General from "./Pages/General/General";
 import Income from "./Pages/Income/Incomes";
 import { useAuth } from "./Context/auth";
 /*Modals*/
-import ExpenseAddModal from "./Pages/Expense/ExpenseAddModal";
 export const ContextProvider = createContext();
 function App() {
   const [modal_ExpenseAdd, setModal_ExpenseAdd] = useState(false);
@@ -39,7 +37,7 @@ function App() {
                 path="/"
                 element={
                   <RequireAuth>
-                    <General /> <ExpenseAddModal />
+                    <General />
                   </RequireAuth>
                 }
               />
@@ -56,7 +54,7 @@ function App() {
                 path="/expense"
                 element={
                   <RequireAuth>
-                    <Expense /> <ExpenseAddModal />
+                    <Expense />
                   </RequireAuth>
                 }
               />

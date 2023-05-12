@@ -181,7 +181,7 @@
     display: flex;
     justify-content: space-between;
     justify-items: center;
-    width: 30%;
+    width: 35%;
 
   }
   .Budget .budget-status{
@@ -193,8 +193,9 @@
     background-color: var(--grey-color);
     border-radius: 5px;
     font-size: 20px;
-    margin-left: 27%;
-    margin-right: 27%;
+    margin-left: 10%;
+    margin-right: 10%;
+    justify-content: center;
     
   }
   .budget-status button{

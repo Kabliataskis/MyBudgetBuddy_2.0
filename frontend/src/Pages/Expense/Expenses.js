@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import swal from "sweetalert2";
 import ExpenseEditModal from "./ExpenseEditModal";
 import DownloadCSVButton from "../CSV_export/Csv";
+import calculateTotalExpense from "../General/Income_sum/Expense_sum";
+import ExpenseAddModal from "./ExpenseAddModal";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
@@ -16,18 +18,24 @@ import { ContextProvider } from "../../App";
 import "./Expense.css";
 import "../../index.css";
 export default function Expenses() {
+  const [editExpenseId, setEditExpenseId] = useState();
   const [editExpens, setEditExpens] = useState({});
   const [modal_ExpenseEdit, setModal_ExpenseEdit] = useState(false);
   const { setModal_ExpenseAdd } = useContext(ContextProvider);
-  const [expenses, setExpenses] = useState([
-    {
-      id: 1,
-      data: "2023-03-28",
-      kategorija: "Transportas",
-      pavadinimas: "Remontas",
-      suma: "200€",
-    },
-  ]);
+  const [expenses, setExpenses] = useState([]);
+  const totalExpense = calculateTotalExpense(expenses);
+
+
+  const [categories, setCategories] = useState([])
+
+  let categories_list = categories.map((el) =>{
+    return(
+     <option value= {el.title} key={el._id+el.title}> 
+       {el.title}
+     </option>
+    )
+   });
+
 
   const getExpense = async () => {
     try {
@@ -37,9 +45,26 @@ export default function Expenses() {
       console.log(err);
     }
   };
+  const getCategories = async () => {
+    try {
+      const res = await axios.get("/category?");
+      setCategories(res.data.data.categories);
+      // console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     getExpense();
+    getCategories();
   }, []);
+
+
+
+
+
+
 
   async function deleteExpense(id) {
     swal
@@ -72,33 +97,53 @@ export default function Expenses() {
       });
   }
 
-  const [value, setValue] = useState("");
 
-  // const filterExpense = expenses.filter((el) => {
-  //   return el.title
-  //     .toLocaleLowerCase()
-  //     .includes(value.toLocaleLowerCase());
-  // });
+  const [value, setValue] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [categoryFilter, setCategoryFilter]= useState("");
+  const filterExpense = expenses.filter((el) => {
+    const title = el.title || "";
+    const date = el.date || "";
+    const category= el.category|| "";
+    const lowercaseValue = value ? value.toLocaleLowerCase() : "";
+
+  
+    const startDateObj = startDate ? new Date(startDate) : null;
+    const endDateObj = endDate ? new Date(endDate) : null;
+    const ExpenseDateObj = date ? new Date(date) : null;
+
+    const dateInRange =
+      (!startDateObj ||
+        startDateObj <= ExpenseDateObj.setHours(0, 0, 0, 0) + 86400000) &&
+      (!endDateObj || endDateObj >= ExpenseDateObj.setHours(0, 0, 0, 0));
+
+    return title.toLocaleLowerCase().includes(lowercaseValue) && dateInRange && category.includes(categoryFilter);
+  });
+
+  const handleSearchChange = (e) => {
+    setValue(e.target.value);
+    setCurrentPage(1);
+  };
+
+    const removeFilter = (event) => {
+    event.preventDefault();
+    setCurrentPage(1);
+    setValue("");
+    setStartDate("");
+    setEndDate("");
+    setCategoryFilter("");
+  };
 
   const editExpense = (id) => {
     console.log(id);
-    let item_index;
-    expenses.forEach((el, index) => {
-      if (el.id == id) {
-        item_index = index;
-      }
-    });
-    setEditExpens(expenses[item_index]);
+    setEditExpenseId(id)
     setModal_ExpenseEdit(true);
   };
 
-  const filterExpense = expenses.filter((el) => {
-    const title = el.title || ""; // fallback to an empty string if title is undefined or null
-    const lowercaseValue = value ? value.toLocaleLowerCase() : ""; // fallback to an empty string if value is undefined or null
-    return title.toLocaleLowerCase().includes(lowercaseValue);
-  });
 
-  const [pageSize, setPageSize] = useState(10); // number of records per page
+
+  const [pageSize, setPageSize] = useState(5); // number of records per page
   const [currentPage, setCurrentPage] = useState(1); // current page number
   const totalItems = filterExpense.length;
   const totalPages = Math.ceil(totalItems / pageSize);
@@ -106,18 +151,17 @@ export default function Expenses() {
   const getPageNumbers = () => {
     let pages = [];
 
-    if (totalPages <= 5) {
+    if (totalPages <= 4) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
     } else {
-      if (currentPage <= 5) {
-        pages = [1, 2, 3, 4, 5,6, "...", totalPages];
+      if (currentPage <= 4) {
+        pages = [1, 2, 3, 4, 5, "...", totalPages];
       } else if (currentPage > 4 && currentPage < totalPages - 2) {
         pages = [
           1,
           "...",
-          currentPage - 2,
           currentPage - 1,
           currentPage,
           currentPage + 1,
@@ -155,6 +199,7 @@ export default function Expenses() {
       <Expense
         key={uuidv4()}
         obj={el}
+        id={el._id}
         setEditExpens={setEditExpens}
         editExpense={editExpense}
         deleteExpense={deleteExpense}
@@ -162,18 +207,22 @@ export default function Expenses() {
     );
   });
 
+ 
   return (
     <div className="main_back">
+      <ExpenseAddModal getExpense={getExpense}/>
       <ExpenseEditModal
+        editExpenseId={editExpenseId}
         modal_ExpenseEdit={modal_ExpenseEdit}
         setModal_ExpenseEdit={setModal_ExpenseEdit}
         editExpens={editExpens}
+        getExpense={getExpense}
       />
       <div className="container-pajamos">
         <h3 className="h3-text">Išlaidos</h3>
         <div className="block_pajamos">
           <p className="block_pajamo">
-            Mėnesio išlaidos: <span className="red-eur">5956€</span>
+            Mėnesio išlaidos: <span className="red-eur">{totalExpense}€</span>
           </p>
           <button className="btnAdd" onClick={() => setModal_ExpenseAdd(true)}>
             Įvesti išlaidas
@@ -264,26 +313,26 @@ export default function Expenses() {
                 type="text"
                 placeholder="Paieška..."
                 className="paieska_filter"
-                onChange={(event) => setValue(event.target.value)}
+                onChange={(e) => handleSearchChange(e)}
+                value={value}
               />
               <select
                 className="dropdown-kategorija"
                 name="Kategorija"
                 id="Kategorija"
+                onChange={(event) => setCategoryFilter(event.target.value)}
               >
-                <option value="kategorija">Kategorija</option>
-                <option value="transportas">Transportas</option>
-                <option value="parduotuve">Parduotuvė</option>
-                <option value="mokesciai">Mokesčiai</option>
-                <option value="sveikata">Sveikata</option>
+                <option value="">Kategorija</option>
+                {categories_list}
+             
               </select>
               <p className="data_filter_p">
                 <label htmlFor="nuo_data">Nuo</label>{" "}
-                <input className="data_filter" type="date" id="nuo_data" />{" "}
+                <input onChange={(event) => setStartDate(event.target.value)}  className="data_filter" type="date" id="nuo_data" value={startDate} />{" "}
                 <label htmlFor="iki_data">iki</label>{" "}
-                <input className="data_filter" type="date" id="iki_data" />
+                <input onChange={(event) => setEndDate(event.target.value)} className="data_filter" type="date" id="iki_data" value={endDate} />
               </p>
-              <button className="btn-dark">Ieškoti</button>
+              <button  onClick={(event) => removeFilter(event)} className="btn-dark">Išvalyti</button>
             </form>
           </div>
         </div>
