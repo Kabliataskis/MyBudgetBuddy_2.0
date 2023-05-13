@@ -3,20 +3,20 @@ import { FaTrash, FaPen } from "react-icons/fa";
 import "./Expense.css";
 
 export function getCategories(expenses) {
-  const categories = [...new Set(expenses.map(expense => expense.category))];
+  const categories = [...new Set(expenses.map(expense => expense.category.title))];
   return categories;
 }
 
 export function getCategoryTotal(expenses, category) {
   const total = expenses
-    .filter(expense => expense.category === category)
+    .filter(expense => expense.category.title === category)
     .reduce((sum, expense) => sum + expense.sum, 0);
   return total;
 }
 
 export default function Expense(props) {
   const{obj, editExpense, deleteExpense} = props;
-  const {_id, category, date, title, sum} = obj;
+  const {_id, date, category, title, sum} = obj;
 
   const formatDate = (date) => {
     date =  new Date(date);
@@ -25,11 +25,10 @@ export default function Expense(props) {
     let y = date.getFullYear()  // year
     return `${y}-${m}-${d}`;
 }
-
   return (
     <tr>
       <td>{formatDate(date)}</td>
-      <td>{category}</td>
+      <td>{category.title}</td>
       <td>{title}</td>
       <td className="red-eur">-{sum}€</td>
       <td>

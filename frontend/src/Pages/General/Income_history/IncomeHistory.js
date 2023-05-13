@@ -7,8 +7,7 @@ import IncomeAdd_Modal from "../../Income/IncomeAddModal";
 import { FaPiggyBank } from "react-icons/fa";
 
 export default function IncomeHistory() {
-  const [incomes, setIncomes] = useState([
-  ]);
+  const [incomes, setIncomes] = useState([]);
 
   const getIncomes = async () => {
     try {

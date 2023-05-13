@@ -12,6 +12,7 @@ exports.checkAuth = (req, res, next) => {
       );
       console.log(decoded);
       req.userInfo = decoded;
+      console.log(decoded);
       next();
     } catch (err) {
       console.log(err);

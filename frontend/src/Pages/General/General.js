@@ -31,7 +31,7 @@ export default function General() {
   };
   useEffect(() => {
     getIncomes();
-  }, [incomes]);
+  }, []);
 
   const getExpense = async () => {
     try {
@@ -43,7 +43,7 @@ export default function General() {
   };
   useEffect(() => {
     getExpense();
-  }, [expenses]);
+  }, []);
 
   const totalIncome = calculateTotalIncome(incomes);
   const totalExpense = calculateTotalExpense(expenses);
