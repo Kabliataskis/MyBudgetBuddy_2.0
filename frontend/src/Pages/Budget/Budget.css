@@ -94,7 +94,7 @@
     background-color: var(--dark-color);
     color: var(--white-color);
     border-radius: 5px;
-    padding: 3px 3px 3px 20px;
+    /* padding: 3px 3px 3px 20px; */
     font-size: 15px;
     border: none;
     border-right: 10px solid transparent;

@@ -24,6 +24,20 @@ export default function Budget() {
   useEffect(() => {
     getExpense();
   }, [expenses]);
+
+  const [incomes, setIncomes] = useState([]);
+  const getIncomes = async () => {
+    try {
+      const res = await axios.get("/income?");
+      setIncomes(res.data.data.incomes);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getIncomes();
+  }, []);
+
   function statusChange() {
     setLimit((prevLimit) => ({
       ...prevLimit,
@@ -72,27 +86,29 @@ export default function Budget() {
           <div className="inside-container">
             <div className="compare-container until">
               <p>Iki:</p>
-              <select className="dropdown-month" name="month" id="month">
+              {/* <select className="dropdown-month" name="month" id="month">
                 <option value="now">2023.05</option>
                 <option value="2023-04">2023.04</option>
                 <option value="2023-03">2023.03</option>
                 <option value="2023-02">2023.02</option>
                 <option value="2023-01">2023.01</option>
-              </select>
+              </select> */}
+              <input className="dropdown-month" type="date" />
             </div>
             <div className="compare-container from">
               <p>Nuo:</p>
-              <select className="dropdown-month" name="month" id="month">
+              {/* <select className="dropdown-month" name="month" id="month">
                 <option value="now">2023.05</option>
                 <option value="2023-04">2023.04</option>
                 <option value="2023-03">2023.03</option>
                 <option value="2023-02">2023.02</option>
                 <option value="2023-01">2023.01</option>
-              </select>
+              </select> */}
+              <input className="dropdown-month" type="date" />
             </div>
           </div>
           <div className="multiaxis-chart-container">
-            <MultiAxis />
+            <MultiAxis incomes={incomes}/>
           </div>
         </div>
       </div>
