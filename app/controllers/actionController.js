@@ -31,3 +31,24 @@ exports.getAllActions = async (req, res) => {
       });
     }
   };
+
+
+
+  exports.getActionCategories = async (req, res) => {
+    try {
+      const uniqueActions = await Action.distinct("action");
+      res.status(200).json({
+        status: "success",
+        results: uniqueActions.length,
+        data: {
+          categories: uniqueActions,
+        },
+      });
+    } catch (err) {
+      res.status(500).json({
+        status: "error",
+        message: err.message,
+      });
+    }
+  };
+

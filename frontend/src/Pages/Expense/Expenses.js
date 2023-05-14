@@ -27,7 +27,6 @@ export default function Expenses() {
 
 
   const [categories, setCategories] = useState([])
-console.log(categories);
   let categories_list = categories.map((el) =>{
     return(
      <option value= {el.title} key={el._id+el.title}> 

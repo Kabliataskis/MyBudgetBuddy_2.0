@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "../../../axios";
 import Action from "./Action";
+import { getActionTitle } from "../../../func";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
@@ -9,8 +10,21 @@ import {
   MdKeyboardArrowLeft,
 } from "react-icons/md";
 export const Actions = () => {
+  const [categoryFilter, setCategoryFilter]= useState("");
   const [value, setValue] = useState("");
   const [actions, setActions] = useState([]);
+  const [categories, setCategories] = useState([])
+
+
+  const getCategories = async () => {
+    try {
+      const res = await axios.get("/actions/categories");
+      setCategories(res.data.data.categories);
+      // console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const getActions = async () => {
     try {
@@ -22,13 +36,26 @@ export const Actions = () => {
   };
   useEffect(() => {
     getActions();
+    getCategories();
   }, []);
+
+
+
+  let categories_list = categories.map((el) =>{
+    return(
+      <option value={el}> 
+      {getActionTitle(el)}
+    </option>
+    )
+   });
+
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const filterActions = actions.filter((el) => {
-    const title = el.username || "";
+    const title = el.user_id.username || "";
     const date = el.createdAt || "";
+    const category = el.action || "";
     const lowercaseValue = value ? value.toLocaleLowerCase() : "";
   
     const startDateObj = startDate ? new Date(startDate) : null;
@@ -40,7 +67,7 @@ export const Actions = () => {
         startDateObj <= incomeDateObj.setHours(0, 0, 0, 0) + 86400000) &&
       (!endDateObj || endDateObj >= incomeDateObj.setHours(0, 0, 0, 0));
 
-    return title.toLocaleLowerCase().includes(lowercaseValue) && dateInRange;
+    return title.toLocaleLowerCase().includes(lowercaseValue) && dateInRange && category.includes(categoryFilter);
   });
 
   const removeFilter = (event) => {
@@ -49,6 +76,7 @@ export const Actions = () => {
     setValue("");
     setStartDate("");
     setEndDate("");
+    setCategoryFilter("");
   };
 
 
@@ -103,7 +131,10 @@ export const Actions = () => {
 
 
 
-
+  const handleSearchChange = (e) => {
+    setValue(e.target.value);
+    setCurrentPage(1);
+  };
 
 
   const startIndex = (currentPage - 1) * pageSize;
@@ -197,34 +228,32 @@ export const Actions = () => {
       <div className="filter-block">
           <h3>Filtravimas</h3>
           <div>
-            <form>
+          <form>
               <input
                 type="text"
                 placeholder="Vartotojo slapyvardis..."
                 className="paieska_filter"
-                onChange={(event) => setValue(event.target.value)}
+                onChange={(e) => handleSearchChange(e)}
                 value={value}
               />
+              <select
+                className="dropdown-kategorija"
+                name="Kategorija"
+                id="Kategorija"
+                onChange={(event) => setCategoryFilter(event.target.value)}
+                value={categoryFilter}
+              >
+                <option value="">Įvykis</option>
+                {categories_list}
+             
+              </select>
               <p className="data_filter_p">
-                <label className="word" htmlFor="nuo_data">Nuo</label>
-                <input
-                  onChange={(event) => setStartDate(event.target.value)}
-                  className="data_filter"
-                  type="date"
-                  id="nuo_data"
-                  value={startDate}
-                />
-
-                <label className="word2" htmlFor="iki_data">iki</label>
-                <input
-                  onChange={(event) => setEndDate(event.target.value)}
-                  className="data_filter"
-                  type="date"
-                  id="iki_data"
-                  value={endDate}
-                />
+                <label htmlFor="nuo_data">Nuo</label>{" "}
+                <input onChange={(event) => setStartDate(event.target.value)}  className="data_filter" type="date" id="nuo_data" value={startDate} />{" "}
+                <label htmlFor="iki_data">iki</label>{" "}
+                <input onChange={(event) => setEndDate(event.target.value)} className="data_filter" type="date" id="iki_data" value={endDate} />
               </p>
-              <button className="btn-dark" onClick={(event) => removeFilter(event)}>Išvalyti</button>
+              <button  onClick={(event) => removeFilter(event)} className="btn-dark">Išvalyti</button>
             </form>
           </div>
         </div>

@@ -62,7 +62,7 @@ export default function ExpenseEditModal(props) {
       formik.resetForm();
     } catch (err) {
       console.log(err);
-      toast.error("Klaida");
+      toast.error(`Klaida. ${err.response.data.msg}`);
     }
   };
 
