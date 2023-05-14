@@ -1,11 +1,10 @@
 const Category = require("../models/categoryModel");
-const User = require("../models/userModel");
 const Expense = require("../models/expenseModel");
+const {saveAction} = require("./actionController");
 
 
 exports.getAllCategories = async (req, res) => {
   const {limit = 0} = req.query;
-
   try {
     const allCategories = await Category.find()
     .sort({ createdAt: -1 })
@@ -51,7 +50,8 @@ exports.addCategory = async (req, res) => {
             title: req.body.title,
             imgSrc: req.body.imgSrc,
         });
-          res.status(201).json(newCategory);
+        await saveAction(req.userInfo.id, 'category_add', newCategory);
+        res.status(201).json(newCategory);
     }
 
   } catch (err) {
@@ -78,6 +78,7 @@ exports.deleteCategory = async (req, res) => {
                   message: `Kategorija nr: ${id} sėkmingai pašalinta.`,
                   category: Delete_Category,
                 });
+                await saveAction(req.userInfo.id, 'category_delete', Delete_Category);
               }catch (error){
                 res.status(500).json({ error: error.message });
               }
@@ -98,15 +99,17 @@ exports.editCategory = async (req, res) => {
     } else {
 
         try{
-          await Category.updateOne({
+          const Updated_Category = await Category.findOneAndUpdate({
                   _id: id,
                 },{
                   title: req.body.title,
                   imgSrc: req.body.imgSrc,
-                }
+                },  { new: true }
                 );
+                await saveAction(req.userInfo.id, 'category_edit', Updated_Category);
                 res.json({
-                  success: true,
+                  status: "success",
+                  data: Updated_Category
                 })
         }catch (error){
           res.status(500).json({ error: error.message });

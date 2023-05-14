@@ -1,96 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "../../../axios";
-import { toast } from "react-toastify";
-import swal from "sweetalert2";
-import User from "./User";
-import UserEdit_Modal from "./UserEditModal";
-import UserCreate_Modal from "./UserCreateModal";
+import Action from "./Action";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
   MdOutlineKeyboardArrowRight,
   MdKeyboardArrowLeft,
 } from "react-icons/md";
-export const Users = () => {
+export const Actions = () => {
   const [value, setValue] = useState("");
-  const [users, setUsers] = useState([]);
-  const [editId, setEditId] = useState();
-  const [modal_UserEdit, setModal_UserEdit] = useState(false);
-  const [modal_UserCreate, setModal_UserCreate] = useState(false);
-  const getUsers = async () => {
+  const [actions, setActions] = useState([]);
+
+  const getActions = async () => {
     try {
-      const res = await axios.get("/auth");
-      setUsers(res.data.data.users);
+      const res = await axios.get("/actions");
+      setActions(res.data.data.actions);
     } catch (err) {
       console.log(err);
     }
   };
   useEffect(() => {
-    getUsers();
+    getActions();
   }, []);
-
-  const editUser = async (id) => {
-    console.log(id);
-    setEditId(id);
-    setModal_UserEdit(true);
-  };
-  const deleteUser = (id) => {
-    swal
-      .fire({
-        title: "Veiksmo patvirtinimas",
-        text: "Ar tikrai norite ištrinti šį vartotoją?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#d33",
-        cancelButtonColor: "#243743",
-        confirmButtonText: "Ištrinti",
-        cancelButtonText: "Atšaukti!",
-      })
-      .then(async (result) => {
-        if (result.isConfirmed) {
-          try {
-            const res = await axios.delete("/user/" + id);
-            swal.fire({
-              title: "Sėkmingai",
-              text: "Vartotojas ištrintas",
-              icon: "success",
-              confirmButtonColor: "#28b78d",
-            });
-            getUsers();
-          } catch (err) {
-            toast.error(err.response.data.msg);
-          }
-        }
-      });
-  };
-  const updateUserRole = async (e, id, username) => {
-    console.log(id);
-    let role = e.target.value;
-    try {
-      const res = await axios.patch("/user/role/" + id, {
-        role,
-      });
-      getUsers();
-      // swal.fire({
-      //   title: "Sėkmingai",
-      //   text: "Vartotojo rolė atnaujinta",
-      //   icon: "success",
-      //   confirmButtonColor: "#28b78d",
-      // });
-      toast.success(`Vartotojo ${username} rolė atnaujinta`);
-    } catch (err) {
-      console.log(err);
-      toast.error(`Klaida. ${err.response.data.msg}`);
-    }
-  };
-
-
-
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const filterUsers = users.filter((el) => {
+  const filterActions = actions.filter((el) => {
     const title = el.username || "";
     const date = el.createdAt || "";
     const lowercaseValue = value ? value.toLocaleLowerCase() : "";
@@ -118,7 +54,7 @@ export const Users = () => {
 
   const [pageSize, setPageSize] = useState(10); // number of records per page
   const [currentPage, setCurrentPage] = useState(1); // current page number
-  const totalItems = filterUsers.length;
+  const totalItems = filterActions.length;
   const totalPages = Math.ceil(totalItems / pageSize);
   const pages = [];
 
@@ -172,44 +108,28 @@ export const Users = () => {
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-  let users_list = filterUsers.slice(startIndex, endIndex).map((el) => {
+  let actions_list = filterActions.slice(startIndex, endIndex).map((el) => {
     return (
-      <User
+      <Action
         key={uuidv4()}
         obj={el}
-        editUser={editUser}
-        deleteUser={deleteUser}
-        updateUserRole={updateUserRole}
       />
     );
   });
 
   return (
     <div className="container-pajamos flex_container">
-      <UserEdit_Modal
-        editId={editId}
-        modal_UserEdit={modal_UserEdit}
-        setModal_UserEdit={setModal_UserEdit}
-        getUsers={getUsers}
-      />
-      <UserCreate_Modal
-        modal_UserCreate={modal_UserCreate}
-        setModal_UserCreate={setModal_UserCreate}
-        getUsers={getUsers}
-      />
       <div className="table_main">
         <table>
           <thead>
             <tr>
-              <th>Reg. Data</th>
-              <th>Slapyvardis</th>
-              <th>El. Paštas</th>
-              <th>Rolė</th>
-              <th>Redaguoti</th>
-              <th>Pašalinti</th>
+              <th>Data</th>
+              <th>Vartotojas</th>
+              <th>Įvykis</th>
+              <th>Daugiau informacijos</th>
             </tr>
           </thead>
-          <tbody>{users_list}</tbody>
+          <tbody>{actions_list}</tbody>
         </table>
         <div className="pagination-container">
             <ul>
@@ -247,7 +167,7 @@ export const Users = () => {
               <li
                 onClick={() =>
                   setCurrentPage(
-                    endIndex >= users.length
+                    endIndex >= actions.length
                       ? currentPage - 0
                       : currentPage + 1
                   )
@@ -258,7 +178,7 @@ export const Users = () => {
               <li
                 onClick={() =>
                   setCurrentPage(
-                    endIndex >= users.length
+                    endIndex >= actions.length
                       ? currentPage - 0
                       : totalPages
                   )
@@ -275,8 +195,7 @@ export const Users = () => {
 
 
       <div className="filter-block">
-          <button className="Admin-createBtn" onClick={() => setModal_UserCreate(true)}>Sukurti vartotoją</button>
-          <h3 className="Admin-filter-title">Filtravimas</h3>
+          <h3>Filtravimas</h3>
           <div>
             <form>
               <input
@@ -313,4 +232,4 @@ export const Users = () => {
   );
 };
 
-export default Users;
+export default Actions;
