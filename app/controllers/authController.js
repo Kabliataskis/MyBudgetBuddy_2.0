@@ -68,7 +68,7 @@ exports.authRegister = async (req, res) => {
       });
       const { password, ...data } = newUser._doc;
       data.token = token;
-      await saveAction(data._id, 'register');
+      await saveAction(data._id, 'register', data);
       res.status(201).json({
         status: "success",
         data: data,
