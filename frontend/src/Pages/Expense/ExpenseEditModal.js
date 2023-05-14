@@ -5,7 +5,7 @@ import { AiOutlineClose, AiFillWarning } from "react-icons/ai";
 import swal from "sweetalert2";
 import { useFormik } from "formik";
 export default function ExpenseEditModal(props) {
-  const { modal_ExpenseEdit, setModal_ExpenseEdit, editExpenseId, getExpense } = props;
+  const { modal_ExpenseEdit, setModal_ExpenseEdit, editExpenseId, setEditExpenseId, getExpense } = props;
   const max_sum = 9999999; // Maksimali suma €
 
   const validate = (values) => {
@@ -59,10 +59,9 @@ export default function ExpenseEditModal(props) {
         icon: "success",
         confirmButtonColor: "#28b78d",
       });
-      formik.resetForm();
     } catch (err) {
       console.log(err);
-      toast.error("Klaida");
+      toast.error(`Klaida. ${err.response.data.msg}`);
     }
   };
 
@@ -79,13 +78,12 @@ export default function ExpenseEditModal(props) {
       if(editExpenseId){
         try {
           const res = await axios.get("/expense/"+editExpenseId);
-          console.log(res.data);
-          formik.setFieldValue("category", res.data.category);
+          formik.setFieldValue("category", res.data.category.title);
           formik.setFieldValue("title", res.data.title);
           formik.setFieldValue("date", formatDate(res.data.date));
           formik.setFieldValue("sum", res.data.sum);
         } catch (err) {
-          console.log(err);
+          toast.error(`Klaida. ${err.response.data.msg}`);
         }
       }
     }
@@ -129,6 +127,7 @@ export default function ExpenseEditModal(props) {
   // Modal close
   const closeModal = () => {
     setModal_ExpenseEdit(false);
+    setEditExpenseId();
   };
   const getCategories = async () => {
     try {

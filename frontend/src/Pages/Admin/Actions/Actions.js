@@ -1,98 +1,61 @@
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "../../../axios";
-import { toast } from "react-toastify";
-import swal from "sweetalert2";
-import User from "./User";
-import UserEdit_Modal from "./UserEditModal";
-import UserCreate_Modal from "./UserCreateModal";
+import Action from "./Action";
+import { getActionTitle } from "../../../func";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
   MdOutlineKeyboardArrowRight,
   MdKeyboardArrowLeft,
 } from "react-icons/md";
-export const Users = () => {
+export const Actions = () => {
+  const [categoryFilter, setCategoryFilter]= useState("");
   const [value, setValue] = useState("");
-  const [users, setUsers] = useState([]);
-  const [editId, setEditId] = useState();
-  const [modal_UserEdit, setModal_UserEdit] = useState(false);
-  const [modal_UserCreate, setModal_UserCreate] = useState(false);
-  const getUsers = async () => {
+  const [actions, setActions] = useState([]);
+  const [categories, setCategories] = useState([])
+
+
+  const getCategories = async () => {
     try {
-      const res = await axios.get("/auth");
-      setUsers(res.data.data.users);
+      const res = await axios.get("/actions/categories");
+      setCategories(res.data.data.categories);
+      // console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getActions = async () => {
+    try {
+      const res = await axios.get("/actions");
+      setActions(res.data.data.actions);
     } catch (err) {
       console.log(err);
     }
   };
   useEffect(() => {
-    getUsers();
+    getActions();
+    getCategories();
   }, []);
 
-  const editUser = async (id) => {
-    console.log(id);
-    setEditId(id);
-    setModal_UserEdit(true);
-  };
-  const deleteUser = (id) => {
-    swal
-      .fire({
-        title: "Veiksmo patvirtinimas",
-        text: "Ar tikrai norite ištrinti šį vartotoją?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#d33",
-        cancelButtonColor: "#243743",
-        confirmButtonText: "Ištrinti",
-        cancelButtonText: "Atšaukti!",
-      })
-      .then(async (result) => {
-        if (result.isConfirmed) {
-          try {
-            const res = await axios.delete("/user/" + id);
-            swal.fire({
-              title: "Sėkmingai",
-              text: "Vartotojas ištrintas",
-              icon: "success",
-              confirmButtonColor: "#28b78d",
-            });
-            getUsers();
-          } catch (err) {
-            toast.error(err.response.data.msg);
-          }
-        }
-      });
-  };
-  const updateUserRole = async (e, id, username) => {
-    console.log(id);
-    let role = e.target.value;
-    try {
-      const res = await axios.patch("/user/role/" + id, {
-        role,
-      });
-      getUsers();
-      // swal.fire({
-      //   title: "Sėkmingai",
-      //   text: "Vartotojo rolė atnaujinta",
-      //   icon: "success",
-      //   confirmButtonColor: "#28b78d",
-      // });
-      toast.success(`Vartotojo ${username} rolė atnaujinta`);
-    } catch (err) {
-      console.log(err);
-      toast.error(`Klaida. ${err.response.data.msg}`);
-    }
-  };
 
 
+  let categories_list = categories.map((el) =>{
+    return(
+      <option value={el} key={uuidv4() +0}> 
+      {getActionTitle(el)}
+    </option>
+    )
+   });
 
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const filterUsers = users.filter((el) => {
-    const title = el.username || "";
+  const filterActions = actions.filter((el) => {
+    const title = el.user_id.username || "";
     const date = el.createdAt || "";
+    const category = el.action || "";
     const lowercaseValue = value ? value.toLocaleLowerCase() : "";
   
     const startDateObj = startDate ? new Date(startDate) : null;
@@ -104,7 +67,7 @@ export const Users = () => {
         startDateObj <= incomeDateObj.setHours(0, 0, 0, 0) + 86400000) &&
       (!endDateObj || endDateObj >= incomeDateObj.setHours(0, 0, 0, 0));
 
-    return title.toLocaleLowerCase().includes(lowercaseValue) && dateInRange;
+    return title.toLocaleLowerCase().includes(lowercaseValue) && dateInRange && category.includes(categoryFilter);
   });
 
   const removeFilter = (event) => {
@@ -113,12 +76,13 @@ export const Users = () => {
     setValue("");
     setStartDate("");
     setEndDate("");
+    setCategoryFilter("");
   };
 
 
   const [pageSize, setPageSize] = useState(10); // number of records per page
   const [currentPage, setCurrentPage] = useState(1); // current page number
-  const totalItems = filterUsers.length;
+  const totalItems = filterActions.length;
   const totalPages = Math.ceil(totalItems / pageSize);
   const pages = [];
 
@@ -167,50 +131,36 @@ export const Users = () => {
 
 
 
-
+  const handleSearchChange = (e) => {
+    setValue(e.target.value);
+    setCurrentPage(1);
+  };
 
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-  let users_list = filterUsers.slice(startIndex, endIndex).map((el) => {
+  let actions_list = filterActions.slice(startIndex, endIndex).map((el) => {
     return (
-      <User
+      <Action
         key={uuidv4()}
         obj={el}
-        editUser={editUser}
-        deleteUser={deleteUser}
-        updateUserRole={updateUserRole}
       />
     );
   });
 
   return (
     <div className="container-pajamos flex_container">
-      <UserEdit_Modal
-        editId={editId}
-        setEditId={setEditId}
-        modal_UserEdit={modal_UserEdit}
-        setModal_UserEdit={setModal_UserEdit}
-        getUsers={getUsers}
-      />
-      <UserCreate_Modal
-        modal_UserCreate={modal_UserCreate}
-        setModal_UserCreate={setModal_UserCreate}
-        getUsers={getUsers}
-      />
       <div className="table_main">
         <table>
           <thead>
             <tr>
-              <th>Reg. Data</th>
-              <th>Slapyvardis</th>
-              <th>El. Paštas</th>
-              <th>Rolė</th>
-              <th>Redaguoti</th>
-              <th>Pašalinti</th>
+              <th>Data</th>
+              <th>Vartotojas</th>
+              <th>Įvykis</th>
+              <th>Daugiau informacijos</th>
             </tr>
           </thead>
-          <tbody>{users_list}</tbody>
+          <tbody>{actions_list}</tbody>
         </table>
         <div className="pagination-container">
             <ul>
@@ -248,7 +198,7 @@ export const Users = () => {
               <li
                 onClick={() =>
                   setCurrentPage(
-                    endIndex >= users.length
+                    endIndex >= actions.length
                       ? currentPage - 0
                       : currentPage + 1
                   )
@@ -259,7 +209,7 @@ export const Users = () => {
               <li
                 onClick={() =>
                   setCurrentPage(
-                    endIndex >= users.length
+                    endIndex >= actions.length
                       ? currentPage - 0
                       : totalPages
                   )
@@ -270,43 +220,38 @@ export const Users = () => {
             </ul>
           </div>
 
-
-
       </div>
 
 
       <div className="filter-block">
-          <button className="Admin-createBtn" onClick={() => setModal_UserCreate(true)}>Sukurti vartotoją</button>
-          <h3 className="Admin-filter-title">Filtravimas</h3>
+          <h3>Filtravimas</h3>
           <div>
-            <form>
+          <form>
               <input
                 type="text"
                 placeholder="Vartotojo slapyvardis..."
                 className="paieska_filter"
-                onChange={(event) => setValue(event.target.value)}
+                onChange={(e) => handleSearchChange(e)}
                 value={value}
               />
+              <select
+                className="dropdown-kategorija"
+                name="Kategorija"
+                id="Kategorija"
+                onChange={(event) => setCategoryFilter(event.target.value)}
+                value={categoryFilter}
+              >
+                <option value="">Įvykis</option>
+                {categories_list}
+             
+              </select>
               <p className="data_filter_p">
-                <label className="word" htmlFor="nuo_data">Nuo</label>
-                <input
-                  onChange={(event) => setStartDate(event.target.value)}
-                  className="data_filter"
-                  type="date"
-                  id="nuo_data"
-                  value={startDate}
-                />
-
-                <label className="word2" htmlFor="iki_data">iki</label>
-                <input
-                  onChange={(event) => setEndDate(event.target.value)}
-                  className="data_filter"
-                  type="date"
-                  id="iki_data"
-                  value={endDate}
-                />
+                <label htmlFor="nuo_data">Nuo</label>{" "}
+                <input onChange={(event) => setStartDate(event.target.value)}  className="data_filter" type="date" id="nuo_data" value={startDate} />{" "}
+                <label htmlFor="iki_data">iki</label>{" "}
+                <input onChange={(event) => setEndDate(event.target.value)} className="data_filter" type="date" id="iki_data" value={endDate} />
               </p>
-              <button className="btn-dark" onClick={(event) => removeFilter(event)}>Išvalyti</button>
+              <button  onClick={(event) => removeFilter(event)} className="btn-dark">Išvalyti</button>
             </form>
           </div>
         </div>
@@ -314,4 +259,4 @@ export const Users = () => {
   );
 };
 
-export default Users;
+export default Actions;

@@ -222,6 +222,7 @@ export default function Incomes() {
       <IncomeAdd_Modal getIncomes={getIncomes} />
       <IncomeEdit_Modal
         editId={editId}
+        setEditId={setEditId}
         modal_IncomeEdit={modal_IncomeEdit}
         setModal_IncomeEdit={setModal_IncomeEdit}
         editPajamos={editPajamos}

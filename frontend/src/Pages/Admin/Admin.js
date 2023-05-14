@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Admin.css";
 import Categories from "./Categories/Categories";
 import Users from "./Users/Users";
+import Actions from "./Actions/Actions";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export const Admin = () => {
@@ -17,7 +18,7 @@ export const Admin = () => {
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const type = searchParams.get("type");
-    if (type == "categories" || type == "users" || type == "logs") {
+    if (type == "categories" || type == "users" || type == "actions") {
       setShowPage(type);
     }
   }, [location.search]);
@@ -49,9 +50,9 @@ export const Admin = () => {
           </button>
           <button
             className={
-              showPage == "logs" ? "Admin-nav-item  selected" : "Admin-nav-item"
+              showPage == "actions" ? "Admin-nav-item  selected" : "Admin-nav-item"
             }
-            onClick={() => funcShowPage("logs")}
+            onClick={() => funcShowPage("actions")}
           >
             Įvykių žurnalas
           </button>
@@ -60,7 +61,7 @@ export const Admin = () => {
 
       {showPage == "categories" ? <Categories /> : null}
       {showPage == "users" ? <Users /> : null}
-      {showPage == "logs" ? <Users /> : null}
+      {showPage == "actions" ? <Actions /> : null}
     </div>
   );
 };

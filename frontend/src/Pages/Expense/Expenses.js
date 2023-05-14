@@ -27,7 +27,6 @@ export default function Expenses() {
 
 
   const [categories, setCategories] = useState([])
-console.log(categories);
   let categories_list = categories.map((el) =>{
     return(
      <option value= {el.title} key={el._id+el.title}> 
@@ -214,6 +213,7 @@ console.log(categories);
       <ExpenseAddModal getExpense={getExpense}/>
       <ExpenseEditModal
         editExpenseId={editExpenseId}
+        setEditExpenseId={setEditExpenseId}
         modal_ExpenseEdit={modal_ExpenseEdit}
         setModal_ExpenseEdit={setModal_ExpenseEdit}
         editExpens={editExpens}

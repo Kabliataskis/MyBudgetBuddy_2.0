@@ -68,7 +68,7 @@ export default function ExpenseAddModal(props) {
       getExpense();
     } catch (err) {
       console.log(err);
-      toast.error("Klaida");
+      toast.error(`Klaida. ${err.response.data.msg}`);
     }
   };
 
