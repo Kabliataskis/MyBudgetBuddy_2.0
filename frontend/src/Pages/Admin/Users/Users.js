@@ -5,13 +5,19 @@ import { toast } from "react-toastify";
 import swal from "sweetalert2";
 import User from "./User";
 import UserEdit_Modal from "./UserEditModal";
+import UserCreate_Modal from "./UserCreateModal";
+import {
+  MdKeyboardDoubleArrowLeft,
+  MdKeyboardDoubleArrowRight,
+  MdOutlineKeyboardArrowRight,
+  MdKeyboardArrowLeft,
+} from "react-icons/md";
 export const Users = () => {
   const [value, setValue] = useState("");
-  const [pageSize, setPageSize] = useState(10); // number of records per page
-  const [currentPage, setCurrentPage] = useState(1); // current page number
   const [users, setUsers] = useState([]);
   const [editId, setEditId] = useState();
   const [modal_UserEdit, setModal_UserEdit] = useState(false);
+  const [modal_UserCreate, setModal_UserCreate] = useState(false);
   const getUsers = async () => {
     try {
       const res = await axios.get("/auth");
@@ -78,15 +84,94 @@ export const Users = () => {
       toast.error(`Klaida. ${err.response.data.msg}`);
     }
   };
+
+
+
+
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const filterUsers = users.filter((el) => {
-    const title = el.title || ""; // fallback to an empty string if title is undefined or null
-    const lowercaseValue = value ? value.toLocaleLowerCase() : ""; // fallback to an empty string if value is undefined or null
-    return title.toLocaleLowerCase().includes(lowercaseValue);
+    const title = el.username || "";
+    const date = el.createdAt || "";
+    const lowercaseValue = value ? value.toLocaleLowerCase() : "";
+  
+    const startDateObj = startDate ? new Date(startDate) : null;
+    const endDateObj = endDate ? new Date(endDate) : null;
+    const incomeDateObj = date ? new Date(date) : null;
+
+    const dateInRange =
+      (!startDateObj ||
+        startDateObj <= incomeDateObj.setHours(0, 0, 0, 0) + 86400000) &&
+      (!endDateObj || endDateObj >= incomeDateObj.setHours(0, 0, 0, 0));
+
+    return title.toLocaleLowerCase().includes(lowercaseValue) && dateInRange;
   });
+
+  const removeFilter = (event) => {
+    event.preventDefault();
+    setCurrentPage(1);
+    setValue("");
+    setStartDate("");
+    setEndDate("");
+  };
+
+
+  const [pageSize, setPageSize] = useState(10); // number of records per page
+  const [currentPage, setCurrentPage] = useState(1); // current page number
+  const totalItems = filterUsers.length;
+  const totalPages = Math.ceil(totalItems / pageSize);
+  const pages = [];
+
+  const getPageNumbers = () => {
+    let pages = [];
+
+    if (totalPages <= 4) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage <= 4) {
+        pages = [1, 2, 3, 4, 5, "...", totalPages];
+      } else if (currentPage > 4 && currentPage < totalPages - 2) {
+        pages = [
+          1,
+          "...",
+          currentPage - 1,
+          currentPage,
+          currentPage + 1,
+          "...",
+          totalPages,
+        ];
+      } else {
+        pages = [
+          1,
+          "...",
+          totalPages - 4,
+          totalPages - 3,
+          totalPages - 2,
+          totalPages - 1,
+          totalPages,
+        ];
+      }
+      pages.push(totalPages);
+    }
+
+    return pages;
+  };
+
+  for (let i = 1; i <= totalPages; i++) {
+    pages.push(i);
+  }
+
+
+
+
+
+
+
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-
   let users_list = filterUsers.slice(startIndex, endIndex).map((el) => {
     return (
       <User
@@ -107,6 +192,11 @@ export const Users = () => {
         setModal_UserEdit={setModal_UserEdit}
         getUsers={getUsers}
       />
+      <UserCreate_Modal
+        modal_UserCreate={modal_UserCreate}
+        setModal_UserCreate={setModal_UserCreate}
+        getUsers={getUsers}
+      />
       <div className="table_main">
         <table>
           <thead>
@@ -121,28 +211,104 @@ export const Users = () => {
           </thead>
           <tbody>{users_list}</tbody>
         </table>
+        <div className="pagination-container">
+            <ul>
+              <li
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage(1)}
+              >
+                <MdKeyboardDoubleArrowLeft />
+              </li>
+              <li
+                onClick={() =>
+                  setCurrentPage(
+                    currentPage === 1 ? currentPage - 0 : currentPage - 1
+                  )
+                }
+              >
+                <MdKeyboardArrowLeft />
+              </li>
+
+              {getPageNumbers().map((page, index) => (
+                <li
+                  className={currentPage === page ? "select" : ""}
+                  key={index}
+                  onClick={() => {
+                    if (page === "...") {
+                      return;
+                    }
+                    setCurrentPage(page);
+                  }}
+                >
+                  {page}
+                </li>
+              ))}
+
+              <li
+                onClick={() =>
+                  setCurrentPage(
+                    endIndex >= users.length
+                      ? currentPage - 0
+                      : currentPage + 1
+                  )
+                }
+              >
+                <MdOutlineKeyboardArrowRight />
+              </li>
+              <li
+                onClick={() =>
+                  setCurrentPage(
+                    endIndex >= users.length
+                      ? currentPage - 0
+                      : totalPages
+                  )
+                }
+              >
+                <MdKeyboardDoubleArrowRight />
+              </li>
+            </ul>
+          </div>
+
+
+
       </div>
 
+
       <div className="filter-block">
-        <h3>Filtravimas</h3>
-        <div>
-          <form>
-            <input
-              type="text"
-              placeholder="Paieška..."
-              className="paieska_filter"
-              onChange={(event) => setValue(event.target.value)}
-            />
-            <p className="data_filter_p">
-              <label htmlFor="nuo_data">Nuo</label>
-              <input className="data_filter" type="date" id="nuo_data" />
-              <label htmlFor="iki_data">iki</label>
-              <input className="data_filter" type="date" id="iki_data" />
-            </p>
-            <button className="btn-dark">Ieškoti</button>
-          </form>
+          <button className="Admin-createBtn" onClick={() => setModal_UserCreate(true)}>Sukurti vartotoją</button>
+          <h3 className="Admin-filter-title">Filtravimas</h3>
+          <div>
+            <form>
+              <input
+                type="text"
+                placeholder="Vartotojo slapyvardis..."
+                className="paieska_filter"
+                onChange={(event) => setValue(event.target.value)}
+                value={value}
+              />
+              <p className="data_filter_p">
+                <label className="word" htmlFor="nuo_data">Nuo</label>
+                <input
+                  onChange={(event) => setStartDate(event.target.value)}
+                  className="data_filter"
+                  type="date"
+                  id="nuo_data"
+                  value={startDate}
+                />
+
+                <label className="word2" htmlFor="iki_data">iki</label>
+                <input
+                  onChange={(event) => setEndDate(event.target.value)}
+                  className="data_filter"
+                  type="date"
+                  id="iki_data"
+                  value={endDate}
+                />
+              </p>
+              <button className="btn-dark" onClick={(event) => removeFilter(event)}>Išvalyti</button>
+            </form>
+          </div>
         </div>
-      </div>
     </div>
   );
 };

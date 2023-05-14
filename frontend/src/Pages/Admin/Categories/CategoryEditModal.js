@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineClose, AiFillWarning } from "react-icons/ai";
 import { toast } from "react-toastify";
 import swal from "sweetalert2";
@@ -8,6 +8,7 @@ import { useFormik } from "formik";
 
 export default function CategoryEditModal(props) {
   const {modal_categoryEdit, setModal_categoryEdit, editId, getCategories} = props;
+  const [resData, setResData] = useState();
   const validate = (values) => {
     let errors = {};
 
@@ -50,6 +51,7 @@ export default function CategoryEditModal(props) {
       if(editId){
         try {
           const res = await axios.get("/category/"+editId);
+          setResData(res.data);
           formik.setFieldValue("title", res.data.title);
           formik.setFieldValue("imgSrc", res.data.imgSrc);
         } catch (err) {
@@ -79,6 +81,8 @@ export default function CategoryEditModal(props) {
   // Modal close
   const closeModal = () => {
     setModal_categoryEdit(false);
+    formik.setFieldValue("title", resData.title);
+    formik.setFieldValue("imgSrc", resData.imgSrc);
     //formik.resetForm(); // reset forma
   };
 
@@ -154,7 +158,7 @@ export default function CategoryEditModal(props) {
                   type="reset"
                   onClick={() => {
                     closeModal();
-                    formik.resetForm();
+                    // formik.resetForm();
                   }}
                 >
                   Atšaukti

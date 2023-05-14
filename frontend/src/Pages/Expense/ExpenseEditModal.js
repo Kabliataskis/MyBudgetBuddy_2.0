@@ -80,7 +80,7 @@ export default function ExpenseEditModal(props) {
         try {
           const res = await axios.get("/expense/"+editExpenseId);
           console.log(res.data);
-          formik.setFieldValue("category", res.data.category);
+          formik.setFieldValue("category", res.data.category.title);
           formik.setFieldValue("title", res.data.title);
           formik.setFieldValue("date", formatDate(res.data.date));
           formik.setFieldValue("sum", res.data.sum);

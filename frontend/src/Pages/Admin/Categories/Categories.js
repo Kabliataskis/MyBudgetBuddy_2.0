@@ -63,12 +63,31 @@ export const Categories = () => {
       });
   }
 
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const filterCategory = categories.filter((el) => {
-    const title = el.title || ""; // fallback to an empty string if title is undefined or null
-    const lowercaseValue = value ? value.toLocaleLowerCase() : ""; // fallback to an empty string if value is undefined or null
-    return title.toLocaleLowerCase().includes(lowercaseValue);
-  });
+    const title = el.title || "";
+    const date = el.createdAt || "";
+    const lowercaseValue = value ? value.toLocaleLowerCase() : "";
+  
+    const startDateObj = startDate ? new Date(startDate) : null;
+    const endDateObj = endDate ? new Date(endDate) : null;
+    const incomeDateObj = date ? new Date(date) : null;
 
+    const dateInRange =
+      (!startDateObj ||
+        startDateObj <= incomeDateObj.setHours(0, 0, 0, 0) + 86400000) &&
+      (!endDateObj || endDateObj >= incomeDateObj.setHours(0, 0, 0, 0));
+
+    return title.toLocaleLowerCase().includes(lowercaseValue) && dateInRange;
+  });
+  const removeFilter = (event) => {
+    event.preventDefault();
+    // setCurrentPage(1);
+    setValue("");
+    setStartDate("");
+    setEndDate("");
+  };
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
 
@@ -114,7 +133,7 @@ export const Categories = () => {
 
           <div className="filter-block">
           <button className="Admin-createBtn" onClick={() => setModal_categoryCreate(true)}>Sukurti kategoriją</button>
-          <h3>Filtravimas</h3>
+          <h3 className="Admin-filter-title">Filtravimas</h3>
           <div>
             <form>
               <input
@@ -122,14 +141,28 @@ export const Categories = () => {
                 placeholder="Paieška..."
                 className="paieska_filter"
                 onChange={(event) => setValue(event.target.value)}
+                value={value}
               />
               <p className="data_filter_p">
-                <label htmlFor="nuo_data">Nuo</label>
-                <input className="data_filter" type="date" id="nuo_data" />
-                <label htmlFor="iki_data">iki</label>
-                <input className="data_filter" type="date" id="iki_data" />
+                <label className="word" htmlFor="nuo_data">Nuo</label>
+                <input
+                  onChange={(event) => setStartDate(event.target.value)}
+                  className="data_filter"
+                  type="date"
+                  id="nuo_data"
+                  value={startDate}
+                />
+
+                <label className="word2" htmlFor="iki_data">iki</label>
+                <input
+                  onChange={(event) => setEndDate(event.target.value)}
+                  className="data_filter"
+                  type="date"
+                  id="iki_data"
+                  value={endDate}
+                />
               </p>
-              <button className="btn-dark">Ieškoti</button>
+              <button className="btn-dark" onClick={(event) => removeFilter(event)}>Išvalyti</button>
             </form>
           </div>
         </div>

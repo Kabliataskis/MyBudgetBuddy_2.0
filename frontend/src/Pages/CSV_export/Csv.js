@@ -20,7 +20,7 @@ function DownloadCSVButton() {
   }, []);
 
   const csvHeaders = [
-    { label: "Kategorija", key: "category" },
+    { label: "Kategorija", key: "category.title" },
     { label: "Pavadinimas", key: "title" },
     { label: "Suma", key: "sum" },
     { label: "Data", key: "date" },
