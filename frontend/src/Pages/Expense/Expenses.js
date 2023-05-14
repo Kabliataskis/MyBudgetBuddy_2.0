@@ -213,6 +213,7 @@ export default function Expenses() {
       <ExpenseAddModal getExpense={getExpense}/>
       <ExpenseEditModal
         editExpenseId={editExpenseId}
+        setEditExpenseId={setEditExpenseId}
         modal_ExpenseEdit={modal_ExpenseEdit}
         setModal_ExpenseEdit={setModal_ExpenseEdit}
         editExpens={editExpens}

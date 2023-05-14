@@ -43,7 +43,7 @@ export const Actions = () => {
 
   let categories_list = categories.map((el) =>{
     return(
-      <option value={el}> 
+      <option value={el} key={uuidv4() +0}> 
       {getActionTitle(el)}
     </option>
     )
@@ -219,8 +219,6 @@ export const Actions = () => {
               </li>
             </ul>
           </div>
-
-
 
       </div>
 

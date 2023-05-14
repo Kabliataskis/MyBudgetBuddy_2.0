@@ -37,7 +37,7 @@ export default function Action(props) {
       details = `Pavadinimas: ${data.title}`;
       break;
     case "expense_add":
-      details = `Pavadinimas: ${data.title}, suma: -${data.sum} €`;
+      details = `Pavadinimas: ${data.title}, kategorija: ${data.category.title} suma: -${data.sum} €`;
       break;
     case "expense_edit":
       details = `Pavadinimas: ${data.title}`;

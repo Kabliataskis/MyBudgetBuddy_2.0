@@ -6,13 +6,17 @@ import CategoryEditModal from "./CategoryEditModal";
 import { toast } from "react-toastify";
 import swal from "sweetalert2";
 import axios from "../../../axios";
+import {
+  MdKeyboardDoubleArrowLeft,
+  MdKeyboardDoubleArrowRight,
+  MdOutlineKeyboardArrowRight,
+  MdKeyboardArrowLeft,
+} from "react-icons/md";
 export const Categories = () => {
   const [modal_categoryCreate, setModal_categoryCreate] = useState(false);
   const [modal_categoryEdit, setModal_categoryEdit] = useState(false);
   const [editId, setEditId] = useState();
   const [value, setValue] = useState("");
-  const [pageSize, setPageSize] = useState(10); // number of records per page
-  const [currentPage, setCurrentPage] = useState(1); // current page number
   const [categories, setCategories] = useState([]);
 
   const getCategories = async () => {
@@ -88,6 +92,56 @@ export const Categories = () => {
     setStartDate("");
     setEndDate("");
   };
+
+
+  const [pageSize, setPageSize] = useState(10); // number of records per page
+  const [currentPage, setCurrentPage] = useState(1); // current page number
+  const totalItems = filterCategory.length;
+  const totalPages = Math.ceil(totalItems / pageSize);
+  const pages = [];
+
+  const getPageNumbers = () => {
+    let pages = [];
+
+    if (totalPages <= 4) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage <= 4) {
+        pages = [1, 2, 3, 4, 5, "...", totalPages];
+      } else if (currentPage > 4 && currentPage < totalPages - 2) {
+        pages = [
+          1,
+          "...",
+          currentPage - 1,
+          currentPage,
+          currentPage + 1,
+          "...",
+          totalPages,
+        ];
+      } else {
+        pages = [
+          1,
+          "...",
+          totalPages - 4,
+          totalPages - 3,
+          totalPages - 2,
+          totalPages - 1,
+          totalPages,
+        ];
+      }
+      pages.push(totalPages);
+    }
+
+    return pages;
+  };
+
+  for (let i = 1; i <= totalPages; i++) {
+    pages.push(i);
+  }
+
+
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
 
@@ -115,6 +169,7 @@ export const Categories = () => {
         modal_categoryEdit={modal_categoryEdit}
         setModal_categoryEdit={setModal_categoryEdit}
         editId={editId}
+        setEditId={setEditId}
       />
         <div className="table_main">
           <table>
@@ -129,6 +184,65 @@ export const Categories = () => {
             </thead>
             <tbody>{categories_list}</tbody>
           </table>
+
+          <div className="pagination-container">
+            <ul>
+              <li
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage(1)}
+              >
+                <MdKeyboardDoubleArrowLeft />
+              </li>
+              <li
+                onClick={() =>
+                  setCurrentPage(
+                    currentPage === 1 ? currentPage - 0 : currentPage - 1
+                  )
+                }
+              >
+                <MdKeyboardArrowLeft />
+              </li>
+
+              {getPageNumbers().map((page, index) => (
+                <li
+                  className={currentPage === page ? "select" : ""}
+                  key={index}
+                  onClick={() => {
+                    if (page === "...") {
+                      return;
+                    }
+                    setCurrentPage(page);
+                  }}
+                >
+                  {page}
+                </li>
+              ))}
+
+              <li
+                onClick={() =>
+                  setCurrentPage(
+                    endIndex >= categories.length
+                      ? currentPage - 0
+                      : currentPage + 1
+                  )
+                }
+              >
+                <MdOutlineKeyboardArrowRight />
+              </li>
+              <li
+                onClick={() =>
+                  setCurrentPage(
+                    endIndex >= categories.length
+                      ? currentPage - 0
+                      : totalPages
+                  )
+                }
+              >
+                <MdKeyboardDoubleArrowRight />
+              </li>
+            </ul>
+          </div>
+
           </div>
 
           <div className="filter-block">

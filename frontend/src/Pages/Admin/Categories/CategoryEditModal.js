@@ -7,8 +7,7 @@ import axios from "../../../axios";
 import { useFormik } from "formik";
 
 export default function CategoryEditModal(props) {
-  const {modal_categoryEdit, setModal_categoryEdit, editId, getCategories} = props;
-  const [resData, setResData] = useState();
+  const {modal_categoryEdit, setModal_categoryEdit, editId, setEditId, getCategories} = props;
   const validate = (values) => {
     let errors = {};
 
@@ -38,7 +37,6 @@ export default function CategoryEditModal(props) {
         icon: "success",
         confirmButtonColor: "#28b78d",
       });
-      formik.resetForm();
     } catch (err){
       console.log(err);
       toast.error('Klaida');
@@ -51,7 +49,6 @@ export default function CategoryEditModal(props) {
       if(editId){
         try {
           const res = await axios.get("/category/"+editId);
-          setResData(res.data);
           formik.setFieldValue("title", res.data.title);
           formik.setFieldValue("imgSrc", res.data.imgSrc);
         } catch (err) {
@@ -81,8 +78,7 @@ export default function CategoryEditModal(props) {
   // Modal close
   const closeModal = () => {
     setModal_categoryEdit(false);
-    formik.setFieldValue("title", resData.title);
-    formik.setFieldValue("imgSrc", resData.imgSrc);
+    setEditId();
     //formik.resetForm(); // reset forma
   };
 

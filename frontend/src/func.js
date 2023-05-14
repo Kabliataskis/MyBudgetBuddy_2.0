@@ -21,6 +21,9 @@ export const getActionTitle = (action) => {
       case "login":
         title = "Prisijungimas";
         break;
+      case "register":
+        title = "Registracija";
+        break;
       case "category_add":
         title = "Sukurta kategorija";
         break;

@@ -188,6 +188,7 @@ export const Users = () => {
     <div className="container-pajamos flex_container">
       <UserEdit_Modal
         editId={editId}
+        setEditId={setEditId}
         modal_UserEdit={modal_UserEdit}
         setModal_UserEdit={setModal_UserEdit}
         getUsers={getUsers}

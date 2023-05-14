@@ -7,7 +7,7 @@ import swal from "sweetalert2";
 import { useFormik } from "formik";
 
 export default function UserEditModal(props) {
-  const { modal_UserEdit, setModal_UserEdit, editId, getUsers } = props;
+  const { modal_UserEdit, setModal_UserEdit, editId, setEditId, getUsers } = props;
   const [resData, setResData] = useState();
   const validate = (values) => {
     let errors = {};
@@ -93,9 +93,10 @@ export default function UserEditModal(props) {
   // Modal close
   const closeModal = () => {
     setModal_UserEdit(false);
-    formik.setFieldValue("username", resData.username);
-    formik.setFieldValue("email", resData.email);
-    formik.setFieldValue("password", "");
+    setEditId();
+    // formik.setFieldValue("username", resData.username);
+    // formik.setFieldValue("email", resData.email);
+    // formik.setFieldValue("password", "");
     // formik.resetForm(); // reset forma
   };
 
