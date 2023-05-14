@@ -2,6 +2,7 @@
 const bcrypt = require("bcrypt");
 const Income = require("../models/incomeModel");
 const Expense = require("../models/expenseModel");
+const Action = require("../models/actionModel");
 const User = require("../models/userModel");
 const {saveAction} = require("./actionController");
 exports.deleteUser = async (req, res) => {
@@ -16,6 +17,7 @@ exports.deleteUser = async (req, res) => {
           await User.findByIdAndDelete(id);
           await Income.deleteMany({ user_id: id });
           await Expense.deleteMany({ user_id: id });
+          await Action.deleteMany({ user_id: id });
           await saveAction(req.userInfo.id, 'user_delete', Delete_User);
           res.status(200).json({
             status: "success",

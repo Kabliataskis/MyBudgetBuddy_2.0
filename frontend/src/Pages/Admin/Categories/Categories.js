@@ -87,7 +87,7 @@ export const Categories = () => {
   });
   const removeFilter = (event) => {
     event.preventDefault();
-    // setCurrentPage(1);
+    setCurrentPage(1);
     setValue("");
     setStartDate("");
     setEndDate("");
