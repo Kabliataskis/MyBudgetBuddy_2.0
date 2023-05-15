@@ -53,11 +53,11 @@ export default function Budget() {
           <div className="stat-container data">
             <p>Mėnuo:</p>
             <select className="dropdown-month" name="month" id="month">
-              <option value="now">Šis men.</option>
-              <option value="2023-04">04 men.</option>
-              <option value="2023-03">03 men.</option>
-              <option value="2023-02">02 men.</option>
-              <option value="2023-01">01 men.</option>
+              <option value="now">Šis mėn.</option>
+              <option value="2023-04">04 mėn.</option>
+              <option value="2023-03">03 mėn.</option>
+              <option value="2023-02">02 mėn.</option>
+              <option value="2023-01">01 mėn.</option>
             </select>
           </div>
         </div>
@@ -97,11 +97,11 @@ export default function Budget() {
         </div>
       </div>
       <div className="bottom-container">
-        <h2>Nustatytos kategorijos biudžėtas</h2>
+        <h2>Nustatytos kategorijos biudžetas</h2>
         <div className="budget-container">
           <div className="budget-dropdown-category">
             <select className="dropdown-category" name="category" id="category">
-              <option value="">Pasirinkti kategorija:</option>
+              <option value="">Pasirinkti kategoriją:</option>
               <option value="all">Bendras</option>
               <option value="transport">Transportas</option>
               <option value="bills">Mokesčiai</option>
@@ -112,13 +112,13 @@ export default function Budget() {
           </div>
           <div className="budget-category">
             <div className="budget-history">
-              <p>Kategorijos biudžėto istorija:</p>
+              <p>Kategorijos biudžeto istorija:</p>
               <select
                 className="dropdown-history-month"
                 name="month"
                 id="month"
               >
-                <option value="now">Šis men.</option>
+                <option value="now">Šis mėn.</option>
                 <option value="2023-04">04 men.</option>
                 <option value="2023-03">03 men.</option>
                 <option value="2023-02">02 men.</option>
@@ -131,21 +131,10 @@ export default function Budget() {
             </div>
           </div>
           <div className="budget-status">
-            <p>
-              Nustatytas biudžėtas:{" "}
-              <span className="green">{limit.amount}</span> €{" "}
-            </p>
-            <button onClick={() => statusChange(limit)}>
-              {limit.status ? (
-                <span className="green">
-                  <MdDownloadDone />
-                </span>
-              ) : (
-                <span className="red">
-                  <FaPen />
-                </span>
-              )}
-            </button>
+		  <p>Nustatytas biudžetas: {limit.status ? <input type='number' value={limit.amount}/>:<span className="green">{limit.amount}</span> } € </p>
+            <button onClick={() => 
+				 statusChange(limit)}>
+				 {limit.status ?<span className="green"><MdDownloadDone /></span>: <span className="red"><FaPen /></span>}</button>
             {/* <button onClick={() => 
 							 statusChange(limit)}>{limit.status ? <span><input
 								type='text'
