@@ -150,14 +150,14 @@ export default function Expenses() {
   const pages = [];
   const getPageNumbers = () => {
     let pages = [];
-  
+
     if (totalPages <= 7) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
     } else {
       if (currentPage <= 6) {
-        pages = [1, 2, 3, 4,7, "...", totalPages];
+        pages = [1, 2, 3, 4,5,6,7, "...", totalPages];
       } else if (currentPage > 6 && currentPage < totalPages - 2) {
         pages = [
           1,
@@ -184,7 +184,7 @@ export default function Expenses() {
         ];
       }
     }
-  
+
     return pages;
   };
 
