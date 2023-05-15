@@ -5,7 +5,7 @@ import { AiOutlineClose, AiFillWarning } from "react-icons/ai";
 import swal from "sweetalert2";
 import { useFormik } from "formik";
 export default function ExpenseEditModal(props) {
-  const { modal_ExpenseEdit, setModal_ExpenseEdit, editExpenseId } = props;
+  const { modal_ExpenseEdit, setModal_ExpenseEdit, editExpenseId, getExpense } = props;
   const max_sum = 9999999; // Maksimali suma €
 
   const validate = (values) => {
@@ -52,6 +52,7 @@ export default function ExpenseEditModal(props) {
       console.log(res);
       //Jei backend grąžina success
       setModal_ExpenseEdit(false);
+      getExpense();
       swal.fire({
         title: "Sėkmingai",
         text: res.data.mess,
