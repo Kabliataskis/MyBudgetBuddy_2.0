@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "../../axios";
 import { toast } from "react-toastify";
 import { AiOutlineClose, AiFillWarning } from "react-icons/ai";
 import swal from "sweetalert2";
 import { useFormik } from "formik";
 export default function ExpenseEditModal(props) {
-  const { modal_ExpenseEdit, setModal_ExpenseEdit, editExpenseId } = props;
+  const { modal_ExpenseEdit, setModal_ExpenseEdit, editExpenseId, setEditExpenseId, getExpense } = props;
   const max_sum = 9999999; // Maksimali suma €
 
   const validate = (values) => {
@@ -52,16 +52,16 @@ export default function ExpenseEditModal(props) {
       console.log(res);
       //Jei backend grąžina success
       setModal_ExpenseEdit(false);
+      getExpense();
       swal.fire({
         title: "Sėkmingai",
         text: res.data.mess,
         icon: "success",
         confirmButtonColor: "#28b78d",
       });
-      formik.resetForm();
     } catch (err) {
       console.log(err);
-      toast.error("Klaida");
+      toast.error(`Klaida. ${err.response.data.msg}`);
     }
   };
 
@@ -78,13 +78,12 @@ export default function ExpenseEditModal(props) {
       if(editExpenseId){
         try {
           const res = await axios.get("/expense/"+editExpenseId);
-          console.log(res.data);
-          formik.setFieldValue("category", res.data.category);
+          formik.setFieldValue("category", res.data.category.title);
           formik.setFieldValue("title", res.data.title);
           formik.setFieldValue("date", formatDate(res.data.date));
           formik.setFieldValue("sum", res.data.sum);
         } catch (err) {
-          console.log(err);
+          toast.error(`Klaida. ${err.response.data.msg}`);
         }
       }
     }
@@ -128,8 +127,31 @@ export default function ExpenseEditModal(props) {
   // Modal close
   const closeModal = () => {
     setModal_ExpenseEdit(false);
+    setEditExpenseId();
+  };
+  const getCategories = async () => {
+    try {
+      const res = await axios.get("/category?");
+      setCategories(res.data.data.categories);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+
+  const [categories, setCategories] = useState([])
+
+  let categories_list = categories.map((el) =>{
+    return(
+     <option value= {el.title} key={el._id+el.title}> 
+       {el.title}
+     </option>
+    )
+   });
   return (
     <>
       {modal_ExpenseEdit ? (
@@ -147,7 +169,7 @@ export default function ExpenseEditModal(props) {
               noValidate
               onSubmit={formik.handleSubmit}
             >
-              <select
+              {/* <select
                 className="boxOptions"
                 id="category"
                 value={formik.values.category}
@@ -161,6 +183,18 @@ export default function ExpenseEditModal(props) {
                 <option value="Mokesčiai">Mokesčiai</option>
                 <option value="Laisvalaikis">Laisvalaikis</option>
                 <option value="Parduotuvė">Parduotuvė</option>
+              </select> */}
+
+              <select
+                className="boxOptions"
+                id="category"
+                name="category"
+                value={formik.values.category}
+                onChange={formik.handleChange}
+              >
+                <option value="">Pasirinkite kategoriją</option>
+                {categories_list}
+             
               </select>
               {formik.touched.category && formik.errors.category ? (
                 <div className="error-mess-box">

@@ -27,7 +27,6 @@ export default function Expenses() {
 
 
   const [categories, setCategories] = useState([])
-
   let categories_list = categories.map((el) =>{
     return(
      <option value= {el.title} key={el._id+el.title}> 
@@ -105,7 +104,7 @@ export default function Expenses() {
   const filterExpense = expenses.filter((el) => {
     const title = el.title || "";
     const date = el.date || "";
-    const category= el.category|| "";
+    const category= el.category.title || "";
     const lowercaseValue = value ? value.toLocaleLowerCase() : "";
 
   
@@ -119,6 +118,7 @@ export default function Expenses() {
       (!endDateObj || endDateObj >= ExpenseDateObj.setHours(0, 0, 0, 0));
 
     return title.toLocaleLowerCase().includes(lowercaseValue) && dateInRange && category.includes(categoryFilter);
+    //&& category.includes(categoryFilter)
   });
 
   const handleSearchChange = (e) => {
@@ -213,6 +213,7 @@ export default function Expenses() {
       <ExpenseAddModal getExpense={getExpense}/>
       <ExpenseEditModal
         editExpenseId={editExpenseId}
+        setEditExpenseId={setEditExpenseId}
         modal_ExpenseEdit={modal_ExpenseEdit}
         setModal_ExpenseEdit={setModal_ExpenseEdit}
         editExpens={editExpens}

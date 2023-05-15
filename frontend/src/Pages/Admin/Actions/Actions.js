@@ -1,77 +1,61 @@
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import Category from "./Category";
-import CategoryCreate_Modal from "./CategoryCreateModal";
-import CategoryEditModal from "./CategoryEditModal";
-import { toast } from "react-toastify";
-import swal from "sweetalert2";
 import axios from "../../../axios";
+import Action from "./Action";
+import { getActionTitle } from "../../../func";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
   MdOutlineKeyboardArrowRight,
   MdKeyboardArrowLeft,
 } from "react-icons/md";
-export const Categories = () => {
-  const [modal_categoryCreate, setModal_categoryCreate] = useState(false);
-  const [modal_categoryEdit, setModal_categoryEdit] = useState(false);
-  const [editId, setEditId] = useState();
+export const Actions = () => {
+  const [categoryFilter, setCategoryFilter]= useState("");
   const [value, setValue] = useState("");
-  const [categories, setCategories] = useState([]);
+  const [actions, setActions] = useState([]);
+  const [categories, setCategories] = useState([])
+
 
   const getCategories = async () => {
     try {
-      const res = await axios.get("/category?");
+      const res = await axios.get("/actions/categories");
       setCategories(res.data.data.categories);
+      // console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getActions = async () => {
+    try {
+      const res = await axios.get("/actions");
+      setActions(res.data.data.actions);
     } catch (err) {
       console.log(err);
     }
   };
   useEffect(() => {
+    getActions();
     getCategories();
   }, []);
 
-  const editCategory = (id) => {
-    setEditId(id);
-    setModal_categoryEdit(true);
-  }
 
-  const deleteCategory = (id) => {
-    swal
-      .fire({
-        title: "Veiksmo patvirtinimas",
-        text: "Ar tikrai norite ištrinti šią kategoriją?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#d33",
-        cancelButtonColor: "#243743",
-        confirmButtonText: "Ištrinti",
-        cancelButtonText: "Atšaukti!",
-      })
-      .then(async (result) => {
-        if (result.isConfirmed) {
-          try {
-            const res = await axios.delete("/category/" + id);
-            console.log(res);
-            swal.fire({
-              title: "Sėkmingai",
-              text: "Kategorija ištrinta",
-              icon: "success",
-              confirmButtonColor: "#28b78d",
-            });
-            getCategories();
-          } catch (err) {
-            toast.error(err.response.data.msg);
-          }
-        }
-      });
-  }
+
+  let categories_list = categories.map((el) =>{
+    return(
+      <option value={el} key={uuidv4() +0}> 
+      {getActionTitle(el)}
+    </option>
+    )
+   });
+
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const filterCategory = categories.filter((el) => {
-    const title = el.title || "";
+  const filterActions = actions.filter((el) => {
+    const title = el.user_id.username || "";
     const date = el.createdAt || "";
+    const category = el.action || "";
     const lowercaseValue = value ? value.toLocaleLowerCase() : "";
   
     const startDateObj = startDate ? new Date(startDate) : null;
@@ -83,20 +67,22 @@ export const Categories = () => {
         startDateObj <= incomeDateObj.setHours(0, 0, 0, 0) + 86400000) &&
       (!endDateObj || endDateObj >= incomeDateObj.setHours(0, 0, 0, 0));
 
-    return title.toLocaleLowerCase().includes(lowercaseValue) && dateInRange;
+    return title.toLocaleLowerCase().includes(lowercaseValue) && dateInRange && category.includes(categoryFilter);
   });
+
   const removeFilter = (event) => {
     event.preventDefault();
     setCurrentPage(1);
     setValue("");
     setStartDate("");
     setEndDate("");
+    setCategoryFilter("");
   };
 
 
   const [pageSize, setPageSize] = useState(10); // number of records per page
   const [currentPage, setCurrentPage] = useState(1); // current page number
-  const totalItems = filterCategory.length;
+  const totalItems = filterActions.length;
   const totalPages = Math.ceil(totalItems / pageSize);
   const pages = [];
 
@@ -142,50 +128,41 @@ export const Categories = () => {
   }
 
 
+
+
+
+  const handleSearchChange = (e) => {
+    setValue(e.target.value);
+    setCurrentPage(1);
+  };
+
+
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-
-  let categories_list = filterCategory.slice(startIndex, endIndex).map((el) => {
+  let actions_list = filterActions.slice(startIndex, endIndex).map((el) => {
     return (
-      <Category
+      <Action
         key={uuidv4()}
         obj={el}
-        editCategory={editCategory}
-        deleteCategory={deleteCategory}
       />
     );
   });
 
-
   return (
-      <div className="container-pajamos flex_container">
-        <CategoryCreate_Modal
-        getCategories={getCategories}
-        modal_categoryCreate={modal_categoryCreate}
-        setModal_categoryCreate={setModal_categoryCreate}
-      />
-      <CategoryEditModal
-        getCategories={getCategories}
-        modal_categoryEdit={modal_categoryEdit}
-        setModal_categoryEdit={setModal_categoryEdit}
-        editId={editId}
-        setEditId={setEditId}
-      />
-        <div className="table_main">
-          <table>
-            <thead>
-              <tr>
-                <th>Data</th>
-                <th>Pavadinimas</th>
-                <th>Paveikslėlis</th>
-                <th>Redaguoti</th>
-                <th>Pašalinti</th>
-              </tr>
-            </thead>
-            <tbody>{categories_list}</tbody>
-          </table>
-
-          <div className="pagination-container">
+    <div className="container-pajamos flex_container">
+      <div className="table_main">
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Vartotojas</th>
+              <th>Įvykis</th>
+              <th>Daugiau informacijos</th>
+            </tr>
+          </thead>
+          <tbody>{actions_list}</tbody>
+        </table>
+        <div className="pagination-container">
             <ul>
               <li
                 disabled={currentPage === 1}
@@ -221,7 +198,7 @@ export const Categories = () => {
               <li
                 onClick={() =>
                   setCurrentPage(
-                    endIndex >= categories.length
+                    endIndex >= actions.length
                       ? currentPage - 0
                       : currentPage + 1
                   )
@@ -232,7 +209,7 @@ export const Categories = () => {
               <li
                 onClick={() =>
                   setCurrentPage(
-                    endIndex >= categories.length
+                    endIndex >= actions.length
                       ? currentPage - 0
                       : totalPages
                   )
@@ -243,47 +220,43 @@ export const Categories = () => {
             </ul>
           </div>
 
-          </div>
+      </div>
 
-          <div className="filter-block">
-          <button className="Admin-createBtn" onClick={() => setModal_categoryCreate(true)}>Sukurti kategoriją</button>
-          <h3 className="Admin-filter-title">Filtravimas</h3>
+
+      <div className="filter-block">
+          <h3>Filtravimas</h3>
           <div>
-            <form>
+          <form>
               <input
                 type="text"
-                placeholder="Paieška..."
+                placeholder="Vartotojo slapyvardis..."
                 className="paieska_filter"
-                onChange={(event) => setValue(event.target.value)}
+                onChange={(e) => handleSearchChange(e)}
                 value={value}
               />
+              <select
+                className="dropdown-kategorija"
+                name="Kategorija"
+                id="Kategorija"
+                onChange={(event) => setCategoryFilter(event.target.value)}
+                value={categoryFilter}
+              >
+                <option value="">Įvykis</option>
+                {categories_list}
+             
+              </select>
               <p className="data_filter_p">
-                <label className="word" htmlFor="nuo_data">Nuo</label>
-                <input
-                  onChange={(event) => setStartDate(event.target.value)}
-                  className="data_filter"
-                  type="date"
-                  id="nuo_data"
-                  value={startDate}
-                />
-
-                <label className="word2" htmlFor="iki_data">iki</label>
-                <input
-                  onChange={(event) => setEndDate(event.target.value)}
-                  className="data_filter"
-                  type="date"
-                  id="iki_data"
-                  value={endDate}
-                />
+                <label htmlFor="nuo_data">Nuo</label>{" "}
+                <input onChange={(event) => setStartDate(event.target.value)}  className="data_filter" type="date" id="nuo_data" value={startDate} />{" "}
+                <label htmlFor="iki_data">iki</label>{" "}
+                <input onChange={(event) => setEndDate(event.target.value)} className="data_filter" type="date" id="iki_data" value={endDate} />
               </p>
-              <button className="btn-dark" onClick={(event) => removeFilter(event)}>Išvalyti</button>
+              <button  onClick={(event) => removeFilter(event)} className="btn-dark">Išvalyti</button>
             </form>
           </div>
         </div>
-
-          </div>
-
+    </div>
   );
 };
 
-export default Categories;
+export default Actions;

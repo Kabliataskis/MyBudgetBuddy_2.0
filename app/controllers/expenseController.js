@@ -1,6 +1,7 @@
 /* eslint-disable linebreak-style */
 const Expense = require("../models/expenseModel");
-
+const Category = require("../models/categoryModel");
+const {saveAction} = require("./actionController");
 
 const addTime = (date) => {
   date = new Date(date);
@@ -27,7 +28,7 @@ const addTime = (date) => {
 exports.getAllExpense = async (req, res) => {
   const {limit = 0} = req.query
   try {
-    const allExpenses = await Expense.find({user_id: req.userInfo.id})
+    const allExpenses = await Expense.find({user_id: req.userInfo.id}).populate('category')
     .sort({ date: -1 })
     .limit(limit);
 
@@ -49,12 +50,14 @@ exports.getAllExpense = async (req, res) => {
 
 exports.getExpense = async (req, res) => {
   try {
-    const GetExpense = await Expense.findById(req.params.id);
+    const GetExpense = await Expense.findById(req.params.id).populate('category');
     if (!GetExpense) {
       return res.status(404).json({ msg: `Pajamos nr: ${id} neegzistuoja`});
     } else {
       if(GetExpense.user_id == req.userInfo.id){
         res.status(200).json(GetExpense);
+      }else{
+        // other user err
       }
     }
   } catch (error) {
@@ -64,20 +67,21 @@ exports.getExpense = async (req, res) => {
 };
 
 exports.addExpense = async (req, res) => {
-  console.log("new expense request");
   try {
-
-
-
-    const newExpense = await Expense.create({
-      user_id: req.userInfo.id,
-      category: req.body.category,
-      title: req.body.title,
-      sum: req.body.sum,
-      date: addTime(req.body.date),
-    });
-    console.log(newExpense);
-    res.status(201).json(newExpense);
+    const getCategory = await Category.findOne({title: req.body.category});
+    if(getCategory){
+      const newExpense = await Expense.create({
+        user_id: req.userInfo.id,
+        category: getCategory._id,
+        title: req.body.title,
+        sum: req.body.sum,
+        date: addTime(req.body.date),
+      });
+      await saveAction(req.userInfo.id, 'expense_add', newExpense);
+      res.status(201).json(newExpense);
+    }else{
+      return res.status(404).json({ msg: `Kategorija neegzistuoja`});
+    }
   } catch (err) {
     res.status(500).json({ mess: err });
   }
@@ -88,23 +92,23 @@ exports.deleteExpense = async (req, res) => {
     const { id } = req.params;
     const Delete_Expense = await Expense.findById(id);
     if (!Delete_Expense) {
-      return res.status(404).json({ msg: `Pajamos nr: ${id} neegzistuoja`});
+      return res.status(404).json({ msg: `Išlaidos nr: ${id} neegzistuoja`});
     } else {
 
       if(Delete_Expense.user_id == req.userInfo.id){
-        console.log("true");
         try{
-          const delete_ = await Expense.findByIdAndDelete(id);
+          await Expense.findByIdAndDelete(id);
+          await saveAction(req.userInfo.id, 'expense_delete', Delete_Expense);
           res.status(200).json({
             status: "success",
-            message: `Pajamos nr: ${id} sėkmingai pašalintas.`,
+            message: `Išlaidos nr: ${id} sėkmingai pašalintas.`,
             expense: Delete_Expense,
           });
         }catch (error){
           res.status(500).json({ error: error.message });
         }
       }else{
-        return res.status(403).json({ msg: `Pajamos nr: ${id} priklauso kitam vartotojui`});
+        return res.status(403).json({ msg: `Išlaidos nr: ${id} priklauso kitam vartotojui`});
       }
     }
   } catch (error) {
@@ -120,27 +124,37 @@ exports.deleteExpense = async (req, res) => {
       if (!Edit_Expense) {
         return res.status(404).json({ msg: `Pajamos nr: ${id} neegzistuoja`});
       } else {
-  
         if(Edit_Expense.user_id == req.userInfo.id){
-          console.log("true");
-          try{
-            await Expense.updateOne({
-                    _id: id,
-                  },{
-                    user_id: req.userInfo.id,
-                    category: req.body.category,
-                    title: req.body.title,
-                    sum: req.body.sum,
-                    date: addTime(req.body.date),
-                  }
-                  );
-                  res.json({
-                    success: true,
-                  })
-          }catch (error){
-            res.status(500).json({ error: error.message });
+          const getCategory = await Category.findOne({title: req.body.category});
+          if(getCategory){
+            try{
+              const Updated_Expense = await Expense.findOneAndUpdate({
+                      _id: id,
+                    },{
+                      user_id: req.userInfo.id,
+                      category: getCategory._id,
+                      title: req.body.title,
+                      sum: req.body.sum,
+                      date: addTime(req.body.date),
+                    },
+                    {new: true}
+                    );
+                    await saveAction(req.userInfo.id, 'expense_edit', Updated_Expense);
+                    res.json({
+                      status: "success",
+                      data: Updated_Expense,
+                    })
+            }catch (error){
+              res.status(500).json({ error: error.message });
+            }
           }
-        }
+          }else{
+            return res.status(404).json({ msg: `Kategorija: ${req.body.category} nerasta`});
+          }
+
+
+
+
       }
     } catch (error) {
       res.status(500).json({ error: error.message });

@@ -1,8 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
-const Income = require("../models/incomeModel");
-const Expense = require("../models/expenseModel");
+const {saveAction} = require("./actionController");
 
 const signToken = (data) => {
   return jwt.sign(data, "secret_1D3._0A$)!_)N@!#()!I*E(AD<02L>?", {
@@ -69,6 +68,7 @@ exports.authRegister = async (req, res) => {
       });
       const { password, ...data } = newUser._doc;
       data.token = token;
+      await saveAction(data._id, 'register', data);
       res.status(201).json({
         status: "success",
         data: data,
@@ -103,6 +103,7 @@ exports.authLogin = async (req, res) => {
           role: user.role,
         });
         const { password, ...data } = user._doc;
+        await saveAction(data._id, 'login');
         res.status(200).json({
           status: "success",
           data: { ...data, token },
