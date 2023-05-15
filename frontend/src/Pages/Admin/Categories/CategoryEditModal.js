@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineClose, AiFillWarning } from "react-icons/ai";
 import { toast } from "react-toastify";
 import swal from "sweetalert2";
@@ -7,7 +7,7 @@ import axios from "../../../axios";
 import { useFormik } from "formik";
 
 export default function CategoryEditModal(props) {
-  const {modal_categoryEdit, setModal_categoryEdit, editId, getCategories} = props;
+  const {modal_categoryEdit, setModal_categoryEdit, editId, setEditId, getCategories} = props;
   const validate = (values) => {
     let errors = {};
 
@@ -37,7 +37,6 @@ export default function CategoryEditModal(props) {
         icon: "success",
         confirmButtonColor: "#28b78d",
       });
-      formik.resetForm();
     } catch (err){
       console.log(err);
       toast.error('Klaida');
@@ -79,6 +78,7 @@ export default function CategoryEditModal(props) {
   // Modal close
   const closeModal = () => {
     setModal_categoryEdit(false);
+    setEditId();
     //formik.resetForm(); // reset forma
   };
 
@@ -154,7 +154,7 @@ export default function CategoryEditModal(props) {
                   type="reset"
                   onClick={() => {
                     closeModal();
-                    formik.resetForm();
+                    // formik.resetForm();
                   }}
                 >
                   Atšaukti

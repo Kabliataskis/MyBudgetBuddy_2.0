@@ -8,8 +8,6 @@ const expenseSchema = mongoose.Schema(
             required: true
         }, 
         category:{
-            // type: String,
-            // required: true,
             type: mongoose.Schema.Types.ObjectId,
             ref: 'category',
             required: true
