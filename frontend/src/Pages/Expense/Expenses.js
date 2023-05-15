@@ -158,7 +158,7 @@ export default function Expenses() {
     } else {
       if (currentPage <= 6) {
         pages = [1, 2, 3, 4,5,6,7, "...", totalPages];
-      } else if (currentPage > 6 && currentPage < totalPages - 2) {
+      } else if (currentPage > 6 && currentPage < totalPages - 3) {
         pages = [
           1,
           "...",
