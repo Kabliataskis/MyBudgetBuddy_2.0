@@ -150,7 +150,7 @@ export default function Expenses() {
   const pages = [];
   const getPageNumbers = () => {
     let pages = [];
-
+  
     if (totalPages <= 4) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
@@ -180,7 +180,7 @@ export default function Expenses() {
         ];
       }
     }
-
+  
     return pages;
   };
 

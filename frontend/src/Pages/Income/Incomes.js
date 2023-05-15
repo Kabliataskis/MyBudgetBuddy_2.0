@@ -101,7 +101,7 @@ export default function Incomes() {
 
   const getPageNumbers = () => {
     let pages = [];
-
+  
     if (totalPages <= 4) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
@@ -130,11 +130,11 @@ export default function Incomes() {
           totalPages,
         ];
       }
-      pages.push(totalPages);
     }
-
+  
     return pages;
   };
+  
 
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
