@@ -12,5 +12,6 @@ export default function calculateTotalIncome(incomes) {
     return incomeMonth === currentMonth;
   });
 
-  return filteredIncomes.reduce((total, income) => total + income.sum, 0);
+  const totalIncome = filteredIncomes.reduce((total, income) => total + income.sum, 0);
+  return parseFloat(totalIncome.toFixed(2));
 }
