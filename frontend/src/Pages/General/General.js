@@ -1,15 +1,14 @@
-import React, { useContext,useState,useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { ContextProvider } from "../../App";
 import axios from "../../axios";
 
-
-//Css
+// Css
 import "./General.css";
 
-//Charts
+// Charts
 import DoughnutChart from "./Charts/DoughnutChart";
 
-//History
+// History
 import ExpenseHistory from "./Expense_history/ExpenseHistory";
 import IncomeHistory from "./Income_history/IncomeHistory";
 
@@ -21,32 +20,38 @@ export default function General() {
   const { setModal_IncomeAdd } = useContext(ContextProvider);
   const [incomes, setIncomes] = useState([]);
   const [expenses, setExpenses] = useState([]);
-  const getIncomes = async () => {
-    try {
-      const res = await axios.get("/income?");
-      setIncomes(res.data.data.incomes);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const totalIncome = calculateTotalIncome(incomes);
+  const totalExpense = calculateTotalExpense(expenses);
+
+  const pelnasWidth = ((totalIncome / (totalIncome + totalExpense)) * 100).toFixed(2);
+  const islaidosWidth = ((totalExpense / (totalIncome + totalExpense)) * 100).toFixed(2);
+
+
   useEffect(() => {
+    const getIncomes = async () => {
+      try {
+        const res = await axios.get("/income?");
+        setIncomes(res.data.data.incomes);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     getIncomes();
   }, []);
 
-  const getExpense = async () => {
-    try {
-      const res = await axios.get("/expense?");
-      setExpenses(res.data.data.expenses);
-    } catch (err) {
-      console.log(err);
-    }
-  };
   useEffect(() => {
+    const getExpense = async () => {
+      try {
+        const res = await axios.get("/expense?");
+        setExpenses(res.data.data.expenses);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     getExpense();
   }, []);
-
-  const totalIncome = calculateTotalIncome(incomes);
-  const totalExpense = calculateTotalExpense(expenses);
 
   useEffect(() => {
     const pelnasWidth = (totalIncome / (totalIncome + totalExpense)) * 100 + "%";
@@ -57,26 +62,27 @@ export default function General() {
   }, [totalIncome, totalExpense]);
 
   return (
-    <main className="General-container General">
+   <main className="General-container General">
       <div className="top-container">
         <div className="stats-containers">
           <div className="stat-container">
             <p>
-              Likutis: <span className="green">{totalIncome-totalExpense}€</span>
+              Likutis: <span className="green">{(totalIncome-totalExpense).toFixed(2)}€</span>
             </p>
           </div>
-
+  
           <div className="stat-container isleista-per-men">
             <p>
-              Išleista per mėn: <span className="red">{totalExpense}€</span>
+              Išleista per mėn: <span className="red">{(totalExpense.toFixed(2))}€</span>
             </p>
           </div>
-
+  
           <div className="horizontal-bar-container">
             <div className="horizontal-bar__pelnas">{totalIncome} €</div>
             <div className="horizontal-bar__islaidos">{totalExpense} €</div>
           </div>
         </div>
+  
 
         <div className="doughnut-chart-container">
         <DoughnutChart expenses={expenses} />

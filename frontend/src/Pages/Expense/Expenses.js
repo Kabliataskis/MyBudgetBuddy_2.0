@@ -27,7 +27,6 @@ export default function Expenses() {
 
 
   const [categories, setCategories] = useState([])
-console.log(categories);
   let categories_list = categories.map((el) =>{
     return(
      <option value= {el.title} key={el._id+el.title}> 
@@ -152,20 +151,22 @@ console.log(categories);
   const getPageNumbers = () => {
     let pages = [];
 
-    if (totalPages <= 4) {
+    if (totalPages <= 7) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
     } else {
-      if (currentPage <= 4) {
-        pages = [1, 2, 3, 4, 5, "...", totalPages];
-      } else if (currentPage > 4 && currentPage < totalPages - 2) {
+      if (currentPage <= 6) {
+        pages = [1, 2, 3, 4,5,6,7, "...", totalPages];
+      } else if (currentPage > 6 && currentPage < totalPages - 3) {
         pages = [
           1,
           "...",
+          currentPage - 2,
           currentPage - 1,
           currentPage,
           currentPage + 1,
+          currentPage + 2,
           "...",
           totalPages,
         ];
@@ -173,6 +174,8 @@ console.log(categories);
         pages = [
           1,
           "...",
+          totalPages - 6,
+          totalPages - 5,
           totalPages - 4,
           totalPages - 3,
           totalPages - 2,
@@ -214,6 +217,7 @@ console.log(categories);
       <ExpenseAddModal getExpense={getExpense}/>
       <ExpenseEditModal
         editExpenseId={editExpenseId}
+        setEditExpenseId={setEditExpenseId}
         modal_ExpenseEdit={modal_ExpenseEdit}
         setModal_ExpenseEdit={setModal_ExpenseEdit}
         editExpens={editExpens}

@@ -92,54 +92,7 @@ export default function Incomes() {
     setEditId(id);
     setModal_IncomeEdit(true);
   };
-  // const getPageNumbers = () => {
-  //   let pages = [];
-  
-  //   if (totalPages <= 4) {
-  //     for (let i = 1; i <= totalPages; i++) {
-  //       pages.push(i);
-  //     }
-  //   } else {
-  //     if (currentPage <= 4) {
-  //       pages = [1, 2, 3, 4, 5,  "...", totalPages-1 , totalPages];
-  //     } else if (currentPage > 4 && currentPage < totalPages - 2) {
-  //       pages = [1, "...", currentPage - 2, currentPage - 1, currentPage, currentPage + 1, "...", totalPages];
-  //     } else {
-  //       pages = [1, "...", totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
-  //     }
-  //   }
-  
-  //   return pages;
-  // };
-  // const getPageNumbers = () => {
-  //   let pages = [];
-  //   const MAX_VISIBLE_PAGES = 3; // maximum number of visible page numbers
-  //   const pageOffset = MAX_VISIBLE_PAGES - 1;
-  //   const totalVisiblePages = pageOffset * 2 + 1;
-  //   const firstVisiblePage = Math.max(1, currentPage - pageOffset);
-  //   const lastVisiblePage = Math.min(totalPages, firstVisiblePage + totalVisiblePages - 1);
-  
-  //   if (firstVisiblePage > 1) {
-  //     pages.push(1);
-  //     if (firstVisiblePage > 2) {
-  //       pages.push("...");
-  //     }
-  //   }
-  
-  //   for (let i = firstVisiblePage; i <= lastVisiblePage; i++) {
-  //     pages.push(i);
-  //   }
-  
-  //   if (lastVisiblePage < totalPages) {
-  //     if (lastVisiblePage < totalPages - 1) {
-  //       pages.push("...");
-  //     }
-  //     pages.push(totalPages);
-  //   }
-  
-  //   return pages;
-  // };
-  
+
   const [pageSize, setPageSize] = useState(10); // number of records per page
   const [currentPage, setCurrentPage] = useState(1); // current page number
   const totalItems = filterIncome.length;
@@ -148,21 +101,23 @@ export default function Incomes() {
 
   const getPageNumbers = () => {
     let pages = [];
-
-    if (totalPages <= 4) {
+  
+    if (totalPages <= 7) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
     } else {
-      if (currentPage <= 4) {
-        pages = [1, 2, 3, 4, 5, "...", totalPages];
-      } else if (currentPage > 4 && currentPage < totalPages - 2) {
+      if (currentPage <= 6) {
+        pages = [1, 2, 3, 4,5,6,7, "...", totalPages];
+      } else if (currentPage > 6 && currentPage < totalPages - 3) {
         pages = [
           1,
           "...",
+          currentPage - 2,
           currentPage - 1,
           currentPage,
           currentPage + 1,
+          currentPage + 2,
           "...",
           totalPages,
         ];
@@ -170,6 +125,8 @@ export default function Incomes() {
         pages = [
           1,
           "...",
+          totalPages - 6,
+          totalPages - 5,
           totalPages - 4,
           totalPages - 3,
           totalPages - 2,
@@ -177,11 +134,11 @@ export default function Incomes() {
           totalPages,
         ];
       }
-      pages.push(totalPages);
     }
-
+  
     return pages;
   };
+  
 
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
@@ -222,6 +179,7 @@ export default function Incomes() {
       <IncomeAdd_Modal getIncomes={getIncomes} />
       <IncomeEdit_Modal
         editId={editId}
+        setEditId={setEditId}
         modal_IncomeEdit={modal_IncomeEdit}
         setModal_IncomeEdit={setModal_IncomeEdit}
         editPajamos={editPajamos}

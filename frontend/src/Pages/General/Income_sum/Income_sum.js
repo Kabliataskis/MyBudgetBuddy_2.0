@@ -13,4 +13,4 @@ export default function calculateTotalIncome(incomes) {
   });
 
   return filteredIncomes.reduce((total, income) => total + income.sum, 0);
-}
+} 
