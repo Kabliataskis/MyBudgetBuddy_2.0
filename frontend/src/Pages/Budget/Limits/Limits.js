@@ -5,9 +5,11 @@ import axios from "../../../axios";
 import { FaPen } from "react-icons/fa";
 import { MdDownloadDone } from "react-icons/md";
 import Limit from "./Limit";
+import LimitEditModal from "./LimitEditModal";
 
 export default function Limits() {
-
+    const [modal_limitEdit, setModal_limitEdit] = useState(false);
+    const [editId, setEditId] = useState();
     const [limits, setLimits] = useState([])
     const [spents, setSpents] = useState([])
     // let categories_list = categories.map((el) =>{
@@ -43,7 +45,10 @@ export default function Limits() {
         getLimits();
       }, []);
 
-
+      const editLimit = (id) => {
+        setEditId(id);
+        setModal_limitEdit(true);
+      }
       let limits_list = limits.map((el) => {
         return (
           <Limit
@@ -51,12 +56,14 @@ export default function Limits() {
             obj={el}
             spents={spents}
             id={el._id}
+            editLimit={editLimit}
           />
         );
       });
 
 
 
+    
 
 const [dropdownYear, setDropdownYear] = useState(new Date().getFullYear());
 const  [dropdownMnth, setDropdownMonth] = useState(new Date().getMonth() +1); // getMonth() returns the month (from 0 to 11) of a date:
@@ -68,6 +75,13 @@ const handleMonthChange = (e) => {
 }
   return (
       <div className="bottom-container">
+        <LimitEditModal
+        getLimits={getLimits}
+        modal_limitEdit={modal_limitEdit}
+        setModal_limitEdit={setModal_limitEdit}
+        editId={editId}
+        setEditId={setEditId}
+        />
         <div className="budget-limits-top-container">
          <h2 className="budget-limits-top-container-title">Nustatytos kategorijos biudžetas</h2>
          <div className="budget-limits-dropdowns-container">

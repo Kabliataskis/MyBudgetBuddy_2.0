@@ -75,6 +75,61 @@ exports.getAllLimits = async (req, res) => {
   }
 };
 
+exports.getLimit = async (req, res) => {
+  try {
+    const GetLimit = await Limit.findById(req.params.id).populate({path: "category", model:"category"});
+    if (!GetLimit) {
+      return res.status(404).json({ msg: `Limitas nr: ${id} neegzistuoja`});
+    } else {
+      if(GetLimit.user_id == req.userInfo.id){
+        res.status(200).json(GetLimit);
+      }else{
+        return res.status(403).json({ msg: `Limitas nr: ${id} priklauso kitam vartotojui`});
+      }
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+  
+};
+
+
+exports.editLimit = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const Edit_Limit = await Limit.findById(id);
+    if (!Edit_Limit) {
+      return res.status(404).json({ msg: `Limitas nr: ${id} neegzistuoja` });
+    } else {
+      if (Edit_Limit.user_id == req.userInfo.id) {
+        try {
+          const Updated_Limit = await Limit.findOneAndUpdate(
+            {
+              _id: id,
+            },
+            {
+              limit: req.body.limit,
+            },
+            {new: true}
+          );
+          // await saveAction(req.userInfo.id, "limit_edit", Updated_Limit);
+          res.json({
+            status: "success",
+            data: Updated_Limit,
+          });
+        } catch (error) {
+          res.status(500).json({ error: error.message });
+        }
+      }else{
+        return res.status(403).json({ msg: `Limitas nr: ${id} priklauso kitam vartotojui`});
+      }
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 // exports.getActionCategories = async (req, res) => {
 //   try {
 //     const uniqueActions = await Action.distinct("action");

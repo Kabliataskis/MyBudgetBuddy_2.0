@@ -59,7 +59,7 @@ export default function Budget() {
         </div>
       </div>
       <div className="center-container">
-        <h2>Pajamų ir išlaidų palyginimas</h2>
+        <h2 className="h2">Pajamų ir išlaidų palyginimas</h2>
         <div className="compares-container">
           <div className="inside-container">
             <div className="compare-container until">
