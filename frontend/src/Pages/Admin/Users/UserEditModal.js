@@ -144,6 +144,7 @@ export default function UserEditModal(props) {
                   type="email"
                   name="email"
                   id="email"
+                  placeholder="El. paštas"
                   required
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
