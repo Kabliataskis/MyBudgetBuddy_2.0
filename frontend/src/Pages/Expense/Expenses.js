@@ -156,6 +156,16 @@ export default function Expenses() {
         pages.push(i);
       }
     } else {
+      if (currentPage <= 4) {
+        pages = [1, 2, 3, 4, 5, "...", totalPages];
+      } else if (currentPage > totalPages - 4) {
+        pages = [
+          1,
+          "...",
+          totalPages - 4,
+          totalPages - 3,
+          totalPages - 2,
+          totalPages - 1,
       if (currentPage <= 6) {
         pages = [1, 2, 3, 4,5,6,7, "...", totalPages];
       } else if (currentPage > 6 && currentPage < totalPages - 3) {
@@ -173,6 +183,10 @@ export default function Expenses() {
       } else {
         pages = [
           1,
+          "...",
+          currentPage - 1,
+          currentPage,
+          currentPage + 1,
           "...",
           totalPages - 6,
           totalPages - 5,

@@ -8,6 +8,8 @@ import "./Income.css";
 import swal from "sweetalert2";
 import "../../index.css";
 import IncomeEdit_Modal from "./IncomeEditModal.js";
+import ReactPaginate from "react-paginate"
+
 import IncomeAdd_Modal from "./IncomeAddModal";
 import calculateTotalIncome from "../General/Income_sum/Income_sum";
 import {
@@ -101,12 +103,24 @@ export default function Incomes() {
 
   const getPageNumbers = () => {
     let pages = [];
-  
     if (totalPages <= 7) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
     } else {
+      if (currentPage <= 4) {
+        pages = [1, 2, 3, 4, 5, "...", totalPages];
+      } else if (currentPage > totalPages - 4) {
+        pages = [
+          1,
+          "...",
+          totalPages - 4,
+          totalPages - 3,
+          totalPages - 2,
+          totalPages - 1,
+          totalPages,
+        ];
+      } else {
       if (currentPage <= 6) {
         pages = [1, 2, 3, 4,5,6,7, "...", totalPages];
       } else if (currentPage > 6 && currentPage < totalPages - 3) {
@@ -135,10 +149,9 @@ export default function Incomes() {
         ];
       }
     }
-  
+
     return pages;
   };
-  
 
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
