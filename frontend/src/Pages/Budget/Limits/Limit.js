@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaPen } from "react-icons/fa";
 import { MdDownloadDone } from "react-icons/md";
 
@@ -30,13 +30,28 @@ export default function Limit(props) {
     }));
   };
 
+  const[limitWidth, setLimitWidth] = useState(); 
+  const[spentWidth, setSpentWidth] = useState();
+  useEffect(() => {
+    if (spent === 0) {
+      setLimitWidth("100%");
+      setSpentWidth("0%");
+    } else {
+      setLimitWidth((limit / (limit + spent)) * 100 + "%");
+      setSpentWidth((spent / (limit + spent)) * 100 + "%");
+    }
+    console.log("effect");
+  }, [limit, spent]);
+
+
+
   return (
     <div className="budget-limit-container">
       <img src={category.imgSrc} className="budget-limit__category-icon" />
       <h3>{category.title}</h3>
       <div className="budget-linechart">
-        <div className="horizontal-bar__pelnas">{limit} €</div>
-        <div className="horizontal-bar__islaidos">{spent} €</div>
+        <div className="horizontal-bar__pelnas" style={{width: limitWidth}}>{limit} €</div>
+        <div className="horizontal-bar__islaidos" style={{width: spentWidth}}>{spent} €</div>
       </div>
       <div className="budget-limit-info">
         <h4>

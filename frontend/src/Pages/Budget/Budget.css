@@ -266,3 +266,15 @@
 .budget-category-limit-dropdown option {
   background-color: var(--grey-dark-color);
 }
+
+.Budget .horizontal-bar__pelnas {
+  /* width: var(--limit-width); */
+  background-color: var(--main-color);
+  border-radius: 5px 0px 0px 5px;
+}
+
+.Budget .horizontal-bar__islaidos {
+  /* width: var(--spent-width); */
+  background-color: var(--red-color);
+  border-radius: 0px 5px 5px 0px;
+}
