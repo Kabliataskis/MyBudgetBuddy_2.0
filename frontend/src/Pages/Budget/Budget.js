@@ -6,7 +6,7 @@ import MultiAxis from "./Charts/Multiaxis_Line_Chart";
 import axios from "../../axios";
 import { FaPen } from "react-icons/fa";
 import { MdDownloadDone } from "react-icons/md";
-
+import Center_Block from "./CenterBlock/Center_block";
 export default function Budget() {
   const [expenses, setExpenses] = useState([]);
   const [limit, setLimit] = useState({
@@ -23,20 +23,8 @@ export default function Budget() {
   };
   useEffect(() => {
     getExpense();
-  }, [expenses]);
-
-  const [incomes, setIncomes] = useState([]);
-  const getIncomes = async () => {
-    try {
-      const res = await axios.get("/income?");
-      setIncomes(res.data.data.incomes);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  useEffect(() => {
-    getIncomes();
   }, []);
+
 
   function statusChange() {
     setLimit((prevLimit) => ({
@@ -44,16 +32,6 @@ export default function Budget() {
       status: !prevLimit.status,
     }));
   }
-  //   const [inputLimit, setInputLimit] = useState('');
-
-  //   const handleInputChange = (event) => {
-  // 	setInputLimit(event.target.value);
-  //   };
-
-  //   const handleButtonClick = () => {
-  // 	setLimit({ ...limit, amount: `${limit.amount}` });
-  // 	setInputLimit('');
-  //   };
 
   return (
     <div className="Budget-container Budget">
@@ -75,43 +53,11 @@ export default function Budget() {
             </select>
           </div>
         </div>
-
         <div className="doughnut-chart-container">
           <DoughnutChart expenses={expenses} />
         </div>
       </div>
-      <div className="center-container">
-        <h2>Pajamų ir išlaidų palyginimas</h2>
-        <div className="compares-container">
-          <div className="inside-container">
-            <div className="compare-container until">
-              <p>Iki:</p>
-              {/* <select className="dropdown-month" name="month" id="month">
-                <option value="now">2023.05</option>
-                <option value="2023-04">2023.04</option>
-                <option value="2023-03">2023.03</option>
-                <option value="2023-02">2023.02</option>
-                <option value="2023-01">2023.01</option>
-              </select> */}
-              <input className="dropdown-month" type="date" />
-            </div>
-            <div className="compare-container from">
-              <p>Nuo:</p>
-              {/* <select className="dropdown-month" name="month" id="month">
-                <option value="now">2023.05</option>
-                <option value="2023-04">2023.04</option>
-                <option value="2023-03">2023.03</option>
-                <option value="2023-02">2023.02</option>
-                <option value="2023-01">2023.01</option>
-              </select> */}
-              <input className="dropdown-month" type="date" />
-            </div>
-          </div>
-          <div className="multiaxis-chart-container">
-            <MultiAxis incomes={incomes}/>
-          </div>
-        </div>
-      </div>
+      <Center_Block/>
       <div className="bottom-container">
         <h2>Nustatytos kategorijos biudžetas</h2>
         <div className="budget-container">
