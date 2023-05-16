@@ -102,14 +102,14 @@ export default function Incomes() {
   const getPageNumbers = () => {
     let pages = [];
   
-    if (totalPages <= 8) {
+    if (totalPages <= 7) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
     } else {
-      if (currentPage <= 7) {
+      if (currentPage <= 6) {
         pages = [1, 2, 3, 4,5,6,7,8,"...", totalPages];
-      } else if (currentPage > 7 && currentPage < totalPages - 3) {
+      } else if (currentPage => 7 && currentPage < totalPages - 3) {
         pages = [
           1,
           "...",
