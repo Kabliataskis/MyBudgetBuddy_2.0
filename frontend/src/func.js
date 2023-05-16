@@ -31,7 +31,7 @@ export const getActionTitle = (action) => {
         title = "Kategorijos redagavimas";
         break;
       case "category_delete":
-        title = "Kategorijos trinimas";
+        title = "Kategorijos trynimas";
         break;
       case "user_updateRole":
         title = "Rolės atnaujinimas";
@@ -40,7 +40,7 @@ export const getActionTitle = (action) => {
         title = "Vartotojo redagavimas";
         break;
       case "user_delete":
-        title = "Vartotojo trinimas";
+        title = "Vartotojo trynimas";
         break;
       case "income_add":
         title = "Pajamų pridėjimas";
@@ -49,7 +49,7 @@ export const getActionTitle = (action) => {
         title = "Pajamų redagavimas";
         break;
       case "income_delete":
-        title = "Pajamų trinimas";
+        title = "Pajamų trynimas";
         break;
       case "expense_add":
         title = "Išlaidų pridėjimas";
@@ -58,7 +58,7 @@ export const getActionTitle = (action) => {
         title = "Išlaidų redagavimas";
         break;
       case "expense_delete":
-        title = "Išlaidų trinimas";
+        title = "Išlaidų trynimas";
         break;
       default:
         title = action;
