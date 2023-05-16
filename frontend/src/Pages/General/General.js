@@ -78,8 +78,8 @@ export default function General() {
           </div>
   
           <div className="horizontal-bar-container">
-            <div className="horizontal-bar__pelnas">{totalIncome} €</div>
-            <div className="horizontal-bar__islaidos">{totalExpense} €</div>
+            <div className="horizontal-bar__pelnas">{totalIncome.toFixed((2))} €</div>
+            <div className="horizontal-bar__islaidos">{totalExpense.toFixed((2))} €</div>
           </div>
         </div>
   

@@ -124,21 +124,23 @@ export const Users = () => {
 
   const getPageNumbers = () => {
     let pages = [];
-
-    if (totalPages <= 4) {
+  
+    if (totalPages <= 7) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
     } else {
-      if (currentPage <= 4) {
-        pages = [1, 2, 3, 4, 5, "...", totalPages];
-      } else if (currentPage > 4 && currentPage < totalPages - 2) {
+      if (currentPage <= 6) {
+        pages = [1, 2, 3, 4,5,6,7, "...", totalPages];
+      } else if (currentPage > 6 && currentPage < totalPages - 3) {
         pages = [
           1,
           "...",
+          currentPage - 2,
           currentPage - 1,
           currentPage,
           currentPage + 1,
+          currentPage + 2,
           "...",
           totalPages,
         ];
@@ -146,6 +148,8 @@ export const Users = () => {
         pages = [
           1,
           "...",
+          totalPages - 6,
+          totalPages - 5,
           totalPages - 4,
           totalPages - 3,
           totalPages - 2,
@@ -153,9 +157,8 @@ export const Users = () => {
           totalPages,
         ];
       }
-      pages.push(totalPages);
     }
-
+  
     return pages;
   };
 
@@ -202,9 +205,9 @@ export const Users = () => {
         <table>
           <thead>
             <tr>
-              <th>Reg. Data</th>
+              <th>Reg. data</th>
               <th>Slapyvardis</th>
-              <th>El. Paštas</th>
+              <th>El. paštas</th>
               <th>Rolė</th>
               <th>Redaguoti</th>
               <th>Pašalinti</th>

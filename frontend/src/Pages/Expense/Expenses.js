@@ -157,11 +157,12 @@ export default function Expenses() {
       }
     } else {
       if (currentPage <= 6) {
-        pages = [1, 2, 3, 4,5,6,7, "...", totalPages];
-      } else if (currentPage > 6 && currentPage < totalPages - 3) {
+        pages = [1, 2, 3, 4,5,6,7,8,"...", totalPages];
+      } else if (currentPage => 7 && currentPage < totalPages - 3) {
         pages = [
           1,
           "...",
+          currentPage -3,
           currentPage - 2,
           currentPage - 1,
           currentPage,
@@ -174,6 +175,7 @@ export default function Expenses() {
         pages = [
           1,
           "...",
+          totalPages - 7,
           totalPages - 6,
           totalPages - 5,
           totalPages - 4,
@@ -184,7 +186,7 @@ export default function Expenses() {
         ];
       }
     }
-
+  
     return pages;
   };
 
@@ -227,7 +229,7 @@ export default function Expenses() {
         <h3 className="h3-text">Išlaidos</h3>
         <div className="block_pajamos">
           <p className="block_pajamo">
-            Mėnesio išlaidos: <span className="red-eur">{totalExpense}€</span>
+            Mėnesio išlaidos: <span className="red-eur">{(totalExpense.toFixed(2))}€</span>
           </p>
           <button className="btnAdd" onClick={() => setModal_ExpenseAdd(true)}>
             Įvesti išlaidas

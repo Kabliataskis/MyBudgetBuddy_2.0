@@ -108,11 +108,12 @@ export default function Incomes() {
       }
     } else {
       if (currentPage <= 6) {
-        pages = [1, 2, 3, 4,5,6,7, "...", totalPages];
-      } else if (currentPage > 6 && currentPage < totalPages - 3) {
+        pages = [1, 2, 3, 4,5,6,7,8,"...", totalPages];
+      } else if (currentPage => 7 && currentPage < totalPages - 3) {
         pages = [
           1,
           "...",
+          currentPage -3,
           currentPage - 2,
           currentPage - 1,
           currentPage,
@@ -125,6 +126,7 @@ export default function Incomes() {
         pages = [
           1,
           "...",
+          totalPages - 7,
           totalPages - 6,
           totalPages - 5,
           totalPages - 4,
@@ -189,7 +191,7 @@ export default function Incomes() {
         <h3 className="h3-text">Pajamos</h3>
         <div className="block_pajamos">
           <p className="block_pajamo">
-            Mėnesio pajamos: <span className="color-eur">{totalIncome}€</span>
+            Mėnesio pajamos: <span className="color-eur">{totalIncome.toFixed(2)}€</span>
           </p>
           <button className="btn-gren" onClick={() => setModal_IncomeAdd(true)}>
             Įvesti pajamas
