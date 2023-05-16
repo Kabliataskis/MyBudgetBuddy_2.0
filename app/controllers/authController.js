@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
+const {saveAction} = require("./actionController");
 
 const signToken = (data) => {
   return jwt.sign(data, "secret_1D3._0A$)!_)N@!#()!I*E(AD<02L>?", {
@@ -8,6 +9,40 @@ const signToken = (data) => {
   });
 };
 
+exports.getAllUsers = async (req, res) => {
+  const { limit = 0 } = req.query;
+  try {
+    const allUsers = await User.find()
+      .sort({ createdAt: -1 })
+      .select("-password")
+      .limit(limit);
+
+    res.status(200).json({
+      status: "success",
+      results: allUsers.length,
+      data: {
+        users: allUsers,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: err.message,
+    });
+  }
+};
+exports.getUser = async (req, res) => {
+  try {
+    const GetUser = await User.findById(req.params.id).select("-password");
+    if (!GetUser) {
+      return res.status(404).json({ msg: `Vartotojas id: ${id} neegzistuoja` });
+    } else {
+      res.status(200).json(GetUser);
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 exports.authRegister = async (req, res) => {
   const userExists = await User.exists({
     $or: [{ username: req.body.username }, { email: req.body.email }],
@@ -33,6 +68,7 @@ exports.authRegister = async (req, res) => {
       });
       const { password, ...data } = newUser._doc;
       data.token = token;
+      await saveAction(data._id, 'register', data);
       res.status(201).json({
         status: "success",
         data: data,
@@ -62,19 +98,12 @@ exports.authLogin = async (req, res) => {
           mess: "Neteisingas slapyvardis arba slaptažodis",
         });
       if (validatePass) {
-        // const token = jwt.sign(
-        //   {
-        //     id: user._id,
-        //     role: user.role,
-        //   },
-        //   "secret_1D3._0A$)!_)N@!#()!I*E(AD<02L>?",
-        //   { expiresIn: "1d" }
-        // );
         token = signToken({
           id: user._id,
           role: user.role,
         });
         const { password, ...data } = user._doc;
+        await saveAction(data._id, 'login');
         res.status(200).json({
           status: "success",
           data: { ...data, token },

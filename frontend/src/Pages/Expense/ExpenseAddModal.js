@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { ContextProvider } from "../../App";
 import axios from "../../axios";
 import { toast } from "react-toastify";
@@ -7,6 +7,7 @@ import swal from "sweetalert2";
 import { useFormik } from "formik";
 import "./Expense.css";
 export default function ExpenseAddModal(props) {
+  const {getExpense} = props;
   const { modal_ExpenseAdd, setModal_ExpenseAdd } = useContext(ContextProvider);
   const max_sum = 9999999; // Maksimali suma €
 
@@ -64,9 +65,10 @@ export default function ExpenseAddModal(props) {
         confirmButtonColor: "#28b78d",
       });
       formik.resetForm();
+      getExpense();
     } catch (err) {
       console.log(err);
-      toast.error("Klaida");
+      toast.error(`Klaida. ${err.response.data.msg}`);
     }
   };
 
@@ -109,6 +111,30 @@ export default function ExpenseAddModal(props) {
     setModal_ExpenseAdd(false);
   };
 
+
+  const getCategories = async () => {
+    try {
+      const res = await axios.get("/category?");
+      setCategories(res.data.data.categories);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+
+  const [categories, setCategories] = useState([])
+
+  let categories_list = categories.map((el) =>{
+    return(
+     <option value= {el.title} key={el._id+el.title}> 
+       {el.title}
+     </option>
+    )
+   });
   return (
     <>
       {modal_ExpenseAdd ? (
@@ -126,7 +152,7 @@ export default function ExpenseAddModal(props) {
               noValidate
               onSubmit={formik.handleSubmit}
             >
-              <select
+              {/* <select
                 className="boxOptions"
                 id="category"
                 name="category"
@@ -141,7 +167,23 @@ export default function ExpenseAddModal(props) {
                 <option value="Mokesčiai">Mokesčiai</option>
                 <option value="Laisvalaikis">Laisvalaikis</option>
                 <option value="Parduotuvė">Parduotuvė</option>
+              </select> */}
+
+
+              <select
+                className="boxOptions"
+                id="category"
+                name="category"
+                value={formik.values.category}
+                onChange={formik.handleChange}
+              >
+                <option value="">Pasirinkite kategoriją</option>
+                {categories_list}
+             
               </select>
+
+
+
               {formik.touched.category && formik.errors.category ? (
                 <div className="error-mess-box">
                   <AiFillWarning className="error-mess-icon" />

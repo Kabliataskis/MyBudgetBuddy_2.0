@@ -3,17 +3,16 @@ import {Navigate, BrowserRouter as Router, Route, Routes } from "react-router-do
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
-import { AuthProvider, RequireAuth, AuthorizedRedirect } from "./Context/auth";
+import { AuthProvider, RequireAuth, RequireAdmin, AuthorizedRedirect } from "./Context/auth";
+import Admin from "./Pages/Admin/Admin";
 import Budget from "./Pages/Budget/Budget";
 import Expense from "./Pages/Expense/Expenses";
-import History from "./Pages/History/History";
 import Auth from "./Pages/Auth/Auth";
 import Navbar from "./Pages/Navbar/Navbar";
 import General from "./Pages/General/General";
 import Income from "./Pages/Income/Incomes";
 import { useAuth } from "./Context/auth";
 /*Modals*/
-import ExpenseAddModal from "./Pages/Expense/ExpenseAddModal";
 export const ContextProvider = createContext();
 function App() {
   const [modal_ExpenseAdd, setModal_ExpenseAdd] = useState(false);
@@ -38,7 +37,7 @@ function App() {
                 path="/"
                 element={
                   <RequireAuth>
-                    <General /> <ExpenseAddModal />
+                    <General />
                   </RequireAuth>
                 }
               />
@@ -55,7 +54,7 @@ function App() {
                 path="/expense"
                 element={
                   <RequireAuth>
-                    <Expense /> <ExpenseAddModal />
+                    <Expense />
                   </RequireAuth>
                 }
               />
@@ -67,15 +66,7 @@ function App() {
                   </RequireAuth>
                 }
               />
-              {/* <Route path='/admin' element={<RequireAuth><Admin /></RequireAuth>} /> */}
-              <Route
-                path="/history"
-                element={
-                  <RequireAuth>
-                    <History />
-                  </RequireAuth>
-                }
-              />
+              <Route path='/Admin' element={<RequireAdmin><Admin /></RequireAdmin>} />
             </Routes>
           </Router>
           <ToastContainer

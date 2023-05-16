@@ -1,48 +1,45 @@
-import React, { useState, useEffect, useContext } from "react";
-import { ContextProvider } from "../../App";
+import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import axios from "../../axios";
-import Income from "./Income";
+import axios from "../../../axios";
 import { toast } from "react-toastify";
-import "./Income.css";
 import swal from "sweetalert2";
-import "../../index.css";
-import IncomeEdit_Modal from "./IncomeEditModal.js";
-import ReactPaginate from "react-paginate"
-
-import IncomeAdd_Modal from "./IncomeAddModal";
-import calculateTotalIncome from "../General/Income_sum/Income_sum";
+import User from "./User";
+import UserEdit_Modal from "./UserEditModal";
+import UserCreate_Modal from "./UserCreateModal";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
   MdOutlineKeyboardArrowRight,
   MdKeyboardArrowLeft,
 } from "react-icons/md";
-
-export default function Incomes() {
+export const Users = () => {
+  const [value, setValue] = useState("");
+  const [users, setUsers] = useState([]);
   const [editId, setEditId] = useState();
-  const [editPajamos, setEditPajamos] = useState({});
-  const [modal_IncomeEdit, setModal_IncomeEdit] = useState(false);
-  const { setModal_IncomeAdd } = useContext(ContextProvider);
-
-  const [incomes, setIncomes] = useState([]);
-  const getIncomes = async () => {
+  const [modal_UserEdit, setModal_UserEdit] = useState(false);
+  const [modal_UserCreate, setModal_UserCreate] = useState(false);
+  const getUsers = async () => {
     try {
-      const res = await axios.get("/income?");
-      setIncomes(res.data.data.incomes);
+      const res = await axios.get("/auth");
+      setUsers(res.data.data.users);
     } catch (err) {
       console.log(err);
     }
   };
   useEffect(() => {
-    getIncomes();
+    getUsers();
   }, []);
-  const totalIncome = calculateTotalIncome(incomes);
-  async function deleteIncome(id) {
+
+  const editUser = async (id) => {
+    console.log(id);
+    setEditId(id);
+    setModal_UserEdit(true);
+  };
+  const deleteUser = (id) => {
     swal
       .fire({
         title: "Veiksmo patvirtinimas",
-        text: "Ar tikrai norite ištrinti įrašą?",
+        text: "Ar tikrai norite ištrinti šį vartotoją?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#d33",
@@ -53,30 +50,50 @@ export default function Incomes() {
       .then(async (result) => {
         if (result.isConfirmed) {
           try {
-            const res = await axios.delete("/income/" + id);
+            const res = await axios.delete("/user/" + id);
             swal.fire({
               title: "Sėkmingai",
-              text: "Įrašas ištrintas",
+              text: "Vartotojas ištrintas",
               icon: "success",
               confirmButtonColor: "#28b78d",
             });
-            getIncomes();
+            getUsers();
           } catch (err) {
             toast.error(err.response.data.msg);
           }
         }
       });
-  }
+  };
+  const updateUserRole = async (e, id, username) => {
+    console.log(id);
+    let role = e.target.value;
+    try {
+      const res = await axios.patch("/user/role/" + id, {
+        role,
+      });
+      getUsers();
+      // swal.fire({
+      //   title: "Sėkmingai",
+      //   text: "Vartotojo rolė atnaujinta",
+      //   icon: "success",
+      //   confirmButtonColor: "#28b78d",
+      // });
+      toast.success(`Vartotojo ${username} rolė atnaujinta`);
+    } catch (err) {
+      console.log(err);
+      toast.error(`Klaida. ${err.response.data.msg}`);
+    }
+  };
 
-  const [value, setValue] = useState("");
+
+
+
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-
-  const filterIncome = incomes.filter((el) => {
-    const title = el.title || "";
-    const date = el.date || "";
+  const filterUsers = users.filter((el) => {
+    const title = el.username || "";
+    const date = el.createdAt || "";
     const lowercaseValue = value ? value.toLocaleLowerCase() : "";
-
   
     const startDateObj = startDate ? new Date(startDate) : null;
     const endDateObj = endDate ? new Date(endDate) : null;
@@ -90,48 +107,38 @@ export default function Incomes() {
     return title.toLocaleLowerCase().includes(lowercaseValue) && dateInRange;
   });
 
-  const editIncome = async (id) => {
-    setEditId(id);
-    setModal_IncomeEdit(true);
+  const removeFilter = (event) => {
+    event.preventDefault();
+    setCurrentPage(1);
+    setValue("");
+    setStartDate("");
+    setEndDate("");
   };
+
 
   const [pageSize, setPageSize] = useState(10); // number of records per page
   const [currentPage, setCurrentPage] = useState(1); // current page number
-  const totalItems = filterIncome.length;
+  const totalItems = filterUsers.length;
   const totalPages = Math.ceil(totalItems / pageSize);
   const pages = [];
 
   const getPageNumbers = () => {
     let pages = [];
-    if (totalPages <= 7) {
+
+    if (totalPages <= 4) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
     } else {
       if (currentPage <= 4) {
         pages = [1, 2, 3, 4, 5, "...", totalPages];
-      } else if (currentPage > totalPages - 4) {
+      } else if (currentPage > 4 && currentPage < totalPages - 2) {
         pages = [
           1,
           "...",
-          totalPages - 4,
-          totalPages - 3,
-          totalPages - 2,
-          totalPages - 1,
-          totalPages,
-        ];
-      } else {
-      if (currentPage <= 6) {
-        pages = [1, 2, 3, 4,5,6,7, "...", totalPages];
-      } else if (currentPage > 6 && currentPage < totalPages - 3) {
-        pages = [
-          1,
-          "...",
-          currentPage - 2,
           currentPage - 1,
           currentPage,
           currentPage + 1,
-          currentPage + 2,
           "...",
           totalPages,
         ];
@@ -139,8 +146,6 @@ export default function Incomes() {
         pages = [
           1,
           "...",
-          totalPages - 6,
-          totalPages - 5,
           totalPages - 4,
           totalPages - 3,
           totalPages - 2,
@@ -148,6 +153,7 @@ export default function Incomes() {
           totalPages,
         ];
       }
+      pages.push(totalPages);
     }
 
     return pages;
@@ -157,74 +163,56 @@ export default function Incomes() {
     pages.push(i);
   }
 
+
+
+
+
+
+
+
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  let incomes_list = filterIncome.slice(startIndex, endIndex).map((el) => {
+  let users_list = filterUsers.slice(startIndex, endIndex).map((el) => {
     return (
-      <Income
+      <User
         key={uuidv4()}
         obj={el}
-        id={el._id}
-        setEditPajamos={setEditPajamos}
-        editIncome={editIncome}
-        deleteIncome={deleteIncome}
+        editUser={editUser}
+        deleteUser={deleteUser}
+        updateUserRole={updateUserRole}
       />
     );
   });
 
-  const handleSearchChange = (e) => {
-    setValue(e.target.value);
-    setCurrentPage(1);
-  };
-  const removeFilter = (event) => {
-    event.preventDefault();
-    setCurrentPage(1);
-    setValue("");
-    setStartDate("");
-    setEndDate("");
-  };
   return (
-    <div className="main_back Incomes">
-      <IncomeAdd_Modal getIncomes={getIncomes} />
-      <IncomeEdit_Modal
+    <div className="container-pajamos flex_container">
+      <UserEdit_Modal
         editId={editId}
         setEditId={setEditId}
-        modal_IncomeEdit={modal_IncomeEdit}
-        setModal_IncomeEdit={setModal_IncomeEdit}
-        editPajamos={editPajamos}
-        getIncomes={getIncomes}
+        modal_UserEdit={modal_UserEdit}
+        setModal_UserEdit={setModal_UserEdit}
+        getUsers={getUsers}
       />
-      <div className="container-pajamos">
-        <h3 className="h3-text">Pajamos</h3>
-        <div className="block_pajamos">
-          <p className="block_pajamo">
-            Mėnesio pajamos: <span className="color-eur">{totalIncome}€</span>
-          </p>
-          <button className="btn-gren" onClick={() => setModal_IncomeAdd(true)}>
-            Įvesti pajamas
-          </button>
-        </div>
-      </div>
-
-      <div className="container-pajamos flex_container">
-        <div className="table_main">
-          <table>
-            <thead>
-              <tr>
-                <th>Data</th>
-                <th>Pajamų šaltinis</th>
-                <th>Suma</th>
-                <th>Redaguoti</th>
-                <th>Pašalinti</th>
-              </tr>
-            </thead>
-            <tbody>{incomes_list}</tbody>
-          </table>
-          <div className="pagination-container">
+      <UserCreate_Modal
+        modal_UserCreate={modal_UserCreate}
+        setModal_UserCreate={setModal_UserCreate}
+        getUsers={getUsers}
+      />
+      <div className="table_main">
+        <table>
+          <thead>
+            <tr>
+              <th>Reg. Data</th>
+              <th>Slapyvardis</th>
+              <th>El. Paštas</th>
+              <th>Rolė</th>
+              <th>Redaguoti</th>
+              <th>Pašalinti</th>
+            </tr>
+          </thead>
+          <tbody>{users_list}</tbody>
+        </table>
+        <div className="pagination-container">
             <ul>
               <li
                 disabled={currentPage === 1}
@@ -260,7 +248,7 @@ export default function Incomes() {
               <li
                 onClick={() =>
                   setCurrentPage(
-                    endIndex >= filterIncome.length
+                    endIndex >= users.length
                       ? currentPage - 0
                       : currentPage + 1
                   )
@@ -271,7 +259,7 @@ export default function Incomes() {
               <li
                 onClick={() =>
                   setCurrentPage(
-                    endIndex >= filterIncome.length
+                    endIndex >= users.length
                       ? currentPage - 0
                       : totalPages
                   )
@@ -281,16 +269,22 @@ export default function Incomes() {
               </li>
             </ul>
           </div>
-        </div>
-        <div className="filter-block">
-          <h3>Filtravimas</h3>
+
+
+
+      </div>
+
+
+      <div className="filter-block">
+          <button className="Admin-createBtn" onClick={() => setModal_UserCreate(true)}>Sukurti vartotoją</button>
+          <h3 className="Admin-filter-title">Filtravimas</h3>
           <div>
             <form>
               <input
                 type="text"
-                placeholder="Paieška..."
+                placeholder="Vartotojo slapyvardis..."
                 className="paieska_filter"
-                onChange={(e) => handleSearchChange(e)}
+                onChange={(event) => setValue(event.target.value)}
                 value={value}
               />
               <p className="data_filter_p">
@@ -312,16 +306,12 @@ export default function Incomes() {
                   value={endDate}
                 />
               </p>
-              <button
-                onClick={(event) => removeFilter(event)}
-                className="btn-dark"
-              >
-                Išvalyti
-              </button>
+              <button className="btn-dark" onClick={(event) => removeFilter(event)}>Išvalyti</button>
             </form>
           </div>
         </div>
-      </div>
     </div>
   );
-}
+};
+
+export default Users;

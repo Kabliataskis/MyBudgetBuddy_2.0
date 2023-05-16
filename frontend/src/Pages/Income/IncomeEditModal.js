@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineClose, AiFillWarning } from "react-icons/ai";
 import { toast } from "react-toastify";
 import "./Income.css";
@@ -8,9 +8,8 @@ import swal from "sweetalert2";
 import { useFormik } from "formik";
 
 export default function IncomeEditModal(props) {
-  const {modal_IncomeEdit, setModal_IncomeEdit, editPajamos, editId, getIncomes} = props;
+  const {modal_IncomeEdit, setModal_IncomeEdit, editId, setEditId, getIncomes} = props;
   const max_amount = 9999999; // Maksimali suma €
-  console.log(editPajamos);
   const validate = (values) => {
     let selected_time = new Date(values.date).getTime();
     let curr_time = new Date().getTime();
@@ -51,7 +50,6 @@ export default function IncomeEditModal(props) {
       const res = await axios.patch("/income/"+editId, {
         title, date, sum
       });
-      console.log(res);
       //Jei backend grąžina success
       setModal_IncomeEdit(false);
       getIncomes();
@@ -61,7 +59,6 @@ export default function IncomeEditModal(props) {
         icon: "success",
         confirmButtonColor: "#28b78d",
       });
-      formik.resetForm();
     } catch (err){
       console.log(err);
       toast.error('Klaida');
@@ -78,11 +75,10 @@ export default function IncomeEditModal(props) {
 }
 
   useEffect(() => {
-    const getItem = async () => {
+    const getIncomeItem = async () => {
       if(editId){
         try {
           const res = await axios.get("/income/"+editId);
-          console.log(res.data);
           formik.setFieldValue("title", res.data.title);
           formik.setFieldValue("date", formatDate(res.data.date));
           formik.setFieldValue("amount", res.data.sum);
@@ -91,7 +87,7 @@ export default function IncomeEditModal(props) {
         }
       }
     }
-    getItem();
+    getIncomeItem();
   }, [editId]);
 
 
@@ -132,7 +128,7 @@ export default function IncomeEditModal(props) {
   // Modal close
   const closeModal = () => {
     setModal_IncomeEdit(false);
-    //formik.resetForm(); // reset forma
+    setEditId();
   };
 
   return (
@@ -234,7 +230,6 @@ export default function IncomeEditModal(props) {
                   type="reset"
                   onClick={() => {
                     closeModal();
-                    formik.resetForm();
                   }}
                 >
                   Atšaukti

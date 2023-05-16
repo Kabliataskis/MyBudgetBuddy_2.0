@@ -1,0 +1,96 @@
+.container-admin-nav {
+    background-color: var(--white-color);
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    color: var(--dark-color);
+  }
+
+
+  .block_pajamos {
+    display: flex;
+    margin-left: 60px;
+    align-items: center;
+  }
+  
+  .block_pajamo {
+    background: var(--grey-color);
+    /* padding: 15px 20px; */
+    padding: 15px 20px;
+    border-radius: 8px;
+    /* margin: 15px 40px 0 0px; */
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .Admin-nav-items-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin: 10px 40px;
+  }
+  .Admin-nav-item{
+    background-color: var(--grey-color);
+    color: var(--dark-color);
+    padding: 15px 30px;
+    min-width: 250px;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: 500;
+    transition: 0.2s;
+  }
+  .Admin-nav-item:hover{
+    cursor: pointer;
+    background-color: var(--dark-color);
+    color: var(--white-color);
+  }
+  .Admin-nav-item.selected{
+    color: var(--white-color);
+    background-color: var(--dark-color);
+  }
+  .Admin-table-img{
+    width: 32px;
+    height: 32px;
+  }
+.Admin-createBtn{
+  background-color: var(--main-color);
+  padding: 5px;
+  color: var(--white-color);
+  width: 100%;
+  border: unset;
+  border-radius: 5px;
+}
+.Admin-createBtn:hover{
+  cursor: pointer;
+  background-color: var(--main-color_);
+}
+.CategoryModal-img{
+  width: 32px;
+  height: 32px;
+}
+.Admin-select-dropdown{
+  background-color: var(--grey-color);
+  border-radius: 5px;
+  color: var(--dark-color);
+  border: 1px solid transparent;
+  padding: 5px;
+  outline: none;
+}
+.Admin-filter-title{
+  margin-top: 25px;
+}
+  /* tablet */
+@media screen and (max-width: 1439px) {
+  .Admin-nav-items-container{
+    justify-content: center;
+  }
+    
+}
+/* mobile */
+@media screen and (max-width: 767px) {
+.Admin-nav-items-container{
+  flex-direction: column;
+}
+    
+  }

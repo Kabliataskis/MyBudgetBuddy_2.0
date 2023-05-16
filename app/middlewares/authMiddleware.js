@@ -1,3 +1,4 @@
+const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 
 exports.checkAuth = (req, res, next) => {
@@ -12,6 +13,7 @@ exports.checkAuth = (req, res, next) => {
       );
       console.log(decoded);
       req.userInfo = decoded;
+      console.log(decoded);
       next();
     } catch (err) {
       console.log(err);
@@ -25,14 +27,17 @@ exports.checkAuth = (req, res, next) => {
     });
   }
 };
-exports.isAdmin = (req, res, next) => {
+exports.isAdmin = async (req, res, next) => {
   try {
-    if (req.userInfo.role == "admin") {
-      next();
-    } else {
-      res.status(403).json({
-        message: "Permission denied",
-      });
+    const user = await User.findById(req.userInfo.id);
+    if(user){
+      if (user.role == "admin") {
+        next();
+      } else {
+        res.status(403).json({
+          message: "Permission denied",
+        });
+      }
     }
   } catch (err) {
     res.status(403).json({
