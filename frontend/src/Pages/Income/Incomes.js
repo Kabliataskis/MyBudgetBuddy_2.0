@@ -108,17 +108,21 @@ export default function Incomes() {
       }
     } else {
       if (currentPage <= 6) {
-        pages = [1, 2, 3, 4,5,6,7,8,"...", totalPages];
-      } else if (currentPage => 7 && currentPage < totalPages - 3) {
+        if(totalPages == 8){
+          pages = [1, 2, 3, 4,5,6,7, totalPages];
+        }else{
+          pages = [1, 2, 3, 4,5,6,7, "...", totalPages];
+        }
+      }
+       else if (currentPage > 6 && currentPage < totalPages - 3) {
         pages = [
           1,
           "...",
-          currentPage -3,
-          currentPage - 2,
+          // currentPage -3,
+          // currentPage - 2,
           currentPage - 1,
           currentPage,
           currentPage + 1,
-          currentPage + 2,
           "...",
           totalPages,
         ];
@@ -126,9 +130,8 @@ export default function Incomes() {
         pages = [
           1,
           "...",
-          totalPages - 7,
-          totalPages - 6,
-          totalPages - 5,
+          // totalPages - 6,
+          // totalPages - 5,
           totalPages - 4,
           totalPages - 3,
           totalPages - 2,
@@ -140,7 +143,9 @@ export default function Incomes() {
   
     return pages;
   };
-  
+
+
+
 
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
