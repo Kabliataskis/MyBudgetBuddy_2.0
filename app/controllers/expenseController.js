@@ -1,6 +1,7 @@
 /* eslint-disable linebreak-style */
 const Expense = require("../models/expenseModel");
 const Category = require("../models/categoryModel");
+const Income = require("../models/incomeModel");
 const {saveAction} = require("./actionController");
 
 const addTime = (date) => {
@@ -95,8 +96,6 @@ exports.getMonthExpenses = async (req, res) => {
       });
     }
   }
-
-
 };
 
 
