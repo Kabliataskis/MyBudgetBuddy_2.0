@@ -60,7 +60,7 @@ export const data = {
       yAxisID: 'y',
     },
     {
-      label: 'Islaidos',
+      label: 'Išlaidos',
       data: data2,
       borderColor: 'rgb(53, 162, 235)',
       backgroundColor: 'rgba(53, 162, 235, 0.5)',
