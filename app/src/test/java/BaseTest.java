@@ -15,7 +15,7 @@ public class BaseTest {
         options.addArguments("--remote-allow-origins=*");
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
-        driver.get("http://localhost:3000/");
+        driver.get("http://localhost:3000");
     }
 
     @AfterEach
