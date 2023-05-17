@@ -8,7 +8,7 @@ const limitSchema = mongoose.Schema(
             required: true
         }, 
         category: {
-            type: mongoose.Schema.Types.Mixed,
+            type: mongoose.Schema.Types.ObjectId,
             required: true,
         },
         limit: {

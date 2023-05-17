@@ -1,6 +1,9 @@
+const { ObjectId } = require("mongodb");
 const Category = require("../models/categoryModel");
 const Expense = require("../models/expenseModel");
+const Limit = require("../models/limitModel");
 const {saveAction} = require("./actionController");
+
 
 
 exports.getAllCategories = async (req, res) => {
@@ -68,11 +71,13 @@ exports.deleteCategory = async (req, res) => {
       return res.status(404).json({ msg: `Kategorija nr: ${id} neegzistuoja`});
     } else {
         const isCategoryUsed = await Expense.findOne({category: id});
-        if(isCategoryUsed){
+        const isCategoryUsedOnLimits = await Limit.findOne({category: new ObjectId(id)});
+        if(isCategoryUsed || isCategoryUsedOnLimits){
             return res.status(404).json({ msg: `Kategorija nr: ${id} naudojama vartotojų.`});
         }else{
             try{
                 const delete_ = await Category.findByIdAndDelete(id);
+                await Limit.deleteMany({category: new ObjectId(id)});
                 res.status(200).json({
                   status: "success",
                   message: `Kategorija nr: ${id} sėkmingai pašalinta.`,

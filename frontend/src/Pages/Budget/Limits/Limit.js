@@ -55,8 +55,7 @@ export default function Limit(props) {
       </div>
       <div className="budget-limit-info">
         <h4>
-          Nustatytas biudžetas:
-            <span className="green">{currLimit.amount} €</span>
+           Nustatytas biudžetas: <span className="green"> {currLimit.amount} €</span>
             <span className="red budget-limit__editBtn" onClick={() => editLimit(_id)}> <FaPen /> </span>
         </h4>
 

@@ -269,12 +269,14 @@
 
 .Budget .horizontal-bar__pelnas {
   /* width: var(--limit-width); */
+  min-width: 40px;
   background-color: var(--main-color);
   border-radius: 5px 0px 0px 5px;
 }
 
 .Budget .horizontal-bar__islaidos {
   /* width: var(--spent-width); */
+  min-width: 40px;
   background-color: var(--red-color);
   border-radius: 0px 5px 5px 0px;
 }

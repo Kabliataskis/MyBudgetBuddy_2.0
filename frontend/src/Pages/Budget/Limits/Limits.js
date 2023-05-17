@@ -31,19 +31,19 @@ export default function Limits() {
     //   getCategories();
     // }, []);
 
-    const getLimits = async () => {
-        try {
-          const res = await axios.get("/limits?");
-          setLimits(res.data.data.limits);
-          setSpents(res.data.data.expenses);
-        } catch (err) {
-          console.log(err);
-        }
-      };
+    // const getLimits = async () => {
+    //     try {
+    //       const res = await axios.get("/limits?");
+    //       setLimits(res.data.data.limits);
+    //       setSpents(res.data.data.expenses);
+    //     } catch (err) {
+    //       console.log(err);
+    //     }
+    //   };
 
-      useEffect(() => {
-        getLimits();
-      }, []);
+    //   useEffect(() => {
+    //     getLimits();
+    //   }, []);
 
       const editLimit = (id) => {
         setEditId(id);
@@ -66,13 +66,40 @@ export default function Limits() {
     
 
 const [dropdownYear, setDropdownYear] = useState(new Date().getFullYear());
-const  [dropdownMnth, setDropdownMonth] = useState(new Date().getMonth() +1); // getMonth() returns the month (from 0 to 11) of a date:
+const  [dropdownMonth, setDropdownMonth] = useState(new Date().getMonth() +1); // getMonth() returns the month (from 0 to 11) of a date:
 const handleYearChange = (e) => {
     setDropdownYear(e.target.value);
 }
 const handleMonthChange = (e) => {
     setDropdownMonth(e.target.value);
 }
+useEffect(() => {
+  makeDate();
+}, [dropdownYear, dropdownMonth]);
+
+const makeDate = async () => {
+  // let d = new Date().getDate();
+  // let selected_date = new Date(dropdownYear, dropdownMonth-1, d);
+  // let formatted_date = selected_date.toISOString().slice(0,10);
+  // console.log(`date selected: ${formatted_date}`);
+  // getLimits(formatted_date);
+  console.log(`date selected: ${dropdownYear} ${dropdownMonth}`);
+  getLimits(dropdownYear,dropdownMonth);
+
+}
+
+const getLimits = async (year, month) => {
+  try {
+    console.log("try");
+    const res = await axios.get("/limits/"+year+"/"+month);
+    console.log(res);
+    setLimits(res.data.data.limits);
+    setSpents(res.data.data.expenses);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
   return (
       <div className="bottom-container">
         <LimitEditModal
@@ -99,7 +126,7 @@ const handleMonthChange = (e) => {
                 name="month"
                 id="month"
                 onChange={(e) => handleMonthChange(e)}
-                value={dropdownMnth}
+                value={dropdownMonth}
               >
                 <option value="1">Sausis</option>
                 <option value="2">Vasaris</option>
