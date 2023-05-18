@@ -6,6 +6,7 @@ import swal from "sweetalert2";
 import User from "./User";
 import UserEdit_Modal from "./UserEditModal";
 import UserCreate_Modal from "./UserCreateModal";
+import { getPageNumbers } from "../../../func";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
@@ -122,45 +123,6 @@ export const Users = () => {
   const totalPages = Math.ceil(totalItems / pageSize);
   const pages = [];
 
-  const getPageNumbers = () => {
-    let pages = [];
-  
-    if (totalPages <= 7) {
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
-      }
-    } else {
-      if (currentPage <= 6) {
-        pages = [1, 2, 3, 4,5,6,7, "...", totalPages];
-      } else if (currentPage > 6 && currentPage < totalPages - 3) {
-        pages = [
-          1,
-          "...",
-          currentPage - 2,
-          currentPage - 1,
-          currentPage,
-          currentPage + 1,
-          currentPage + 2,
-          "...",
-          totalPages,
-        ];
-      } else {
-        pages = [
-          1,
-          "...",
-          totalPages - 6,
-          totalPages - 5,
-          totalPages - 4,
-          totalPages - 3,
-          totalPages - 2,
-          totalPages - 1,
-          totalPages,
-        ];
-      }
-    }
-  
-    return pages;
-  };
 
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
@@ -233,7 +195,7 @@ export const Users = () => {
                 <MdKeyboardArrowLeft />
               </li>
 
-              {getPageNumbers().map((page, index) => (
+              {getPageNumbers(totalPages, currentPage).map((page, index) => (
                 <li
                   className={currentPage === page ? "select" : ""}
                   key={index}
