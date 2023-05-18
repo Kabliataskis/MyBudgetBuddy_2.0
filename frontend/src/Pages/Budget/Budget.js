@@ -7,6 +7,8 @@ import axios from "../../axios";
 import { FaPen } from "react-icons/fa";
 import { MdDownloadDone } from "react-icons/md";
 import Center_Block from "./CenterBlock/Center_block";
+import totalExpense from "../General/General";
+
 export default function Budget() {
   const [expenses, setExpenses] = useState([]);
   const [limit, setLimit] = useState({
@@ -39,7 +41,7 @@ export default function Budget() {
         <div className="stats-containers">
           <div className="stat-container isleista-per-men">
             <p>
-              Išleista per mėn: <span className="red">1044.94€</span>
+              Išleista per mėn: <span className="red">{totalExpense}€</span>
             </p>
           </div>
           <div className="stat-container data">
@@ -70,6 +72,7 @@ export default function Budget() {
 
               <option value="health">Sveikata</option>
               <option value="Shop">Parduotuvė</option>
+              <option value="Products">Maistas</option>
             </select>
           </div>
           <div className="budget-category">
@@ -81,10 +84,10 @@ export default function Budget() {
                 id="month"
               >
                 <option value="now">Šis mėn.</option>
-                <option value="2023-04">04 men.</option>
-                <option value="2023-03">03 men.</option>
-                <option value="2023-02">02 men.</option>
-                <option value="2023-01">01 men.</option>
+                <option value="2023-04">04 mėn.</option>
+                <option value="2023-03">03 mėn.</option>
+                <option value="2023-02">02 mėn.</option>
+                <option value="2023-01">01 mėn.</option>
               </select>
             </div>
             <div className="budget-linechart">

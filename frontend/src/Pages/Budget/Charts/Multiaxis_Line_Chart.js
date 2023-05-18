@@ -71,26 +71,45 @@ console.log(filterIncome);
   const data1 = [875, 1032, 1287, 765, 1201,1201];
   const data2 = [924, 1157, 746, 1283, 1089,1089];
 
+export const data = {
+  labels,
+  datasets: [
+    {
+      label: 'Pajamos',
+      data: data1,
+      borderColor: 'rgb(255, 99, 132)',
+      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      yAxisID: 'y',
+    },
+    {
+      label: 'Išlaidos',
+      data: data2,
+      borderColor: 'rgb(53, 162, 235)',
+      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      yAxisID: 'y1',
+    },
+  ],
+};
 
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: "Pajamos",
-        data: data1,
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-        yAxisID: "y",
-      },
-      {
-        label: "Islaidos",
-        data: data2,
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
-        yAxisID: "y1",
-      },
-    ],
-  };
+  // const data = {
+  //   labels,
+  //   datasets: [
+  //     {
+  //       label: "Pajamos",
+  //       data: data1,
+  //       borderColor: "rgb(255, 99, 132)",
+  //       backgroundColor: "rgba(255, 99, 132, 0.5)",
+  //       yAxisID: "y",
+  //     },
+  //     {
+  //       label: "Islaidos",
+  //       data: data2,
+  //       borderColor: "rgb(53, 162, 235)",
+  //       backgroundColor: "rgba(53, 162, 235, 0.5)",
+  //       yAxisID: "y1",
+  //     },
+  //   ],
+  // };
 
   return <Line options={options} data={data} />;
 }
