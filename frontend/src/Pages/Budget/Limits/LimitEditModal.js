@@ -7,6 +7,7 @@ import axios from "../../../axios";
 import { useFormik } from "formik";
 
 export default function LimitEditModal(props) {
+  console.log("loaded");
   const {modal_limitEdit, setModal_limitEdit, editId, setEditId, getLimits} = props;
   const validate = (values) => {
     let errors = {};

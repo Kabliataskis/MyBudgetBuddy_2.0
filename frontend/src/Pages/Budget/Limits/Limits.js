@@ -1,54 +1,37 @@
 /* eslint-disable linebreak-style */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "../../../axios";
 import { FaPen } from "react-icons/fa";
 import { MdDownloadDone } from "react-icons/md";
 import Limit from "./Limit";
 import LimitEditModal from "./LimitEditModal";
-
+import BeatLoader from "react-spinners/BeatLoader";
 export default function Limits() {
+    const [loading, setLoading] = useState(true);
     const [modal_limitEdit, setModal_limitEdit] = useState(false);
     const [editId, setEditId] = useState();
     const [limits, setLimits] = useState([])
     const [spents, setSpents] = useState([])
-    // let categories_list = categories.map((el) =>{
-    //   return(
-    //    <option value= {el.title} key={uuidv4()}> 
-    //      {el.title}
-    //    </option>
-    //   )
-    //  });
-    // const getCategories = async () => {
-    //   try {
-    //     const res = await axios.get("/category?");
-    //     setCategories(res.data.data.categories);
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // };
-    // useEffect(() => {
-    //   getCategories();
-    // }, []);
 
-    // const getLimits = async () => {
-    //     try {
-    //       const res = await axios.get("/limits?");
-    //       setLimits(res.data.data.limits);
-    //       setSpents(res.data.data.expenses);
-    //     } catch (err) {
-    //       console.log(err);
-    //     }
-    //   };
 
-    //   useEffect(() => {
-    //     getLimits();
-    //   }, []);
+
+    const [yearDropdownOptions, setYearDropdownOptions] = useState([]);
+
+    const yearDropdownList = yearDropdownOptions.map((year) => (
+      <option value={year} key={year}>
+        {year}
+      </option>
+    ));
+
 
       const editLimit = (id) => {
+        console.log(`edit limit! ${id}`);
         setEditId(id);
         setModal_limitEdit(true);
       }
+
+      
       let limits_list = limits.map((el) => {
         return (
           <Limit
@@ -74,27 +57,28 @@ const handleMonthChange = (e) => {
     setDropdownMonth(e.target.value);
 }
 useEffect(() => {
+  const currentDate = new Date();
+  const years = Array.from({ length: currentDate.getFullYear() - 2022 + 1 }, (_, index) => currentDate.getFullYear() - index);
+  console.log(years);
+  setYearDropdownOptions(years);
+}, []);
+useEffect(() => {
   makeDate();
 }, [dropdownYear, dropdownMonth]);
 
 const makeDate = async () => {
-  // let d = new Date().getDate();
-  // let selected_date = new Date(dropdownYear, dropdownMonth-1, d);
-  // let formatted_date = selected_date.toISOString().slice(0,10);
-  // console.log(`date selected: ${formatted_date}`);
-  // getLimits(formatted_date);
-  console.log(`date selected: ${dropdownYear} ${dropdownMonth}`);
   getLimits(dropdownYear,dropdownMonth);
-
 }
 
 const getLimits = async (year, month) => {
+  setLoading(true);
   try {
     console.log("try");
     const res = await axios.get("/limits/"+year+"/"+month);
     console.log(res);
     setLimits(res.data.data.limits);
     setSpents(res.data.data.expenses);
+    setLoading(false);
   } catch (err) {
     console.log(err);
   }
@@ -102,13 +86,14 @@ const getLimits = async (year, month) => {
 
   return (
       <div className="bottom-container">
-        <LimitEditModal
-        getLimits={getLimits}
+        
+        {modal_limitEdit ? <LimitEditModal
+        getLimits={makeDate}
         modal_limitEdit={modal_limitEdit}
         setModal_limitEdit={setModal_limitEdit}
         editId={editId}
         setEditId={setEditId}
-        />
+        /> : null}
         <div className="budget-limits-top-container">
          <h2 className="budget-limits-top-container-title">Nustatytos kategorijos biudžetas</h2>
          <div className="budget-limits-dropdowns-container">
@@ -119,7 +104,7 @@ const getLimits = async (year, month) => {
                 onChange={(e) => handleYearChange(e)}
                 value={dropdownYear}
               >
-                <option value="now">2023</option>
+                {/* <option value="now">2023</option> */yearDropdownList}
               </select>
               <select
                 className="budget-category-limit-dropdown"
@@ -148,7 +133,19 @@ const getLimits = async (year, month) => {
 
 
         <div className="budget-limits-container">
-    {limits_list}
+        {
+          loading? 
+          <BeatLoader
+          color="#28b78d"
+          loading
+          margin={2}
+          size={20}
+        />
+        :
+        limits_list
+        }
+
+    
 
             {/* <div className="budget-limit-container">
                 <img src="favicon.ico" className="budget-limit__category-icon"/>

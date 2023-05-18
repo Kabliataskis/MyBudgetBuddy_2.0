@@ -3,6 +3,7 @@ const Limit = require("../models/limitModel");
 const Category = require("../models/categoryModel");
 const Expense = require("../models/expenseModel");
 const { getCategory } = require("./categoryController");
+const {saveAction} = require("./actionController");
 
 exports.getAllLimits = async (req, res) => {
   const {year, month} = req.params;
@@ -49,13 +50,15 @@ exports.getAllLimits = async (req, res) => {
               console.log("no creation");
             }
         }
+        allLimits = await Limit.find({ user_id: req.userInfo.id,   date: { $gte: startOfMonth, $lte: endOfMonth }, }).populate({
+          path: "category",
+          model: "category",
+        });
 
       } else {
         //no category
       }
   
-  
-
 
 
       for (const category of GetCategory) {
@@ -109,97 +112,23 @@ exports.getAllLimits = async (req, res) => {
 
 
 
+const isDateCurrOrFutureMonth = (date) => {
+  date = new Date(date);
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth();
 
+  const dateYear = date.getFullYear();
+  const dateMonth = date.getMonth();
 
-
-// exports.getAllLimits = async (req, res) => {
-//   const { limit = 0 } = req.query;
-//   const {year, month} = req.params;
-//   console.log("year:"+ req.params.year);
-//   console.log("month:"+ req.params.month);
-//   let category_spent = [];
-//   try {
-//     // const allActions = await Action.find()
-//     //   .populate({ path: "user_id", select: "username" })
-//     //   // .populate({ path: "data", populate: { path: "category", model: "category" },})
-//     //   .populate({path: "data.category", model:"category"})
-//     //   .sort({ createdAt: -1 })
-//     //   .limit(limit);
-
-
-
-//     const startOfMonth = new Date(year, month - 1, 1);
-//     const endOfMonth = new Date(year, month, 1, 0, 0, -1);
-
-//     console.log(`The year is ${year} the month is ${month}`);
-//     console.log(`startOfMonth ${startOfMonth}`);
-//     console.log(`endOfMonth ${endOfMonth}`);
-
-
-
-//     allLimits = await Limit.find({ user_id: req.userInfo.id }).populate({
-//       path: "category",
-//       model: "category",
-//     });
-//     const GetCategory = await Category.find();
-//     if (!allLimits.length && GetCategory) {
-//       for (const category of GetCategory) {
-//         const limit = await Limit.create({
-//           user_id: req.userInfo.id,
-//           category: category._id,
-//           limit: 0,
-//         });
-//         allLimits.push(limit);
-//       }
-//     } else {
-//       //no category
-//     }
-//     for (const category of GetCategory) {
-//       const sum = await Expense.aggregate([
-//         {
-//           $match: {
-//             user_id: req.userInfo.id,
-//             category: new ObjectId(category._id),
-//           },
-//         },
-//         {
-//           $group: {
-//             _id: null,
-//             total: { $sum: "$sum" },
-//           },
-//         },
-//         {
-//           $project: {
-//             _id: 0,
-//             total: 1,
-//           },
-//         },
-//       ]);
-//       if (sum && sum.length > 0 && sum[0].total) {
-//         category_spent.push({ category: category.title, spent: sum[0].total });
-//       } else {
-//         category_spent.push({ category: category.title, spent: 0 });
-//       }
-//     }
-
-//     res.status(200).json({
-//       status: "success",
-//       results: allLimits.length,
-//       data: {
-//         limits: allLimits,
-//         expenses: category_spent,
-//       },
-//     });
-//   } catch (err) {
-//     res.status(500).json({
-//       status: "error",
-//       message: err.message,
-//     });
-//   }
-// };
-
-
-
+  if (dateYear > currentYear) {
+    return true; // Date is in a future year
+  } else if (dateYear === currentYear && dateMonth >= currentMonth) {
+    return true; // Date is in the current year and a current or future month
+  } else {
+    return false; // Date is in the past month or an earlier year
+  }
+}
 
 
 exports.getLimit = async (req, res) => {
@@ -232,24 +161,31 @@ exports.editLimit = async (req, res) => {
       return res.status(404).json({ msg: `Limitas nr: ${id} neegzistuoja` });
     } else {
       if (Edit_Limit.user_id == req.userInfo.id) {
-        try {
-          const Updated_Limit = await Limit.findOneAndUpdate(
-            {
-              _id: id,
-            },
-            {
-              limit: req.body.limit,
-            },
-            { new: true }
-          );
-          // await saveAction(req.userInfo.id, "limit_edit", Updated_Limit);
-          res.json({
-            status: "success",
-            data: Updated_Limit,
-          });
-        } catch (error) {
-          res.status(500).json({ error: error.message });
+        if(isDateCurrOrFutureMonth(Edit_Limit.date)){
+          try {
+            const Updated_Limit = await Limit.findOneAndUpdate(
+              {
+                _id: id,
+              },
+              {
+                limit: req.body.limit,
+              },
+              { new: true }
+            );
+            await saveAction(req.userInfo.id, "limit_edit", Updated_Limit);
+            res.json({
+              status: "success",
+              data: Updated_Limit,
+            });
+          } catch (error) {
+            res.status(500).json({ error: error.message });
+          }
+        }else{
+          return res
+          .status(403)
+          .json({ msg: `Negali redaguoti senus limitus` });
         }
+
       } else {
         return res
           .status(403)

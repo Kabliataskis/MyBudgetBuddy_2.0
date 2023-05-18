@@ -14,7 +14,23 @@ export const formatDateFull = (date) => {
     let time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }); // formatted time
     return `${y}-${m}-${d}  ${time}`;
   };
-
+export const isDateCurrOrFutureMonth = (date) => {
+    date = new Date(date);
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+  
+    const dateYear = date.getFullYear();
+    const dateMonth = date.getMonth();
+  
+    if (dateYear > currentYear) {
+      return true; // Date is in a future year
+    } else if (dateYear === currentYear && dateMonth >= currentMonth) {
+      return true; // Date is in the current year and a current or future month
+    } else {
+      return false; // Date is in the past month or an earlier year
+    }
+  }
 export const getActionTitle = (action) => {
     var title;
     switch (action) {
