@@ -8,6 +8,7 @@ import ExpenseEditModal from "./ExpenseEditModal";
 import DownloadCSVButton from "../CSV_export/Csv";
 import calculateTotalExpense from "../General/Income_sum/Expense_sum";
 import ExpenseAddModal from "./ExpenseAddModal";
+import { getPageNumbers } from "../../func";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
@@ -148,45 +149,7 @@ export default function Expenses() {
   const totalItems = filterExpense.length;
   const totalPages = Math.ceil(totalItems / pageSize);
   const pages = [];
-  const getPageNumbers = () => {
-    let pages = [];
 
-    if (totalPages <= 7) {
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
-      }
-    } else {
-      if (currentPage <= 6) {
-        pages = [1, 2, 3, 4,5,6,7, "...", totalPages];
-      } else if (currentPage > 6 && currentPage < totalPages - 3) {
-        pages = [
-          1,
-          "...",
-          currentPage - 2,
-          currentPage - 1,
-          currentPage,
-          currentPage + 1,
-          currentPage + 2,
-          "...",
-          totalPages,
-        ];
-      } else {
-        pages = [
-          1,
-          "...",
-          totalPages - 6,
-          totalPages - 5,
-          totalPages - 4,
-          totalPages - 3,
-          totalPages - 2,
-          totalPages - 1,
-          totalPages,
-        ];
-      }
-    }
-
-    return pages;
-  };
 
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
@@ -227,7 +190,7 @@ export default function Expenses() {
         <h3 className="h3-text">Išlaidos</h3>
         <div className="block_pajamos">
           <p className="block_pajamo">
-            Mėnesio išlaidos: <span className="red-eur">{totalExpense}€</span>
+            Mėnesio išlaidos: <span className="red-eur">{(totalExpense.toFixed(2))}€</span>
           </p>
           <button className="btnAdd" onClick={() => setModal_ExpenseAdd(true)}>
             Įvesti išlaidas
@@ -268,7 +231,7 @@ export default function Expenses() {
                 <MdKeyboardArrowLeft />
               </li>
 
-              {getPageNumbers().map((page, index) => (
+              {getPageNumbers(totalPages, currentPage).map((page, index) => (
                 <li
                   className={currentPage === page ? "select" : ""}
                   key={index}

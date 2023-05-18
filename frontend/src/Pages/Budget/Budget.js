@@ -7,6 +7,7 @@ import axios from "../../axios";
 import { FaPen } from "react-icons/fa";
 import { MdDownloadDone } from "react-icons/md";
 import Limits from "./Limits/Limits";
+import totalExpense from "../General/General";
 
 export default function Budget() {
   const [expenses, setExpenses] = useState([]);
@@ -39,7 +40,7 @@ export default function Budget() {
         <div className="stats-containers">
           <div className="stat-container isleista-per-men">
             <p>
-              Išleista per mėn: <span className="red">1044.94€</span>
+              Išleista per mėn: <span className="red">{totalExpense}€</span>
             </p>
           </div>
           <div className="stat-container data">

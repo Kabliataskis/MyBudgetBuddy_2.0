@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "../../../axios";
 import Action from "./Action";
-import { getActionTitle } from "../../../func";
+import { getActionTitle, getPageNumbers } from "../../../func";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
@@ -86,42 +86,6 @@ export const Actions = () => {
   const totalPages = Math.ceil(totalItems / pageSize);
   const pages = [];
 
-  const getPageNumbers = () => {
-    let pages = [];
-
-    if (totalPages <= 4) {
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
-      }
-    } else {
-      if (currentPage <= 4) {
-        pages = [1, 2, 3, 4, 5, "...", totalPages];
-      } else if (currentPage > 4 && currentPage < totalPages - 2) {
-        pages = [
-          1,
-          "...",
-          currentPage - 1,
-          currentPage,
-          currentPage + 1,
-          "...",
-          totalPages,
-        ];
-      } else {
-        pages = [
-          1,
-          "...",
-          totalPages - 4,
-          totalPages - 3,
-          totalPages - 2,
-          totalPages - 1,
-          totalPages,
-        ];
-      }
-      pages.push(totalPages);
-    }
-
-    return pages;
-  };
 
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
@@ -180,7 +144,7 @@ export const Actions = () => {
                 <MdKeyboardArrowLeft />
               </li>
 
-              {getPageNumbers().map((page, index) => (
+              {getPageNumbers(totalPages, currentPage).map((page, index) => (
                 <li
                   className={currentPage === page ? "select" : ""}
                   key={index}

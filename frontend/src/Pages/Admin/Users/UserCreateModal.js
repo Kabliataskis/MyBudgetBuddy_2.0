@@ -98,7 +98,7 @@ export default function UserCreateModal(props) {
       {modal_UserCreate ? (
         <div className="Pajamos-modal-container" onMouseDown={onMouseDown}>
           <div className="modal-content">
-            <h2 className="modal-title">Redaguoti vartotoją</h2>
+            <h2 className="modal-title">Sukurti vartotoją</h2>
             <span className="modal-close-btn" onClick={() => closeModal()}>
               <AiOutlineClose />
             </span>
@@ -135,7 +135,7 @@ export default function UserCreateModal(props) {
                   type="email"
                   name="email"
                   id="email"
-                  placeholder="El.Paštas"
+                  placeholder="El.paštas"
                   required
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}

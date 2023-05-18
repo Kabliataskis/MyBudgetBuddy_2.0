@@ -47,7 +47,7 @@ export const getActionTitle = (action) => {
         title = "Kategorijos redagavimas";
         break;
       case "category_delete":
-        title = "Kategorijos trinimas";
+        title = "Kategorijos trynimas";
         break;
       case "user_updateRole":
         title = "Rolės atnaujinimas";
@@ -56,7 +56,7 @@ export const getActionTitle = (action) => {
         title = "Vartotojo redagavimas";
         break;
       case "user_delete":
-        title = "Vartotojo trinimas";
+        title = "Vartotojo trynimas";
         break;
       case "income_add":
         title = "Pajamų pridėjimas";
@@ -65,7 +65,7 @@ export const getActionTitle = (action) => {
         title = "Pajamų redagavimas";
         break;
       case "income_delete":
-        title = "Pajamų trinimas";
+        title = "Pajamų trynimas";
         break;
       case "expense_add":
         title = "Išlaidų pridėjimas";
@@ -74,7 +74,7 @@ export const getActionTitle = (action) => {
         title = "Išlaidų redagavimas";
         break;
       case "expense_delete":
-        title = "Išlaidų trinimas";
+        title = "Išlaidų trynimas";
         break;
       default:
         title = action;
@@ -82,4 +82,47 @@ export const getActionTitle = (action) => {
     }
     return title;
   }
+  export const getPageNumbers = (totalPages, currentPage) => {
+    let pages = [];
   
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage <= 6) {
+        if(totalPages == 8){
+          pages = [1, 2, 3, 4,5,6,7, totalPages];
+        }else{
+          pages = [1, 2, 3, 4,5,6,7, "...", totalPages];
+        }
+      }
+       else if (currentPage > 6 && currentPage < totalPages - 3) {
+        pages = [
+          1,
+          "...",
+          // currentPage -3,
+          // currentPage - 2,
+          currentPage - 1,
+          currentPage,
+          currentPage + 1,
+          "...",
+          totalPages,
+        ];
+      } else {
+        pages = [
+          1,
+          "...",
+          // totalPages - 6,
+          // totalPages - 5,
+          totalPages - 4,
+          totalPages - 3,
+          totalPages - 2,
+          totalPages - 1,
+          totalPages,
+        ];
+      }
+    }
+  
+    return pages;
+  };
