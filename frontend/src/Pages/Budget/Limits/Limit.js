@@ -16,8 +16,8 @@ function Limit(props) {
   }
 
 
-  const[limitWidth, setLimitWidth] = useState(); 
-  const[spentWidth, setSpentWidth] = useState();
+  const [limitWidth, setLimitWidth] = useState();
+  const [spentWidth, setSpentWidth] = useState();
   useEffect(() => {
     if(spent === 0 && limit === 0){
       setLimitWidth("50%");
@@ -32,8 +32,6 @@ function Limit(props) {
     }
     console.log("effect");
   }, [limit, spent]);
-
-
 
   return (
     <div className="budget-limit-container">
