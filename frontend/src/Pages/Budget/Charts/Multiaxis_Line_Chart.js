@@ -23,25 +23,25 @@ ChartJS.register(
 
 
 export default function MultiAxgis(props) {
-  const {incomes} = props;
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const {expenses_months,expenses_spent,incomes_earned} = props;
+//   const [startDate, setStartDate] = useState("");
+//   const [endDate, setEndDate] = useState("");
 
-  const filterIncome = incomes.filter((el) => {
-    const date = el.date || "";
+//   const filterIncome = incomes.filter((el) => {
+//     const date = el.date || "";
   
-    const startDateObj = startDate ? new Date(startDate) : null;
-    const endDateObj = endDate ? new Date(endDate) : null;
-    const incomeDateObj = date ? new Date(date) : null;
+//     const startDateObj = startDate ? new Date(startDate) : null;
+//     const endDateObj = endDate ? new Date(endDate) : null;
+//     const incomeDateObj = date ? new Date(date) : null;
 
-    const dateInRange =
-      (!startDateObj ||
-        startDateObj <= incomeDateObj.setHours(0, 0, 0, 0) + 86400000) &&
-      (!endDateObj || endDateObj >= incomeDateObj.setHours(0, 0, 0, 0));
+//     const dateInRange =
+//       (!startDateObj ||
+//         startDateObj <= incomeDateObj.setHours(0, 0, 0, 0) + 86400000) &&
+//       (!endDateObj || endDateObj >= incomeDateObj.setHours(0, 0, 0, 0));
 
-    return dateInRange;
-  });
-console.log(filterIncome);
+//     return dateInRange;
+//   });
+// console.log(filterIncome);
 
   const options = {
     responsive: true,
@@ -66,21 +66,15 @@ console.log(filterIncome);
       },
     },
   };
+  
 
-  const labels = ["2023.01", "2023.02", "2023.03", "2023.04", "2023.05", "2023.06"];
-  const data1 = [875, 1032, 1287, 765, 1201,1201];
-  const data2 = [924, 1157, 746, 1283, 1089,1089];
+  const labels = expenses_months;
+  const data1 = incomes_earned;
+  const data2 = expenses_spent;
 
-export const data = {
+ const data = {
   labels,
   datasets: [
-    {
-      label: 'Pajamos',
-      data: data1,
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      yAxisID: 'y',
-    },
     {
       label: 'Išlaidos',
       data: data2,
@@ -88,6 +82,14 @@ export const data = {
       backgroundColor: 'rgba(53, 162, 235, 0.5)',
       yAxisID: 'y1',
     },
+    {
+      label: 'Pajamos',
+      data: data1,
+      borderColor: 'rgb(255, 99, 132)',
+      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      yAxisID: 'y',
+    }
+    
   ],
 };
 

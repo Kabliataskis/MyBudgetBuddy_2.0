@@ -3,18 +3,11 @@ import MultiAxis from "../Charts/Multiaxis_Line_Chart";
 import axios from "../../../axios";
 
 export default function Center_Block() {
-  const [incomes, setIncomes] = useState([]);
-  const getIncomes = async () => {
-    try {
-      const res = await axios.get("/income?");
-      setIncomes(res.data.data.incomes);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  useEffect(() => {
-    getIncomes();
-  }, []);
+  const [expenses_months, setExpenses_months] = useState();
+  const [expenses_spent, setExpenses_spent] = useState();
+  const [incomes_earned,setIncomes_earned] = useState();
+
+
 
   let curr_month = new Date().getMonth() + 1;
   let curr_year = new Date().getFullYear();
@@ -26,7 +19,9 @@ export default function Center_Block() {
     makeDate();
   }, [yearTo, yearFrom, monthTo, monthFrom]);
 
-  
+  useEffect(() => {
+    // console.log(expenses_months);
+  }, [expenses_months]);
 
 const handleYearToChange = (e) => {
   setYearTo(e.target.value);
@@ -40,57 +35,25 @@ const handleMonthToChange = (e) => {
 const handleMonthFromChange = (e) => {
   setMonthFrom(e.target.value);
 }
+const getData = async (dateFrom, dateTo) => {
 
-const makeDate = () => {
-  let d = new Date().getDate();
-  console.log("MONTH FROM: " + monthFrom);
-  let dateFrom = new Date(yearFrom, monthFrom-1, d);
-  let dateTo = new Date(yearTo, monthTo-1, d);
-  // let date
-  console.log(`date from: ${dateFrom}`);
-  console.log(`date to: ${dateTo}`);
-
-  const monthsArray = [];
-
-  let currentDate = dateFrom;
-  //  incomes.filter((dateFrom, dateTo)=>  date >= dateFrom && date <= dateTo);
-
-
-  //  const filteredIncomes = incomes.filter(income => {
-  //   const date = new Date(income.date);
-  //   return date >= dateFrom && date <= dateTo;
-  // });
-  const filteredIncomes = incomes.filter(income => {
-    const date = new Date(income.date);
-    console.log('dateFrom:', dateFrom);
-    console.log('dateTo:', dateTo);
-    console.log('income date:', date);
-    const isInDateRange = date >= dateFrom && date <= dateTo;
-    console.log('isInDateRange:', isInDateRange);
-    return isInDateRange;
-  });
-
-console.log("FILTERED INCOMES:");
-console.log(filteredIncomes);
-  while (currentDate <= dateTo) {
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth() +1;
-    const formattedMonth = month < 10 ? `0${month}` : month;
-    const formattedDate = `${year}-${formattedMonth}`;
-    monthsArray.push(formattedDate);
-    console.log(new Date(currentDate)); 
-    currentDate.setMonth(currentDate.getMonth() + 1);
+  try {
+    const res = await axios.get("/expense/"+dateFrom+"/"+dateTo);
+    setExpenses_months(res.data.data.expenses_months)
+    setExpenses_spent(res.data.data.expenses_spent)
+    setIncomes_earned(res.data.data.incomes_earned)
+    console.log(expenses_months)
+    // console.log(res.data.data.expenses_months)
+  } catch (err) {
+    console.log(err);
   }
-  
-  console.log(monthsArray);
-
-  
+ }
+const makeDate = async() => {
+  let d = new Date().getDate();
+    let dateFrom = new Date(yearFrom, monthFrom-1, d);
+  let dateTo = new Date(yearTo, monthTo-1, d);
+   getData(dateFrom, dateTo);
 }
-
-// async function {
-//  
-//   }); 
-// };
 
 return(
 <div className="center-container">
@@ -171,7 +134,7 @@ return(
             </div>
           </div>
           <div className="multiaxis-chart-container">
-            <MultiAxis incomes={incomes}/>
+            <MultiAxis expenses_months={expenses_months} expenses_spent={expenses_spent} incomes_earned={incomes_earned}/>
           </div>
         </div>
       </div>
