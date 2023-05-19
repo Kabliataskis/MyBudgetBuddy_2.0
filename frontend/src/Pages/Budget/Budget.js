@@ -4,10 +4,9 @@ import "./Budget.css";
 import DoughnutChart from "../General/Charts/DoughnutChart";
 import MultiAxis from "./Charts/Multiaxis_Line_Chart";
 import axios from "../../axios";
-import { FaPen } from "react-icons/fa";
-import { MdDownloadDone } from "react-icons/md";
 import Limits from "./Limits/Limits";
 import totalExpense from "../General/General";
+import TopBlock from "./TopBlock/TopBlock";
 
 export default function Budget() {
   const [expenses, setExpenses] = useState([]);
@@ -23,6 +22,33 @@ export default function Budget() {
     getExpense();
   }, []);
 
+  const [yearDropdownOptions, setYearDropdownOptions] = useState([]);
+
+    const yearDropdownList = yearDropdownOptions.map((year) => (
+      <option value={year} key={year}>
+        {year}
+      </option>
+    ));
+    const [dropdownYear, setDropdownYear] = useState(new Date().getFullYear());
+const  [dropdownMonth, setDropdownMonth] = useState(new Date().getMonth() +1); // getMonth() returns the month (from 0 to 11) of a date:
+const handleYearChange = (e) => {
+    setDropdownYear(e.target.value);
+}
+const handleMonthChange = (e) => {
+    setDropdownMonth(e.target.value);
+}
+useEffect(() => {
+  const currentDate = new Date();
+  const years = Array.from({ length: currentDate.getFullYear() - 2022 + 1 }, (_, index) => currentDate.getFullYear() - index);
+  console.log(years);
+  setYearDropdownOptions(years);
+}, []);
+// useEffect(() => {
+//   makeDate();
+// }, [dropdownYear, dropdownMonth]);
+
+// const makeDate = async () => {
+  // getLimits(dropdownYear,dropdownMonth);
   //   const [inputLimit, setInputLimit] = useState('');
 
   //   const handleInputChange = (event) => {
@@ -36,29 +62,7 @@ export default function Budget() {
 
   return (
     <div className="Budget-container Budget">
-      <div className="top-container">
-        <div className="stats-containers">
-          <div className="stat-container isleista-per-men">
-            <p>
-              Išleista per mėn: <span className="red">{totalExpense}€</span>
-            </p>
-          </div>
-          <div className="stat-container data">
-            <p>Mėnuo:</p>
-            <select className="dropdown-month" name="month" id="month">
-              <option value="now">Šis mėn.</option>
-              <option value="2023-04">04 mėn.</option>
-              <option value="2023-03">03 mėn.</option>
-              <option value="2023-02">02 mėn.</option>
-              <option value="2023-01">01 mėn.</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="doughnut-chart-container">
-          <DoughnutChart expenses={expenses} />
-        </div>
-      </div>
+      <TopBlock />
       <div className="center-container">
         <h2 className="h2">Pajamų ir išlaidų palyginimas</h2>
         <div className="compares-container">
@@ -92,4 +96,4 @@ export default function Budget() {
     <Limits/>
     </div>
   );
-}
+  }
