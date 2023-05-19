@@ -3,12 +3,10 @@ const Limit = require("../models/limitModel");
 const Category = require("../models/categoryModel");
 const Expense = require("../models/expenseModel");
 const { getCategory } = require("./categoryController");
-const {saveAction} = require("./actionController");
+const { saveAction } = require("./actionController");
 
 exports.getAllLimits = async (req, res) => {
   const { year, month } = req.params;
-  console.log("year:" + req.params.year);
-  console.log("month:" + req.params.month);
 
   if (!year || !month || month > 12 || month < 0 || year < 2022) {
     res
@@ -17,8 +15,6 @@ exports.getAllLimits = async (req, res) => {
   } else {
     let category_spent = [];
     try {
-      //2022-05
-      //2023-05
       const selectedDate = new Date(year, month - 1, 1);
       console.log(`selcted date: ${selectedDate}`);
       const startOfMonth = new Date(
@@ -69,16 +65,16 @@ exports.getAllLimits = async (req, res) => {
             console.log("no creation");
           }
         }
-        allLimits = await Limit.find({ user_id: req.userInfo.id,   date: { $gte: startOfMonth, $lte: endOfMonth }, }).populate({
+        allLimits = await Limit.find({
+          user_id: req.userInfo.id,
+          date: { $gte: startOfMonth, $lte: endOfMonth },
+        }).populate({
           path: "category",
           model: "category",
         });
-
       } else {
         //no category
       }
-  
-
 
       for (const category of GetCategory) {
         const sum = await Expense.aggregate([
@@ -132,9 +128,6 @@ exports.getAllLimits = async (req, res) => {
   }
 };
 
-
-
-
 const isDateCurrOrFutureMonth = (date) => {
   date = new Date(date);
   const currentDate = new Date();
@@ -151,8 +144,7 @@ const isDateCurrOrFutureMonth = (date) => {
   } else {
     return false; // Date is in the past month or an earlier year
   }
-}
-
+};
 
 exports.getLimit = async (req, res) => {
   try {
@@ -177,63 +169,50 @@ exports.getLimit = async (req, res) => {
 };
 
 exports.editLimit = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const Edit_Limit = await Limit.findById(id);
-    if (!Edit_Limit) {
-      return res.status(404).json({ msg: `Limitas nr: ${id} neegzistuoja` });
-    } else {
-      if (Edit_Limit.user_id == req.userInfo.id) {
-        if(isDateCurrOrFutureMonth(Edit_Limit.date)){
-          try {
-            const Updated_Limit = await Limit.findOneAndUpdate(
-              {
-                _id: id,
-              },
-              {
-                limit: req.body.limit,
-              },
-              { new: true }
-            );
-            await saveAction(req.userInfo.id, "limit_edit", Updated_Limit);
-            res.json({
-              status: "success",
-              data: Updated_Limit,
-            });
-          } catch (error) {
-            res.status(500).json({ error: error.message });
-          }
-        }else{
-          return res
-          .status(403)
-          .json({ msg: `Negali redaguoti senus limitus` });
-        }
-
+  if (!req.body.limit || req.body.limit < 0) {
+    return res.status(400).json({ msg: `Neteisingai įvestas limitas` });
+  }else if(req.body.limit > 9999999){
+    return res.status(400).json({ msg: `Limitas negali viršyti 9999999 €!` });
+  } else {
+    try {
+      const { id } = req.params;
+      const Edit_Limit = await Limit.findById(id);
+      if (!Edit_Limit) {
+        return res.status(404).json({ msg: `Limitas nr: ${id} neegzistuoja` });
       } else {
-        return res
-          .status(403)
-          .json({ msg: `Limitas nr: ${id} priklauso kitam vartotojui` });
+        if (Edit_Limit.user_id == req.userInfo.id) {
+          if (isDateCurrOrFutureMonth(Edit_Limit.date)) {
+            try {
+              const Updated_Limit = await Limit.findOneAndUpdate(
+                {
+                  _id: id,
+                },
+                {
+                  limit: req.body.limit,
+                },
+                { new: true }
+              );
+              await saveAction(req.userInfo.id, "limit_edit", Updated_Limit);
+              res.json({
+                status: "success",
+                data: Updated_Limit,
+              });
+            } catch (error) {
+              res.status(500).json({ error: error.message });
+            }
+          } else {
+            return res
+              .status(403)
+              .json({ msg: `Negali redaguoti senus limitus` });
+          }
+        } else {
+          return res
+            .status(403)
+            .json({ msg: `Limitas nr: ${id} priklauso kitam vartotojui` });
+        }
       }
+    } catch (error) {
+      res.status(500).json({ error: error.message });
     }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
   }
 };
-
-// exports.getActionCategories = async (req, res) => {
-//   try {
-//     const uniqueActions = await Action.distinct("action");
-//     res.status(200).json({
-//       status: "success",
-//       results: uniqueActions.length,
-//       data: {
-//         categories: uniqueActions,
-//       },
-//     });
-//   } catch (err) {
-//     res.status(500).json({
-//       status: "error",
-//       message: err.message,
-//     });
-//   }
-// };
