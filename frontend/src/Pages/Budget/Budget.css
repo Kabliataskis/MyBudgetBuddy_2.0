@@ -21,6 +21,7 @@
     width: 400px;
     gap: 25px;
   }
+  
   .Budget .stats-containers .stat-container,
   .Budget .compare-container,
   .Budget .budget-history{
@@ -30,7 +31,11 @@
     border-radius: 5px;
     font-size: 20px;
   }
-    .Budget .data,
+  .Budget .data{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+  }
     .Budget .from {
     width: 250px;
     display: flex;
