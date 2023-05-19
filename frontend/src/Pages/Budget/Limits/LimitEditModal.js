@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { AiOutlineClose, AiFillWarning } from "react-icons/ai";
 import { toast } from "react-toastify";
 import swal from "sweetalert2";
@@ -8,12 +8,19 @@ import { useFormik } from "formik";
 
 export default function LimitEditModal(props) {
   const {modal_limitEdit, setModal_limitEdit, editId, setEditId, getLimits} = props;
+  const max_amount = 9999999; // Maksimali suma €
   const validate = (values) => {
     let errors = {};
 
     if (values.limit.length == 0) {
-      errors.limit = "Prašome užpildyti laukelį (Limitas)";
-    } 
+      errors.limit = "Prašome užpildyti laukelį (Limitas)!";
+    }else if(values.limit > max_amount){
+      errors.limit = `Limitas negali būti didesnis už ${max_amount}€!`;
+    }else if(values.limit < 0){
+      errors.limit = "Limitas turi būti didesnis arba lygus nuliui!";
+    }else if (!Number(values.limit)) {
+      errors.limit = "Limitas turi būti skaičius!";
+    }
     return errors;
   };
 
