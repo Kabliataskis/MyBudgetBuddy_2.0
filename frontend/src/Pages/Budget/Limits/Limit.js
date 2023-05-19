@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { FaPen } from "react-icons/fa";
-import { MdDownloadDone } from "react-icons/md";
+import React from "react";
 import { isDateCurrOrFutureMonth } from "../../../func";
 
-function Limit(props) {
+export default function Limit(props) {
   const { obj, editLimit, spents } = props;
   const { _id, category, limit, date } = obj;
 
@@ -15,43 +13,48 @@ function Limit(props) {
     }
   }
 
+  let balancePercentage;
+  let spentPercentage;
 
-  const [limitWidth, setLimitWidth] = useState();
-  const [spentWidth, setSpentWidth] = useState();
-  useEffect(() => {
     if(spent === 0 && limit === 0){
-      setLimitWidth("50%");
-      setSpentWidth("50%");
+      balancePercentage = '50%';
+      spentPercentage = '50%';
     }else if(limit-spent < 0){
-      setLimitWidth("0%");
-      setSpentWidth("100%");
+      balancePercentage = '0%';
+      spentPercentage = '100%';
     }
     else if (spent === 0) {
-      setLimitWidth("100%");
-      setSpentWidth("0%");
+      balancePercentage = '100%';
+      spentPercentage = '0%'
     } else {
-      setLimitWidth(((limit-spent) / ((limit-spent) + spent)) * 100 + "%");
-      setSpentWidth((spent / ((limit-spent) + spent)) * 100 + "%");
+      balancePercentage = ((limit-spent) / ((limit-spent) + spent)) * 100 + "%";
+      spentPercentage = (spent / ((limit-spent) + spent)) * 100 + "%";
     }
-    console.log("effect");
-  }, [limit, spent]);
+
+    let balance = limit-spent;
+    balance = balance > 0 ? balance.toFixed(2) + "€" : null;
+    const balanceMinWidth = limit == 0 ? 0 : "inherit";
+    const balanceBorderRadius = limit && !spent ? "5px" : "5px 0px 0px 5px";
+
+
+    const ttl_spent = spent > 0 ? spent + "€" : null; 
+    const spentMinWidth = spent == 0 ? 0 : "inherit";
+    const spentBorderRadius = !limit && spent ? "5px" : "0px 5px 5px 0px";
 
   return (
     <div className="budget-limit-container">
       <div className="budget-limit__category-img-container"><img src={category.imgSrc} className="budget-limit__category-icon" /></div>
       <h3>{category.title }</h3>
       <div className="budget-linechart">
-        <div className="horizontal-bar__pelnas" title="Limitas" style={{width: limitWidth}}>{limit-spent} €</div>
-        <div className="horizontal-bar__islaidos" title="Išlaidos" style={{width: spentWidth}}>{spent} €</div>
+        <div className="horizontal-bar__pelnas" title="Limitas" style={{width: balancePercentage, minWidth: balanceMinWidth, borderRadius: balanceBorderRadius}}>{!limit && !spent ? `0.00€` :  balance}</div>
+        <div className="horizontal-bar__islaidos" title="Išlaidos" style={{width: spentPercentage, minWidth: spentMinWidth, borderRadius: spentBorderRadius}}>{!limit && !spent ? `0.00€` :  ttl_spent} </div>
       </div>
       <div className="budget-limit-info">
         <h4>
-           Nustatytas biudžetas: <span className="green"> {limit} €</span>
+           Nustatytas biudžetas: <span className="green"> {limit.toFixed(2)} €</span>
         </h4>
       </div>
       {isDateCurrOrFutureMonth(date)  ? <button className="budget-limit__set-btn" onClick={() => editLimit(_id)}>Nustatyti</button> : null}
     </div>
   );
 }
-
-export default React.memo(Limit);
