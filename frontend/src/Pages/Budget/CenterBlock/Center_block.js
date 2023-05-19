@@ -9,6 +9,35 @@ export default function Center_Block() {
 
 
 
+  
+  const [yearsData, setYearsData] = useState(null);
+ 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('/expense?');
+      setYearsData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+  
+
+  const processedExpensesMonths = Array.isArray(expenses_months)
+  ? expenses_months
+  : [];
+
+  const processedExpensesSpent = Array.isArray(expenses_spent)
+  ? expenses_spent
+  : [];
+
+  const processedIncomesEarned = Array.isArray(incomes_earned)
+  ? incomes_earned
+  : [];
+
   let curr_month = new Date().getMonth() + 1;
   let curr_year = new Date().getFullYear();
   const [monthTo, setMonthTo] = useState(curr_month); // getMonth() returns the month (from 0 to 11) of a date:;
@@ -69,7 +98,7 @@ return(
               onChange={(e) => handleYearToChange(e)}
               value={yearTo}
               >
-                <option value="2023">2023</option>
+                <option value="2023">{yearsData && yearsData.data}</option>
                 <option value="2022">2022</option>
               </select>
               <select
@@ -134,7 +163,10 @@ return(
             </div>
           </div>
           <div className="multiaxis-chart-container">
-            <MultiAxis expenses_months={expenses_months} expenses_spent={expenses_spent} incomes_earned={incomes_earned}/>
+            <MultiAxis expenses_months={processedExpensesMonths}
+             expenses_spent={processedExpensesSpent}
+              incomes_earned={processedIncomesEarned}
+              />
           </div>
         </div>
       </div>
