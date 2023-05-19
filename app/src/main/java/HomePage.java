@@ -10,8 +10,19 @@ public class HomePage extends PageObject {
     @FindBy(xpath = "/html//div[@id='root']//div[@class='top_nav']")
     private WebElement userInfo;
 
+    @FindBy (css = "#nav_islaidos")
+    private WebElement expenseLink;
+
     public HomePage(WebDriver driver) {
         super(driver);
+    }
+
+    public WebElement getExpenseLink() {
+        return expenseLink;
+    }
+
+    public void clickExpenseLink () {
+        this.expenseLink.click(); ;
     }
 
     public String getSuccessMessage() {

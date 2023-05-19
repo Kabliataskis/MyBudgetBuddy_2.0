@@ -27,7 +27,7 @@ public class AccountRegistrationTest extends BaseTest{
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         HomePage homePage = new HomePage(driver);
-        
+
         // Laukiam kol atsiras sukurto userio name navigacijoj
         wait.until(ExpectedConditions.textToBePresentInElement(homePage.getUserInfoEl(), username));
 //        String successMessage = homePage.getSuccessMessage();
