@@ -9,7 +9,7 @@ export default function TopBlock() {
 
     const [categoryList, setCategoryList] = useState();
     const [spentList, setSpentList] = useState();
-    const [totalExpence, setTotalExpence] = useState(0);
+    const [totalExpence, setTotalExpence] = useState(1);
 
 
   const getBudgetExpense = async () => {
@@ -18,7 +18,6 @@ export default function TopBlock() {
       setCategoryList(res.data.data.categories);
       setSpentList(res.data.data.spent);
       setTotalExpence(res.data.data.total_spent);
-    console.log(res);
     } catch (err) {
       console.log(err);
     }
