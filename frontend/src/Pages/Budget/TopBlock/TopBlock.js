@@ -9,7 +9,7 @@ export default function TopBlock() {
 
     const [categoryList, setCategoryList] = useState();
     const [spentList, setSpentList] = useState();
-    const [totalExpence, setTotalExpence] = useState();
+    const [totalExpence, setTotalExpence] = useState(0);
 
 
   const getBudgetExpense = async () => {
@@ -73,7 +73,7 @@ const makeDate = async () => {
         <div className="stats-containers">
           <div className="stat-container isleista-per-men">
             <p>
-              Išleista per mėn: <span className="red">{totalExpence}€</span>
+              Išleista per mėn: <span className="red">{(totalExpence).toFixed(2)}€</span>
             </p>
           </div>
           <div className="stat-container data">
