@@ -16,7 +16,6 @@ export default function DoughnutChart(props) {
 
   const categories = getCategories(filteredExpenses);
   const categoryTotals = categories.map(category => getCategoryTotal(filteredExpenses, category));
-
   const data = {
     labels: categories,
     datasets: [
