@@ -5,25 +5,28 @@ import org.openqa.selenium.support.FindBy;
 
 public class AccountRegistration extends PageObject {
     @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/main/div[2]/button")
-    private WebDriver registerButton;
+    private WebElement registerButton;
 
     @FindBy(id = "username")
-    private WebDriver usernameField;
+    private WebElement usernameField;
 
     @FindBy(id = "email")
-    private WebDriver emailField;
+    private WebElement emailField;
 
     @FindBy(id = "password")
-    private WebDriver passwordField;
+    private WebElement passwordField;
 
     @FindBy(id = "password_repeat")
-    private WebDriver confirmPasswordField;
+    private WebElement confirmPasswordField;
 
     @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/main/div[2]/form/button")
-    private WebDriver submitButton;
+    private WebElement submitButton;
 
     @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]")
-    private WebDriver successMessage;
+    private WebElement successMessage;
+
+    @FindBy(css = ".Navbar > div.top_nav")
+    private WebElement userInfo;
 
     public AccountRegistration(WebDriver driver) {
         super(driver);
@@ -55,5 +58,9 @@ public class AccountRegistration extends PageObject {
 
     public String getSuccessMessage() {
         return successMessage.getText();
+    }
+
+    public String getUserInfo() {
+        return userInfo.getText();
     }
 }

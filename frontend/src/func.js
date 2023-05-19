@@ -14,7 +14,23 @@ export const formatDateFull = (date) => {
     let time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }); // formatted time
     return `${y}-${m}-${d}  ${time}`;
   };
-
+export const isDateCurrOrFutureMonth = (date) => {
+    date = new Date(date);
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+  
+    const dateYear = date.getFullYear();
+    const dateMonth = date.getMonth();
+  
+    if (dateYear > currentYear) {
+      return true; // Date is in a future year
+    } else if (dateYear === currentYear && dateMonth >= currentMonth) {
+      return true; // Date is in the current year and a current or future month
+    } else {
+      return false; // Date is in the past month or an earlier year
+    }
+  }
 export const getActionTitle = (action) => {
     var title;
     switch (action) {
@@ -66,4 +82,47 @@ export const getActionTitle = (action) => {
     }
     return title;
   }
+  export const getPageNumbers = (totalPages, currentPage) => {
+    let pages = [];
   
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage <= 6) {
+        if(totalPages == 8){
+          pages = [1, 2, 3, 4,5,6,7, totalPages];
+        }else{
+          pages = [1, 2, 3, 4,5,6,7, "...", totalPages];
+        }
+      }
+       else if (currentPage > 6 && currentPage < totalPages - 3) {
+        pages = [
+          1,
+          "...",
+          // currentPage -3,
+          // currentPage - 2,
+          currentPage - 1,
+          currentPage,
+          currentPage + 1,
+          "...",
+          totalPages,
+        ];
+      } else {
+        pages = [
+          1,
+          "...",
+          // totalPages - 6,
+          // totalPages - 5,
+          totalPages - 4,
+          totalPages - 3,
+          totalPages - 2,
+          totalPages - 1,
+          totalPages,
+        ];
+      }
+    }
+  
+    return pages;
+  };
