@@ -34,19 +34,19 @@ export default function Limit(props) {
     let balance = limit-spent;
     balance = balance > 0 ? balance.toFixed(2) + "€" : null;
     const balanceMinWidth = limit == 0 ? 0 : "inherit";
-    const balanceBorderRadius = limit && !spent ? "5px" : "5px 0px 0px 5px";
+    const balanceBorderRadius = !spent && limit || spent ? "5px" : "5px 0px 0px 5px";
 
 
-    const ttl_spent = spent > 0 ? spent + "€" : null; 
+    const ttl_spent = spent > 0 ? spent.toFixed(2) + "€" : null; 
     const spentMinWidth = spent == 0 ? 0 : "inherit";
-    const spentBorderRadius = !limit && spent ? "5px" : "0px 5px 5px 0px";
+    const spentBorderRadius = (!limit && spent) || limit ? "5px" : "0px 5px 5px 0px";
 
   return (
     <div className="budget-limit-container">
       <div className="budget-limit__category-img-container"><img src={category.imgSrc} className="budget-limit__category-icon" /></div>
       <h3>{category.title }</h3>
       <div className="budget-linechart">
-        <div className="horizontal-bar__pelnas" title="Limitas" style={{width: balancePercentage, minWidth: balanceMinWidth, borderRadius: balanceBorderRadius}}>{!limit && !spent ? `0.00€` :  balance}</div>
+        <div className="horizontal-bar__pelnas" title="Likutis" style={{width: balancePercentage, minWidth: balanceMinWidth, borderRadius: balanceBorderRadius}}>{!limit && !spent ? `0.00€` :  balance}</div>
         <div className="horizontal-bar__islaidos" title="Išlaidos" style={{width: spentPercentage, minWidth: spentMinWidth, borderRadius: spentBorderRadius}}>{!limit && !spent ? `0.00€` :  ttl_spent} </div>
       </div>
       <div className="budget-limit-info">
