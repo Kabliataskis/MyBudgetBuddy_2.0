@@ -22,13 +22,16 @@ function Limit(props) {
     if(spent === 0 && limit === 0){
       setLimitWidth("50%");
       setSpentWidth("50%");
+    }else if(limit-spent < 0){
+      setLimitWidth("0%");
+      setSpentWidth("100%");
     }
     else if (spent === 0) {
       setLimitWidth("100%");
       setSpentWidth("0%");
     } else {
-      setLimitWidth((limit / (limit + spent)) * 100 + "%");
-      setSpentWidth((spent / (limit + spent)) * 100 + "%");
+      setLimitWidth(((limit-spent) / ((limit-spent) + spent)) * 100 + "%");
+      setSpentWidth((spent / ((limit-spent) + spent)) * 100 + "%");
     }
     console.log("effect");
   }, [limit, spent]);
@@ -38,7 +41,7 @@ function Limit(props) {
       <div className="budget-limit__category-img-container"><img src={category.imgSrc} className="budget-limit__category-icon" /></div>
       <h3>{category.title }</h3>
       <div className="budget-linechart">
-        <div className="horizontal-bar__pelnas" title="Limitas" style={{width: limitWidth}}>{limit} €</div>
+        <div className="horizontal-bar__pelnas" title="Limitas" style={{width: limitWidth}}>{limit-spent} €</div>
         <div className="horizontal-bar__islaidos" title="Išlaidos" style={{width: spentWidth}}>{spent} €</div>
       </div>
       <div className="budget-limit-info">

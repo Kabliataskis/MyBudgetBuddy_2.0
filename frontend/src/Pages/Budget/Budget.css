@@ -375,6 +375,7 @@
   background-color: var(--dark-color);
   color: var(--grey-color);
   cursor: pointer;
+  outline: none;
 }
 .budget-limit__set-btn:hover{
   color: var(--white-color);
