@@ -8,7 +8,6 @@ import ExpenseEditModal from "./ExpenseEditModal";
 import DownloadCSVButton from "../CSV_export/Csv";
 import calculateTotalExpense from "../General/Income_sum/Expense_sum";
 import ExpenseAddModal from "./ExpenseAddModal";
-import { getPageNumbers } from "../../func";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
@@ -149,7 +148,50 @@ export default function Expenses() {
   const totalItems = filterExpense.length;
   const totalPages = Math.ceil(totalItems / pageSize);
   const pages = [];
-
+  const getPageNumbers = () => {
+    let pages = [];
+  
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage <= 6) {
+        if(totalPages == 8){
+          pages = [1, 2, 3, 4,5,6,7, totalPages];
+        }else{
+          pages = [1, 2, 3, 4,5,6,7, "...", totalPages];
+        }
+      }
+       else if (currentPage > 6 && currentPage < totalPages - 3) {
+        pages = [
+          1,
+          "...",
+          // currentPage -3,
+          // currentPage - 2,
+          currentPage - 1,
+          currentPage,
+          currentPage + 1,
+          "...",
+          totalPages,
+        ];
+      } else {
+        pages = [
+          1,
+          "...",
+          // totalPages - 6,
+          // totalPages - 5,
+          totalPages - 4,
+          totalPages - 3,
+          totalPages - 2,
+          totalPages - 1,
+          totalPages,
+        ];
+      }
+    }
+  
+    return pages;
+  };
 
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
@@ -231,7 +273,7 @@ export default function Expenses() {
                 <MdKeyboardArrowLeft />
               </li>
 
-              {getPageNumbers(totalPages, currentPage).map((page, index) => (
+              {getPageNumbers().map((page, index) => (
                 <li
                   className={currentPage === page ? "select" : ""}
                   key={index}

@@ -3,8 +3,6 @@ const Expense = require("../models/expenseModel");
 const Income = require("../models/incomeModel");
 const Category = require("../models/categoryModel");
 const { saveAction } = require("./actionController");
-const Income = require("../models/incomeModel");
-const {saveAction} = require("./actionController");
 
 const addTime = (date) => {
   date = new Date(date);
@@ -48,57 +46,6 @@ exports.getAllExpense = async (req, res) => {
     });
   }
 };
-
-
-exports.getMonthExpenses = async (req, res) => {
-  const {year, month} = req.params;
-
-  if(!year || !month || month > 12 || month < 0 || year < 1970){
-    res.status(400).json({status: "error", msg: 'Blogai nurodyti metai arba mėnesis',
-    });
-  }
-  else{
-    const selectedDate = new Date(year, month - 1, 1);
-    const startOfMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
-    const endOfMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0);
-  
-    try {
-      const allExpenses = await Expense.find({user_id: req.userInfo.id,  date: { $gte: startOfMonth, $lte: endOfMonth }}).populate('category');
-  
-      const categories = [];
-      const spent = [];
-      let total_spent = 0;
-  
-      allExpenses.forEach(expense => {
-        const categoryIndex = categories.indexOf(expense.category.title);
-        if (categoryIndex !== -1) {
-          spent[categoryIndex] += expense.sum;
-          total_spent += expense.sum;
-        } else {
-          categories.push(expense.category.title);
-          spent.push(expense.sum);
-          total_spent += expense.sum;
-        }
-      });
-  
-      res.status(200).json({
-        status: "success",
-        data: {
-          results: categories.length,
-          total_spent,
-          categories,
-          spent
-        }
-      });
-    } catch (err) {
-      res.status(500).json({
-        status: "error",
-        message: err.message,
-      });
-    }
-  }
-};
-
 
 exports.getExpense = async (req, res) => {
   try {

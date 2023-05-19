@@ -8,7 +8,6 @@ const expenseRouter = require("./routes/expenseRoutes");
 const categoryRouter = require("./routes/categoryRoutes");
 const userRouter = require("./routes/userRoutes");
 const actionRouter = require("./routes/actionRoutes");
-const limitRouter = require("./routes/limitRoutes");
 
 dotenv.config();
 
@@ -30,6 +29,5 @@ app.use("/api/v1/expense", expenseRouter);
 app.use("/api/v1/category", categoryRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/actions", actionRouter);
-app.use("/api/v1/limits", limitRouter);
 
 module.exports = app;
