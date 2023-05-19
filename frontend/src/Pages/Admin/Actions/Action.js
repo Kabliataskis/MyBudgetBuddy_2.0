@@ -45,6 +45,9 @@ export default function Action(props) {
     case "expense_delete":
       details = `Pavadinimas: ${data.title}`;
       break;
+    case "limit_edit":
+      details = `Nustatytas ${data.limit}€ limitas, kategorija: ${data.category.title}`;
+      break;
     default:
       details = "-";
       break;

@@ -358,19 +358,22 @@
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
+  border: 1px solid var(--grey-color);
 }
 .Budget .horizontal-bar__pelnas {
   min-width: 40px;
   background-color: var(--main-color);
-  border-radius: 5px 0px 0px 5px;
+  /* border-radius: 5px 0px 0px 5px; */
   transition: 0.2s;
+  padding: 0px;
 }
 
 .Budget .horizontal-bar__islaidos {
   min-width: 40px;
   background-color: var(--red-color);
-  border-radius: 0px 5px 5px 0px;
+  /* border-radius: 0px 5px 5px 0px; */
   transition: 0.2s;
+  padding: 0px;
 }
 .budget-limit__set-btn{
   padding: 10px;
@@ -380,6 +383,7 @@
   background-color: var(--dark-color);
   color: var(--grey-color);
   cursor: pointer;
+  outline: none;
 }
 .budget-limit__set-btn:hover{
   color: var(--white-color);
