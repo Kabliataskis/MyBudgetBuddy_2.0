@@ -175,19 +175,11 @@ exports.editExpense = async (req, res) => {
 
 
 
-exports.test = async (req, res) => {
-  // console.log(req.params.dateFrom.setDate(1));
-  // console.log(req.params.dateTo.setMonth(dateTo.getMonth() + 1, 0));
-
+exports.getExpInc = async (req, res) => {
   let dateFrom = new Date(req.params.dateFrom);
   let dateTo = new Date(req.params.dateTo);
   dateFrom = new Date(dateFrom.setDate(1));
   dateTo = new Date(dateTo.setMonth(dateTo.getMonth() + 1, 0));
-  console.log(`date from ${dateFrom}`);
-  console.log(`date to ${dateTo}`);
-  // const from = new Date('2022-05-01');
-  // const to = new Date('2023-05-31');
-
   try {
     const [allExpenses, allIncomes] = await Promise.all([
       Expense.aggregate([
