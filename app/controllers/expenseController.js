@@ -167,14 +167,6 @@ exports.editExpense = async (req, res) => {
 };
 
 
-
-
-
-
-
-
-
-
 exports.getExpInc = async (req, res) => {
   let dateFrom = new Date(req.params.dateFrom);
   let dateTo = new Date(req.params.dateTo);
