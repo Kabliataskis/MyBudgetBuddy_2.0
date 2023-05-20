@@ -69,4 +69,20 @@ export const getActionTitle = (action) => {
     }
     return title;
   }
+  export const isDateCurrOrFutureMonth = (date) => {
+    date = new Date(date);
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
   
+    const dateYear = date.getFullYear();
+    const dateMonth = date.getMonth();
+  
+    if (dateYear > currentYear) {
+      return true; // Date is in a future year
+    } else if (dateYear === currentYear && dateMonth >= currentMonth) {
+      return true; // Date is in the current year and a current or future month
+    } else {
+      return false; // Date is in the past month or an earlier year
+    }
+  }

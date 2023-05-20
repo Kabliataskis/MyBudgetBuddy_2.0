@@ -1,9 +1,7 @@
 /* eslint-disable linebreak-style */
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "../../../axios";
-import { FaPen } from "react-icons/fa";
-import { MdDownloadDone } from "react-icons/md";
 import Limit from "./Limit";
 import LimitEditModal from "./LimitEditModal";
 import BeatLoader from "react-spinners/BeatLoader";
