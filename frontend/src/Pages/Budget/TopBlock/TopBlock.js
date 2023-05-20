@@ -44,7 +44,6 @@ const handleMonthChange = (e) => {
 useEffect(() => {
   const currentDate = new Date();
   const years = Array.from({ length: currentDate.getFullYear() - 2022 + 1 }, (_, index) => currentDate.getFullYear() - index);
-  console.log(years);
   setYearDropdownOptions(years);
 }, []);
 useEffect(() => {
@@ -54,17 +53,6 @@ useEffect(() => {
 const makeDate = async () => {
     getBudgetExpense();
 };
-
-
-
-    // const handleInputChange = (event) => {
-  	// setInputLimit(event.target.value);
-    // };
-
-  //   const handleButtonClick = () => {
-  // 	setLimit({ ...limit, amount: `${limit.amount}` });
-  // 	setInputLimit('');
-  //   };
 
   return (
     
