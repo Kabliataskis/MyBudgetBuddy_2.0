@@ -18,7 +18,9 @@ export default function LimitEditModal(props) {
       errors.limit = `Limitas negali būti didesnis už ${max_amount}€!`;
     }else if(values.limit < 0){
       errors.limit = "Limitas turi būti didesnis arba lygus nuliui!";
-    }else if (!Number(values.limit)) {
+    }else if (values.limit && !/^\d+(\.\d{1,2})?$/.test(values.limit)) {
+      errors.limit = "Neteisingas formatas. Pvz: 10.21€";
+    } else if (!Number(values.limit)) {
       errors.limit = "Limitas turi būti skaičius!";
     }
     return errors;
@@ -67,6 +69,25 @@ export default function LimitEditModal(props) {
     onSubmit,
     validate,
   });
+
+
+  const handleKeyDown = (event) => {
+    if (
+      !(
+        event.key === "ArrowLeft" ||
+        event.key === "ArrowRight" ||
+        event.key === "Backspace" ||
+        event.key === "Delete" ||
+        (event.key === "a" && event.ctrlKey === true) ||
+        (event.key === "c" && event.ctrlKey === true) ||
+        (event.key === "v" && event.ctrlKey === true) ||
+        (event.key === "x" && event.ctrlKey === true) ||
+        /^[0-9.,]+$/.test(event.key)
+      )
+    ) {
+      event.preventDefault();
+    }
+  };
 
   // Modal close on background click
   const onMouseDown = (e) => {
@@ -126,11 +147,16 @@ export default function LimitEditModal(props) {
                   className={
                     formik.touched.limit && formik.errors.limit ? "error" : ""
                   }
-                  type="text"
+                  type="number"
                   name="limit"
                   id="limit"
+                  min="0.01"
+                  max={max_amount}
+                  autoComplete="off"
+                  step="0.01"
                   placeholder="Limitas"
                   required
+                  onKeyDown={handleKeyDown}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.limit}
