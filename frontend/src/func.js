@@ -60,6 +60,9 @@ export const getActionTitle = (action) => {
       case "expense_delete":
         title = "Išlaidų trynimas";
         break;
+      case "limit_edit":
+        title = "Limito redagavimas";
+        break;
       default:
         title = action;
         break;

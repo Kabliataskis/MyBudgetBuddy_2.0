@@ -1,27 +1,23 @@
 import React from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { getCategories, getCategoryTotal } from "../../Expense/Expense.js";
 import { Doughnut } from 'react-chartjs-2';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export default function DoughnutChart(props) {
-  const { expenses } = props;
-  const currentDate = new Date();
-  const currentMonth = currentDate.getMonth() + 1; 
-  const filteredExpenses = expenses.filter(expense => {
-    const expenseDate = new Date(expense.date);
-    const expenseMonth = expenseDate.getMonth() + 1;
-    return expenseMonth === currentMonth;
-  });
+export default function BudgetDoughnutChart(props) {
+  const { 
+    categoryList,
+    spentList
+   } = props;
 
-  const categories = getCategories(filteredExpenses);
-  const categoryTotals = categories.map(category => getCategoryTotal(filteredExpenses, category));
+
+  
+
   const data = {
-    labels: categories,
+    labels: categoryList,
     datasets: [
       {
         label: 'Išleista',
-        data: categoryTotals,
+        data: spentList,
         backgroundColor: [
           'rgba(40, 140, 183, 0.7)',
           'rgba(183, 131, 40, 0.7)',
