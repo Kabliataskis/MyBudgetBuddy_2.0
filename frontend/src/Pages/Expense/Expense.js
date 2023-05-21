@@ -22,7 +22,7 @@ export default function Expense(props) {
 
   return (
     <tr>
-      <td>{formatDate(date)}</td>
+      <td className="nowrap">{formatDate(date)}</td>
       <td>{category.title}</td>
       <td>{title}</td>
       <td className="red-eur">-{sum}€</td>
