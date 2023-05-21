@@ -6,7 +6,7 @@ export default function User(props) {
   const { _id, createdAt, username, email, role } = obj;
   return (
     <tr>
-      <td>{formatDate(createdAt)}</td>
+      <td className="nowrap">{formatDate(createdAt)}</td>
       <td>{username}</td>
       <td>{email}</td>
       <td><select className="Admin-select-dropdown" onChange={(e) => updateUserRole(e, _id, username)}>

@@ -145,7 +145,7 @@ export const Categories = () => {
           <table>
             <thead>
               <tr>
-                <th>Data</th>
+                <th className="nowrap">Data</th>
                 <th>Pavadinimas</th>
                 <th>Paveikslėlis</th>
                 <th>Redaguoti</th>
