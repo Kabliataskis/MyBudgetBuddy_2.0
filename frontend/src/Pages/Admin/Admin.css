@@ -83,7 +83,6 @@
   /* tablet */
 @media screen and (max-width: 1439px) {
   .Admin-nav-items-container{
-    /* justify-content: center; */
     margin: 10px 0px;
   }
     

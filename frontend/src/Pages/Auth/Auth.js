@@ -6,7 +6,7 @@ export const Auth = () => {
   const [showLogin, setShowLogin] = useState(true);
 
   return (
-    <div className="main-container Auth">
+    <div className="main_back Auth">
       <main className="content-container">
         <div className="boxes">
             <div className="box box__about-aplication">
