@@ -1,30 +1,25 @@
 import React from "react";
 import { FaTrash, FaPen } from "react-icons/fa";
 import "./Expense.css";
-
+import { formatDate } from "../../func";
 export function getCategories(expenses) {
-  const categories = [...new Set(expenses.map(expense => expense.category.title))];
+  const categories = [
+    ...new Set(expenses.map((expense) => expense.category.title)),
+  ];
   return categories;
 }
 
 export function getCategoryTotal(expenses, category) {
   const total = expenses
-    .filter(expense => expense.category.title === category)
+    .filter((expense) => expense.category.title === category)
     .reduce((sum, expense) => sum + expense.sum, 0);
   return total;
 }
 
 export default function Expense(props) {
-  const{obj, editExpense, deleteExpense} = props;
-  const {_id, date, category, title, sum} = obj;
+  const { obj, editExpense, deleteExpense } = props;
+  const { _id, date, category, title, sum } = obj;
 
-  const formatDate = (date) => {
-    date =  new Date(date);
-    let m = String(date.getMonth() + 1).padStart(2, '0'); // month with leading zero
-    let d = String(date.getDate()).padStart(2, '0'); // day with leading zero
-    let y = date.getFullYear()  // year
-    return `${y}-${m}-${d}`;
-}
   return (
     <tr>
       <td>{formatDate(date)}</td>
@@ -35,7 +30,7 @@ export default function Expense(props) {
         <button
           className="btn_change"
           onClick={() => {
-          editExpense(_id);
+            editExpense(_id);
           }}
         >
           <FaPen />

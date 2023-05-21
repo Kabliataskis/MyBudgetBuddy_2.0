@@ -24,7 +24,7 @@ export const Admin = () => {
   }, [location.search]);
 
   return (
-    <div className="main-container">
+    <div className="main_back">
       <div className="container-admin-nav">
         <h3 className="h3-text">Admin</h3>
         <div className="Admin-nav-items-container">

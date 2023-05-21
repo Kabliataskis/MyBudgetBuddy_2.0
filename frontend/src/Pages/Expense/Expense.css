@@ -26,6 +26,7 @@
   font-size: 15px;
   margin-left: 60px;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .btn_csv:hover {

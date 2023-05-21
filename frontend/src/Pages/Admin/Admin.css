@@ -27,7 +27,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 25px;
-    margin: 10px 40px;
+    margin: 10px 60px;
   }
   .Admin-nav-item{
     background-color: var(--grey-color);
@@ -83,14 +83,16 @@
   /* tablet */
 @media screen and (max-width: 1439px) {
   .Admin-nav-items-container{
-    justify-content: center;
+    /* justify-content: center; */
+    margin: 10px 0px;
   }
     
 }
 /* mobile */
 @media screen and (max-width: 767px) {
+
 .Admin-nav-items-container{
   flex-direction: column;
 }
     
-  }
+}

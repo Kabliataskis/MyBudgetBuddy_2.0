@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Expense from "./Expense";
+import BeatLoader from "react-spinners/BeatLoader";
 import axios from "../../axios";
 import { toast } from "react-toastify";
 import swal from "sweetalert2";
@@ -25,22 +26,23 @@ export default function Expenses() {
   const { setModal_ExpenseAdd } = useContext(ContextProvider);
   const [expenses, setExpenses] = useState([]);
   const totalExpense = calculateTotalExpense(expenses);
+  const [loading, setLoading] = useState(true);
 
-
-  const [categories, setCategories] = useState([])
-  let categories_list = categories.map((el) =>{
-    return(
-     <option value= {el.title} key={el._id+el.title}> 
-       {el.title}
-     </option>
-    )
-   });
-
+  const [categories, setCategories] = useState([]);
+  let categories_list = categories.map((el) => {
+    return (
+      <option value={el.title} key={el._id + el.title}>
+        {el.title}
+      </option>
+    );
+  });
 
   const getExpense = async () => {
+    setLoading(true);
     try {
       const res = await axios.get("/expense?");
       setExpenses(res.data.data.expenses);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -49,7 +51,6 @@ export default function Expenses() {
     try {
       const res = await axios.get("/category?");
       setCategories(res.data.data.categories);
-      // console.log(res);
     } catch (err) {
       console.log(err);
     }
@@ -59,12 +60,6 @@ export default function Expenses() {
     getExpense();
     getCategories();
   }, []);
-
-
-
-
-
-
 
   async function deleteExpense(id) {
     swal
@@ -82,7 +77,6 @@ export default function Expenses() {
         if (result.isConfirmed) {
           try {
             const res = await axios.delete("/Expense/" + id);
-            console.log(res);
             swal.fire({
               title: "Sėkmingai",
               text: "Įrašas ištrintas",
@@ -97,18 +91,16 @@ export default function Expenses() {
       });
   }
 
-
   const [value, setValue] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [categoryFilter, setCategoryFilter]= useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
   const filterExpense = expenses.filter((el) => {
     const title = el.title || "";
     const date = el.date || "";
-    const category= el.category.title || "";
+    const category = el.category.title || "";
     const lowercaseValue = value ? value.toLocaleLowerCase() : "";
 
-  
     const startDateObj = startDate ? new Date(startDate) : null;
     const endDateObj = endDate ? new Date(endDate) : null;
     const ExpenseDateObj = date ? new Date(date) : null;
@@ -118,8 +110,11 @@ export default function Expenses() {
         startDateObj <= ExpenseDateObj.setHours(0, 0, 0, 0) + 86400000) &&
       (!endDateObj || endDateObj >= ExpenseDateObj.setHours(0, 0, 0, 0));
 
-    return title.toLocaleLowerCase().includes(lowercaseValue) && dateInRange && category.includes(categoryFilter);
-    //&& category.includes(categoryFilter)
+    return (
+      title.toLocaleLowerCase().includes(lowercaseValue) &&
+      dateInRange &&
+      category.includes(categoryFilter)
+    );
   });
 
   const handleSearchChange = (e) => {
@@ -127,7 +122,7 @@ export default function Expenses() {
     setCurrentPage(1);
   };
 
-    const removeFilter = (event) => {
+  const removeFilter = (event) => {
     event.preventDefault();
     setCurrentPage(1);
     setValue("");
@@ -137,19 +132,15 @@ export default function Expenses() {
   };
 
   const editExpense = (id) => {
-    console.log(id);
-    setEditExpenseId(id)
+    setEditExpenseId(id);
     setModal_ExpenseEdit(true);
   };
 
-
-
-  const [pageSize, setPageSize] = useState(5); // number of records per page
+  const [pageSize, setPageSize] = useState(10); // number of records per page
   const [currentPage, setCurrentPage] = useState(1); // current page number
   const totalItems = filterExpense.length;
   const totalPages = Math.ceil(totalItems / pageSize);
   const pages = [];
-
 
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
@@ -174,23 +165,25 @@ export default function Expenses() {
     );
   });
 
- 
   return (
     <div className="main_back">
-      <ExpenseAddModal getExpense={getExpense}/>
-      <ExpenseEditModal
-        editExpenseId={editExpenseId}
-        setEditExpenseId={setEditExpenseId}
-        modal_ExpenseEdit={modal_ExpenseEdit}
-        setModal_ExpenseEdit={setModal_ExpenseEdit}
-        editExpens={editExpens}
-        getExpense={getExpense}
-      />
+      <ExpenseAddModal getExpense={getExpense} />
+      {modal_ExpenseEdit ? (
+        <ExpenseEditModal
+          editExpenseId={editExpenseId}
+          setEditExpenseId={setEditExpenseId}
+          modal_ExpenseEdit={modal_ExpenseEdit}
+          setModal_ExpenseEdit={setModal_ExpenseEdit}
+          editExpens={editExpens}
+          getExpense={getExpense}
+        />
+      ) : null}
       <div className="container-pajamos">
         <h3 className="h3-text">Išlaidos</h3>
         <div className="block_pajamos">
           <p className="block_pajamo">
-            Mėnesio išlaidos: <span className="red-eur">{(totalExpense.toFixed(2))}€</span>
+            Mėnesio išlaidos:{" "}
+            <span className="red-eur">{totalExpense.toFixed(2)}€</span>
           </p>
           <button className="btnAdd" onClick={() => setModal_ExpenseAdd(true)}>
             Įvesti išlaidas
@@ -211,7 +204,25 @@ export default function Expenses() {
                 <th>Pašalinti</th>
               </tr>
             </thead>
-            <tbody>{expenses_list}</tbody>
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td colSpan={6} style={{ textAlign: "center" }}>
+                    <BeatLoader
+                      color="#28b78d"
+                      loading
+                      margin={2}
+                      size={20}
+                      cssOverride={{
+                        display: "block",
+                      }}
+                    />
+                  </td>
+                </tr>
+              ) : (
+                expenses_list
+              )}
+            </tbody>
           </table>
           <div className="pagination-container no-copy">
             <ul>
@@ -292,15 +303,31 @@ export default function Expenses() {
               >
                 <option value="">Kategorija</option>
                 {categories_list}
-             
               </select>
               <p className="data_filter_p">
-                <label htmlFor="nuo_data">Nuo</label>{" "}
-                <input onChange={(event) => setStartDate(event.target.value)}  className="data_filter" type="date" id="nuo_data" value={startDate} />{" "}
-                <label htmlFor="iki_data">iki</label>{" "}
-                <input onChange={(event) => setEndDate(event.target.value)} className="data_filter" type="date" id="iki_data" value={endDate} />
+                <label htmlFor="nuo_data">Nuo</label>
+                <input
+                  onChange={(event) => setStartDate(event.target.value)}
+                  className="data_filter"
+                  type="date"
+                  id="nuo_data"
+                  value={startDate}
+                />{" "}
+                <label htmlFor="iki_data">iki</label>
+                <input
+                  onChange={(event) => setEndDate(event.target.value)}
+                  className="data_filter"
+                  type="date"
+                  id="iki_data"
+                  value={endDate}
+                />
               </p>
-              <button  onClick={(event) => removeFilter(event)} className="btn-dark">Išvalyti</button>
+              <button
+                onClick={(event) => removeFilter(event)}
+                className="btn-dark"
+              >
+                Išvalyti
+              </button>
             </form>
           </div>
         </div>

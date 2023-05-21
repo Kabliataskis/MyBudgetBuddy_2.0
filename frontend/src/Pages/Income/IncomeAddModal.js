@@ -1,4 +1,4 @@
-import React, {useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { ContextProvider } from "../../App";
 import axios from "../../axios";
 import { toast } from "react-toastify";
@@ -7,7 +7,7 @@ import "./Income.css";
 import swal from "sweetalert2";
 import { useFormik } from "formik";
 export default function IncomeAdd_Modal(props) {
-  const {getIncomes} = props;
+  const { getIncomes } = props;
   const { modal_IncomeAdd, setModal_IncomeAdd } = useContext(ContextProvider);
   const max_sum = 9999999; // Maksimali suma €
 
@@ -27,7 +27,7 @@ export default function IncomeAdd_Modal(props) {
       errors.date = "Prašome užpildyti laukelį (Data)";
     } else if (selected_time > curr_time) {
       errors.date = "Data negali būti vėlesnė nei ši diena";
-    }else if (selected_time<min){
+    } else if (selected_time < min) {
       errors.date = "Data negali būti anktesne";
     }
 
@@ -44,10 +44,12 @@ export default function IncomeAdd_Modal(props) {
   };
 
   const onSubmit = async (values) => {
-    try{
-      let {title, date, sum} = values;
+    try {
+      let { title, date, sum } = values;
       const res = await axios.post("/income", {
-        title, date, sum
+        title,
+        date,
+        sum,
       });
       //Jei backend grąžina success
       setModal_IncomeAdd(false);
@@ -59,21 +61,21 @@ export default function IncomeAdd_Modal(props) {
       });
       formik.resetForm();
       getIncomes();
-    } catch (err){
+    } catch (err) {
       console.log(err);
-      toast.error('Klaida');
+      toast.error("Klaida");
     }
   };
 
+  const today = new Date().toISOString().slice(0, 10);
   const formik = useFormik({
     initialValues: {
       title: "",
-      date: "",
+      date: today,
       sum: "",
     },
     validate,
     onSubmit,
-
   });
 
   const handleKeyDown = (event) => {
@@ -102,6 +104,9 @@ export default function IncomeAdd_Modal(props) {
   };
   // Modal close
   const closeModal = () => {
+    formik.setFieldValue("title", "");
+    formik.setFieldValue("date", today);
+    formik.setFieldValue("sum", "");
     setModal_IncomeAdd(false);
   };
 
@@ -204,7 +209,6 @@ export default function IncomeAdd_Modal(props) {
                   type="reset"
                   onClick={() => {
                     closeModal();
-                    formik.resetForm();
                   }}
                 >
                   Atšaukti
@@ -217,4 +221,3 @@ export default function IncomeAdd_Modal(props) {
     </>
   );
 }
-

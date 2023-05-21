@@ -38,8 +38,8 @@ export default function ExpenseHistory() {
       <thead>
         <tr>
           <th>#</th>
-          <th>Data</th>
-          <th>Kategorija</th>
+          <th className="General-history__date">Data</th>
+          <th className="General-history__category">Kategorija</th>
           <th>Pavadinimas</th>
           <th>Suma</th>
         </tr>

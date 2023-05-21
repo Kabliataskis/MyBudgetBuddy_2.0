@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import Category from "./Category";
 import CategoryCreate_Modal from "./CategoryCreateModal";
 import CategoryEditModal from "./CategoryEditModal";
+import BeatLoader from "react-spinners/BeatLoader";
 import { toast } from "react-toastify";
 import swal from "sweetalert2";
 import axios from "../../../axios";
@@ -19,11 +20,14 @@ export const Categories = () => {
   const [editId, setEditId] = useState();
   const [value, setValue] = useState("");
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getCategories = async () => {
+    setLoading(true);
     try {
       const res = await axios.get("/category?");
       setCategories(res.data.data.categories);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -148,7 +152,25 @@ export const Categories = () => {
                 <th>Pašalinti</th>
               </tr>
             </thead>
-            <tbody>{categories_list}</tbody>
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td colSpan={5} style={{ textAlign: "center" }}>
+                    <BeatLoader
+                      color="#28b78d"
+                      loading
+                      margin={2}
+                      size={20}
+                      cssOverride={{
+                        display: "block",
+                      }}
+                    />
+                  </td>
+                </tr>
+              ) : (
+                categories_list
+              )}
+            </tbody>
           </table>
 
           <div className="pagination-container">

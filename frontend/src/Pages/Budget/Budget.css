@@ -7,17 +7,18 @@
 .Budget .top-container {
   display: flex;
   justify-content: space-between;
-  /* padding: 25px; */
-  padding: 25px 50px;
   background-color: var(--white-color);
   border-radius: 5px;
   font-weight: 600;
+  padding: 25px 50px;
   margin: 10px;
+  gap: 20px;
+  overflow: hidden;
 }
 .Budget .stats-containers {
   display: flex;
   flex-direction: column;
-  width: 400px;
+  width: 600px;
   gap: 25px;
 }
 
@@ -33,22 +34,21 @@
 .Budget .data {
   display: flex;
   flex-direction: row;
-  gap: 50px;
+  gap: 30px;
 }
 .Budget .from {
-  width: 270px;
+  width: 600px;
   display: flex;
   flex-direction: row;
   gap: 20px;
 }
 .Budget .isleista-per-men,
 .Budget .data {
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
 
 .Budget .doughnut-chart-container {
   width: 500px;
-  /* margin-right: 100px; */
   transition: 0.2s;
 }
 .Budget .horizontal-bar-container {
@@ -65,33 +65,32 @@
   justify-content: space-between;
   background-color: var(--white-color);
   border-radius: 5px;
-  padding: 25px 50px;
   font-weight: 600;
+  padding: 25px 50px;
   margin: 10px;
 }
 .Budget h2 {
   margin-top: 30px;
   text-align: center;
-  margin-left: -70px;
+  /* margin-left: -70px; */
 }
 .Budget .compares-container {
   margin-top: 30px;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
+  gap: 20px;
 }
 .Budget .multiaxis-chart-container {
   width: 800px;
 }
 
 .Budget .inside-container {
-  margin-top: 100px;
+  /* margin-top: 100px; */
   display: flex;
   flex-direction: column;
-  width: 400px;
+  /* width: 500px; */
   gap: 25px;
-  /* justify-content: space-around; */
-  /* align-items: center; */
 }
 .Budget .dropdown-month {
   background-color: var(--dark-color);
@@ -106,7 +105,7 @@
   background-color: var(--grey-dark-color);
 }
 .Budget .until {
-  width: 270px;
+  width: 600px;
   display: flex;
   flex-direction: row;
   gap: 20px;
@@ -213,9 +212,6 @@
   background-color: var(--grey-color);
 }
 
-.Budget .bottom-container {
-  padding: 25px 50px;
-}
 .budget-limits-top-container {
   display: flex;
   flex-direction: column;
@@ -322,3 +318,67 @@
 .budget-limit__set-btn:hover {
   color: var(--white-color);
 }
+
+  /* tablet */
+  @media screen and (max-width: 1439px) {
+    .Budget .doughnut-chart-container{
+      width: 350px !important;
+    }
+    .budget-limit-container{
+      width: 350px;
+    }
+    .Budget .top-container,
+    .Budget .center-container,
+    .Budget .bottom-container {
+      padding: 10px;
+    }
+    .Budget .data {
+      flex-direction: column;
+      gap: 30px;
+    }
+    .Budget .dropdown-month{
+      width: 100%;
+    }
+    .Budget .until,
+    .Budget .from{
+      width: 300px;
+      flex-direction: column;
+    }
+  }
+  /* mobile */
+  @media screen and (max-width: 767px) {
+    .Budget .doughnut-chart-container{
+      width: 300px !important;
+    }
+  .Budget .budget-linechart{
+    width: 170px;
+  }
+  .budget-limit-container{
+    padding: 10px 10px;
+    gap: 10px;
+  }
+  .Budget .top-container{
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .Budget .compares-container{
+    flex-direction: column;
+    align-items: center;
+    overflow-x: auto;
+  }
+  .Budget .inside-container{
+    flex-direction: column;
+    margin: 0 auto;
+    gap: 10px;
+  }
+  .Budget .until,
+  .Budget .from{
+    flex-direction: row;
+    width: 100%;
+  }
+.Budget .multiaxis-chart-container{
+  width: 410px !important;
+  margin-top: 15px;
+}
+
+  }

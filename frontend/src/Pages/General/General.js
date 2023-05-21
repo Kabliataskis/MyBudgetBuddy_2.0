@@ -23,8 +23,8 @@ export default function General() {
   const totalIncome = calculateTotalIncome(incomes);
   const totalExpense = calculateTotalExpense(expenses);
 
-  const pelnasWidth = ((totalIncome / (totalIncome + totalExpense)) * 100).toFixed(2);
-  const islaidosWidth = ((totalExpense / (totalIncome + totalExpense)) * 100).toFixed(2);
+  const pelnasWidth = ((totalIncome / (totalIncome + totalExpense)) * 100);
+  const islaidosWidth = ((totalExpense / (totalIncome + totalExpense)) * 100);
 
 
   useEffect(() => {
@@ -62,7 +62,7 @@ export default function General() {
   }, [totalIncome, totalExpense]);
 
   return (
-   <main className="General-container General">
+   <main className="main_back General">
       <div className="top-container">
         <div className="stats-containers">
           <div className="stat-container">

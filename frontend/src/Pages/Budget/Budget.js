@@ -7,7 +7,7 @@ import Center_Block from "./CenterBlock/Center_block";
 
 export default function Budget() {
   return (
-    <div className="Budget-container Budget">
+    <div className="main_back Budget">
       <TopBlock />
       <Center_Block/>
     <Limits/>

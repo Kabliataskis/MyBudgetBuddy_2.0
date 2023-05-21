@@ -3,12 +3,13 @@ import { ContextProvider } from "../../App";
 import { v4 as uuidv4 } from "uuid";
 import axios from "../../axios";
 import Income from "./Income";
+import BeatLoader from "react-spinners/BeatLoader";
 import { toast } from "react-toastify";
 import "./Income.css";
 import swal from "sweetalert2";
 import "../../index.css";
-import IncomeEdit_Modal from "./IncomeEditModal.js";
-import IncomeAdd_Modal from "./IncomeAddModal";
+import IncomeEditModal from "./IncomeEditModal.js";
+import IncomeAddModal from "./IncomeAddModal";
 import calculateTotalIncome from "../General/Income_sum/Income_sum";
 import { getPageNumbers } from "../../func";
 import {
@@ -23,12 +24,14 @@ export default function Incomes() {
   const [editPajamos, setEditPajamos] = useState({});
   const [modal_IncomeEdit, setModal_IncomeEdit] = useState(false);
   const { setModal_IncomeAdd } = useContext(ContextProvider);
-
+  const [loading, setLoading] = useState(true);
   const [incomes, setIncomes] = useState([]);
   const getIncomes = async () => {
+    setLoading(true);
     try {
       const res = await axios.get("/income?");
       setIncomes(res.data.data.incomes);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -76,7 +79,6 @@ export default function Incomes() {
     const date = el.date || "";
     const lowercaseValue = value ? value.toLocaleLowerCase() : "";
 
-  
     const startDateObj = startDate ? new Date(startDate) : null;
     const endDateObj = endDate ? new Date(endDate) : null;
     const incomeDateObj = date ? new Date(date) : null;
@@ -100,20 +102,12 @@ export default function Incomes() {
   const totalPages = Math.ceil(totalItems / pageSize);
   const pages = [];
 
-  
-
-
-
-
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
   }
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
 
   let incomes_list = filterIncome.slice(startIndex, endIndex).map((el) => {
     return (
@@ -141,20 +135,23 @@ export default function Incomes() {
   };
   return (
     <div className="main_back Incomes">
-      <IncomeAdd_Modal getIncomes={getIncomes} />
-      <IncomeEdit_Modal
-        editId={editId}
-        setEditId={setEditId}
-        modal_IncomeEdit={modal_IncomeEdit}
-        setModal_IncomeEdit={setModal_IncomeEdit}
-        editPajamos={editPajamos}
-        getIncomes={getIncomes}
-      />
+      <IncomeAddModal getIncomes={getIncomes} />
+      {editPajamos ? (
+        <IncomeEditModal
+          editId={editId}
+          setEditId={setEditId}
+          modal_IncomeEdit={modal_IncomeEdit}
+          setModal_IncomeEdit={setModal_IncomeEdit}
+          editPajamos={editPajamos}
+          getIncomes={getIncomes}
+        />
+      ) : null}
       <div className="container-pajamos">
         <h3 className="h3-text">Pajamos</h3>
         <div className="block_pajamos">
           <p className="block_pajamo">
-            Mėnesio pajamos: <span className="color-eur">{totalIncome.toFixed(2)}€</span>
+            Mėnesio pajamos:{" "}
+            <span className="color-eur">{totalIncome.toFixed(2)}€</span>
           </p>
           <button className="btn-gren" onClick={() => setModal_IncomeAdd(true)}>
             Įvesti pajamas
@@ -174,7 +171,25 @@ export default function Incomes() {
                 <th>Pašalinti</th>
               </tr>
             </thead>
-            <tbody>{incomes_list}</tbody>
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td colSpan={5} style={{ textAlign: "center" }}>
+                    <BeatLoader
+                      color="#28b78d"
+                      loading
+                      margin={2}
+                      size={20}
+                      cssOverride={{
+                        display: "block",
+                      }}
+                    />
+                  </td>
+                </tr>
+              ) : (
+                incomes_list
+              )}
+            </tbody>
           </table>
           <div className="pagination-container">
             <ul>
@@ -246,7 +261,9 @@ export default function Incomes() {
                 value={value}
               />
               <p className="data_filter_p">
-                <label className="word" htmlFor="nuo_data">Nuo</label>
+                <label className="word" htmlFor="nuo_data">
+                  Nuo
+                </label>
                 <input
                   onChange={(event) => setStartDate(event.target.value)}
                   className="data_filter"
@@ -255,7 +272,9 @@ export default function Incomes() {
                   value={startDate}
                 />
 
-                <label className="word2" htmlFor="iki_data">iki</label>
+                <label className="word2" htmlFor="iki_data">
+                  iki
+                </label>
                 <input
                   onChange={(event) => setEndDate(event.target.value)}
                   className="data_filter"

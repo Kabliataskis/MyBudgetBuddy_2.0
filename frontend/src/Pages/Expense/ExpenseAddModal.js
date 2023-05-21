@@ -7,7 +7,7 @@ import swal from "sweetalert2";
 import { useFormik } from "formik";
 import "./Expense.css";
 export default function ExpenseAddModal(props) {
-  const {getExpense} = props;
+  const { getExpense } = props;
   const { modal_ExpenseAdd, setModal_ExpenseAdd } = useContext(ContextProvider);
   const max_sum = 9999999; // Maksimali suma €
 
@@ -31,7 +31,7 @@ export default function ExpenseAddModal(props) {
       errors.date = "Prašome užpildyti laukelį (Data)";
     } else if (selected_time > curr_time) {
       errors.date = "Data negali būti vėlesnė nei ši diena";
-    }else if (selected_time<min){
+    } else if (selected_time < min) {
       errors.date = "Data negali būti anktesne";
     }
 
@@ -55,8 +55,6 @@ export default function ExpenseAddModal(props) {
         date,
         sum,
       });
-      console.log(res);
-      //Jei backend grąžina success
       setModal_ExpenseAdd(false);
       swal.fire({
         title: "Sėkmingai",
@@ -71,12 +69,12 @@ export default function ExpenseAddModal(props) {
       toast.error(`Klaida. ${err.response.data.msg}`);
     }
   };
-
+  const today = new Date().toISOString().slice(0, 10);
   const formik = useFormik({
     initialValues: {
       category: "",
       title: "",
-      date: "",
+      date: today,
       sum: "",
     },
     validate,
@@ -111,7 +109,6 @@ export default function ExpenseAddModal(props) {
     setModal_ExpenseAdd(false);
   };
 
-
   const getCategories = async () => {
     try {
       const res = await axios.get("/category?");
@@ -125,16 +122,15 @@ export default function ExpenseAddModal(props) {
     getCategories();
   }, []);
 
+  const [categories, setCategories] = useState([]);
 
-  const [categories, setCategories] = useState([])
-
-  let categories_list = categories.map((el) =>{
-    return(
-     <option value= {el.title} key={el._id+el.title}> 
-       {el.title}
-     </option>
-    )
-   });
+  let categories_list = categories.map((el) => {
+    return (
+      <option value={el.title} key={el._id + el.title}>
+        {el.title}
+      </option>
+    );
+  });
   return (
     <>
       {modal_ExpenseAdd ? (
@@ -152,24 +148,6 @@ export default function ExpenseAddModal(props) {
               noValidate
               onSubmit={formik.handleSubmit}
             >
-              {/* <select
-                className="boxOptions"
-                id="category"
-                name="category"
-                value={formik.values.category}
-                onChange={formik.handleChange}
-              >
-                <option className="category" value="">
-                  Pasirinkite kategoriją
-                </option>
-                <option value="Transportas">Transportas</option>
-                <option value="Maistas">Maistas</option>
-                <option value="Mokesčiai">Mokesčiai</option>
-                <option value="Laisvalaikis">Laisvalaikis</option>
-                <option value="Parduotuvė">Parduotuvė</option>
-              </select> */}
-
-
               <select
                 className="boxOptions"
                 id="category"
@@ -179,11 +157,7 @@ export default function ExpenseAddModal(props) {
               >
                 <option value="">Pasirinkite kategoriją</option>
                 {categories_list}
-             
               </select>
-
-
-
               {formik.touched.category && formik.errors.category ? (
                 <div className="error-mess-box">
                   <AiFillWarning className="error-mess-icon" />
