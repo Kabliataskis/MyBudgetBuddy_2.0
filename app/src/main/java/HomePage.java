@@ -10,8 +10,11 @@ public class HomePage extends PageObject {
     @FindBy(xpath = "/html//div[@id='root']//div[@class='top_nav']")
     private WebElement userInfo;
 
-    @FindBy (css = "#nav_islaidos")
+    @FindBy(css = "#nav_islaidos")
     private WebElement expenseLink;
+
+    @FindBy(css = "#nav_pajamos")
+    private WebElement incomeLink;
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -21,8 +24,9 @@ public class HomePage extends PageObject {
         return expenseLink;
     }
 
-    public void clickExpenseLink () {
-        this.expenseLink.click(); ;
+    public void clickExpenseLink() {
+        this.expenseLink.click();
+        ;
     }
 
     public String getSuccessMessage() {
@@ -39,5 +43,12 @@ public class HomePage extends PageObject {
 
     public WebElement getUserInfoEl() {
         return userInfo;
+    }
+
+    public WebElement getIncomeLink() {
+        return incomeLink;
+    }
+    public void clickIncomeLink() {
+        this.incomeLink.click();
     }
 }
