@@ -15,11 +15,10 @@ export default function Expense(props) {
   return (
     <tr>
       <td>
-        {/* <FaPiggyBank /> */}
         <img className="General-category-img" src={category.imgSrc} alt={category.title}/>
       </td>
-      <td>{formatDate(date)}</td>
-      <td>{category.title}</td>
+      <td className="General-history__date nowrap">{formatDate(date)}</td>
+      <td className="General-history__category">{category.title}</td>
       <td>{title}</td>
       <td className="red-eur">-{sum}€</td>
     </tr>

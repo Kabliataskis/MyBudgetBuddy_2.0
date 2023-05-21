@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
 import { TbPigMoney } from "react-icons/tb";
 import { HiOutlineUserCircle } from "react-icons/hi";
-import { VscHistory } from "react-icons/vsc";
 import { IoIosLogOut } from "react-icons/io";
 import logo from "../../Assets/Images/logo.png";
 
@@ -14,111 +13,63 @@ export default function Navbar() {
   const auth = useAuth();
   return (
     <div className="Navbar">
-      <div className="top_nav">{auth.user && auth.user['username']}</div>
+      <div className="top_nav">{auth.user && auth.user["username"]}</div>
       <nav className="navbar">
         <div className="navbar-logo">
           <img src={logo} alt="Logo" />
-          
         </div>
-        
-          {auth.user && (
-          <ul className="navbar-links">
-            <div className="firt_order">
-            <Link to="/" id="nav_apzvalga">
-              <li className="navbar-item">
-                <AiOutlineHome className="nav_icon" />
-                Bendra apžvalga 
-              </li>
-            </Link>
-            <Link to="/income" id="nav_pajamos">
-              <li className="navbar-item">
-                <BsGraphUpArrow className="nav_icon" /> Pajamos
-              </li>
-            </Link>
-            <Link to="/expense" id="nav_islaidos">
-              <li className="navbar-item">
-                <BsGraphDownArrow className="nav_icon" /> Išlaidos
-              </li>
-            </Link>
-            <Link to="/budget" id="nav_biudzetas">
-              <li className="navbar-item">
-                <TbPigMoney className="nav_icon" /> Biudžetas
-              </li>
-            </Link>
-          </div>
-          <div className="second_order">
-          {auth.user['role'] == 'admin' && (
-          <Link to="/admin" id="nav_admin">
-            <li className="navbar-item">
-              <HiOutlineUserCircle className="nav_icon" />
-              Admin
-          </li>
-          </Link>
+        {
+          auth.user && (
+            <ul className="navbar-links">
+              <div className="firt_order">
+                <Link to="/" id="nav_apzvalga">
+                  <li className="navbar-item">
+                    <AiOutlineHome className="nav_icon" />
+                    <span className="navbar-item__title">Bendra apžvalga</span>
+                  </li>
+                </Link>
+                <Link to="/income" id="nav_pajamos">
+                  <li className="navbar-item">
+                    <BsGraphUpArrow className="nav_icon" />
+                    <span className="navbar-item__title">Pajamos</span>
+                  </li>
+                </Link>
+                <Link to="/expense" id="nav_islaidos">
+                  <li className="navbar-item">
+                    <BsGraphDownArrow className="nav_icon" />
+                    <span className="navbar-item__title">Išlaidos</span>
+                  </li>
+                </Link>
+                <Link to="/budget" id="nav_biudzetas">
+                  <li className="navbar-item">
+                    <TbPigMoney className="nav_icon" />
+                    <span className="navbar-item__title"> Biudžetas</span>
+                  </li>
+                </Link>
+              </div>
+              <div className="second_order">
+                {auth.user["role"] === "admin" && (
+                  <Link to="/admin" id="nav_admin">
+                    <li className="navbar-item">
+                      <HiOutlineUserCircle className="nav_icon" />
+                      <span className="navbar-item__title">Admin</span>
+                    </li>
+                  </Link>
+                )}
+                <Link
+                  to="/logout"
+                  id="nav_atsijungti"
+                  onClick={() => auth.logout()}
+                >
+                  <li className="navbar-item">
+                    <IoIosLogOut className="nav_icon" />
+                    <span className="navbar-item__title">Atsijungti</span>
+                  </li>
+                </Link>
+              </div>
+            </ul>
           )}
-          <Link to="/logout" id="nav_atsijungti" onClick={() => auth.logout()}>
-            <li className="navbar-item">
-              <IoIosLogOut className="nav_icon" /> Atsijungti
-            </li>
-          </Link>
-          </div>
-          </ul>
-          )
-          // <ul className="navbar-links">
-          //   <div className="firt_order">
-          //     <Link to="/auth">
-          //       <li className="navbar-item">
-          //         <AiOutlineHome className="nav_icon" />
-          //         Pagrindinis
-          //       </li>
-          //     </Link>
-          //   </div> 
-          // </ul>
-          }
-          {/* <div className="firt_order">
-            <Link to="/" id="nav_apzvalga">
-              <li className="navbar-item">
-                <AiOutlineHome className="nav_icon" />
-                Bendra apžvalga
-              </li>
-            </Link>
-            <Link to="/income" id="nav_pajamos">
-              <li className="navbar-item">
-                <BsGraphUpArrow className="nav_icon" /> Pajamos
-              </li>
-            </Link>
-            <Link to="/expense" id="nav_islaidos">
-              <li className="navbar-item">
-                <BsGraphDownArrow className="nav_icon" /> Išlaidos
-              </li>
-            </Link>
-            <Link to="/budget" id="nav_biudzetas">
-              <li className="navbar-item">
-                <TbPigMoney className="nav_icon" /> Biudžetas
-              </li>
-            </Link>
-          </div> */}
-
-          {/* <div className="second_order">
-            <Link to="/admin" id="nav_admin">
-              <li className="navbar-item">
-                <HiOutlineUserCircle className="nav_icon" />
-                Admin
-              </li>
-            </Link>
-            <Link to="/history" id="nav_istorija">
-              <li className="navbar-item">
-                <VscHistory className="nav_icon" />
-                Istorija
-              </li>
-            </Link>
-          </div> */}
-          {/* <Link to="/logout" id="nav_atsijungti">
-            <li className="navbar-item">
-              <IoIosLogOut className="nav_icon" /> Atsijungti
-            </li>
-          </Link> */}
-        {/* </ul> */}
       </nav>
-    </div>
+     </div>
   );
 }

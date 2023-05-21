@@ -7,6 +7,7 @@ import User from "./User";
 import UserEdit_Modal from "./UserEditModal";
 import UserCreate_Modal from "./UserCreateModal";
 import { getPageNumbers } from "../../../func";
+import BeatLoader from "react-spinners/BeatLoader";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
@@ -19,10 +20,13 @@ export const Users = () => {
   const [editId, setEditId] = useState();
   const [modal_UserEdit, setModal_UserEdit] = useState(false);
   const [modal_UserCreate, setModal_UserCreate] = useState(false);
+  const [loading, setLoading] = useState(true);
   const getUsers = async () => {
+    setLoading(true);
     try {
       const res = await axios.get("/auth");
       setUsers(res.data.data.users);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -32,7 +36,6 @@ export const Users = () => {
   }, []);
 
   const editUser = async (id) => {
-    console.log(id);
     setEditId(id);
     setModal_UserEdit(true);
   };
@@ -66,19 +69,12 @@ export const Users = () => {
       });
   };
   const updateUserRole = async (e, id, username) => {
-    console.log(id);
     let role = e.target.value;
     try {
       const res = await axios.patch("/user/role/" + id, {
         role,
       });
       getUsers();
-      // swal.fire({
-      //   title: "Sėkmingai",
-      //   text: "Vartotojo rolė atnaujinta",
-      //   icon: "success",
-      //   confirmButtonColor: "#28b78d",
-      // });
       toast.success(`Vartotojo ${username} rolė atnaujinta`);
     } catch (err) {
       console.log(err);
@@ -86,16 +82,13 @@ export const Users = () => {
     }
   };
 
-
-
-
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const filterUsers = users.filter((el) => {
     const title = el.username || "";
     const date = el.createdAt || "";
     const lowercaseValue = value ? value.toLocaleLowerCase() : "";
-  
+
     const startDateObj = startDate ? new Date(startDate) : null;
     const endDateObj = endDate ? new Date(endDate) : null;
     const incomeDateObj = date ? new Date(date) : null;
@@ -116,24 +109,15 @@ export const Users = () => {
     setEndDate("");
   };
 
-
   const [pageSize, setPageSize] = useState(10); // number of records per page
   const [currentPage, setCurrentPage] = useState(1); // current page number
   const totalItems = filterUsers.length;
   const totalPages = Math.ceil(totalItems / pageSize);
   const pages = [];
 
-
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
   }
-
-
-
-
-
-
-
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
@@ -175,106 +159,127 @@ export const Users = () => {
               <th>Pašalinti</th>
             </tr>
           </thead>
-          <tbody>{users_list}</tbody>
+          <tbody>
+            {loading ? (
+              <tr>
+                <td colSpan={6} style={{ textAlign: "center" }}>
+                  <BeatLoader
+                    color="#28b78d"
+                    loading
+                    margin={2}
+                    size={20}
+                    cssOverride={{
+                      display: "block",
+                    }}
+                  />
+                </td>
+              </tr>
+            ) : (
+              users_list
+            )}
+          </tbody>
         </table>
         <div className="pagination-container">
-            <ul>
+          <ul>
+            <li disabled={currentPage === 1} onClick={() => setCurrentPage(1)}>
+              <MdKeyboardDoubleArrowLeft />
+            </li>
+            <li
+              onClick={() =>
+                setCurrentPage(
+                  currentPage === 1 ? currentPage - 0 : currentPage - 1
+                )
+              }
+            >
+              <MdKeyboardArrowLeft />
+            </li>
+
+            {getPageNumbers(totalPages, currentPage).map((page, index) => (
               <li
-                disabled={currentPage === 1}
-                onClick={() => setCurrentPage(1)}
+                className={currentPage === page ? "select" : ""}
+                key={index}
+                onClick={() => {
+                  if (page === "...") {
+                    return;
+                  }
+                  setCurrentPage(page);
+                }}
               >
-                <MdKeyboardDoubleArrowLeft />
+                {page}
               </li>
-              <li
-                onClick={() =>
-                  setCurrentPage(
-                    currentPage === 1 ? currentPage - 0 : currentPage - 1
-                  )
-                }
-              >
-                <MdKeyboardArrowLeft />
-              </li>
+            ))}
 
-              {getPageNumbers(totalPages, currentPage).map((page, index) => (
-                <li
-                  className={currentPage === page ? "select" : ""}
-                  key={index}
-                  onClick={() => {
-                    if (page === "...") {
-                      return;
-                    }
-                    setCurrentPage(page);
-                  }}
-                >
-                  {page}
-                </li>
-              ))}
-
-              <li
-                onClick={() =>
-                  setCurrentPage(
-                    endIndex >= users.length
-                      ? currentPage - 0
-                      : currentPage + 1
-                  )
-                }
-              >
-                <MdOutlineKeyboardArrowRight />
-              </li>
-              <li
-                onClick={() =>
-                  setCurrentPage(
-                    endIndex >= users.length
-                      ? currentPage - 0
-                      : totalPages
-                  )
-                }
-              >
-                <MdKeyboardDoubleArrowRight />
-              </li>
-            </ul>
-          </div>
-
-
-
+            <li
+              onClick={() =>
+                setCurrentPage(
+                  endIndex >= users.length ? currentPage - 0 : currentPage + 1
+                )
+              }
+            >
+              <MdOutlineKeyboardArrowRight />
+            </li>
+            <li
+              onClick={() =>
+                setCurrentPage(
+                  endIndex >= users.length ? currentPage - 0 : totalPages
+                )
+              }
+            >
+              <MdKeyboardDoubleArrowRight />
+            </li>
+          </ul>
+        </div>
       </div>
 
-
       <div className="filter-block">
-          <button className="Admin-createBtn" onClick={() => setModal_UserCreate(true)}>Sukurti vartotoją</button>
-          <h3 className="Admin-filter-title">Filtravimas</h3>
-          <div>
-            <form>
+        <button
+          className="Admin-createBtn"
+          onClick={() => setModal_UserCreate(true)}
+        >
+          Sukurti vartotoją
+        </button>
+        <h3 className="Admin-filter-title">Filtravimas</h3>
+        <div>
+          <form>
+            <input
+              type="text"
+              placeholder="Vartotojo slapyvardis..."
+              className="paieska_filter"
+              onChange={(event) => setValue(event.target.value)}
+              value={value}
+            />
+            <p className="data_filter_p">
+              <label className="word" htmlFor="nuo_data">
+                Nuo
+              </label>
               <input
-                type="text"
-                placeholder="Vartotojo slapyvardis..."
-                className="paieska_filter"
-                onChange={(event) => setValue(event.target.value)}
-                value={value}
+                onChange={(event) => setStartDate(event.target.value)}
+                className="data_filter"
+                type="date"
+                id="nuo_data"
+                value={startDate}
               />
-              <p className="data_filter_p">
-                <label className="word" htmlFor="nuo_data">Nuo</label>
-                <input
-                  onChange={(event) => setStartDate(event.target.value)}
-                  className="data_filter"
-                  type="date"
-                  id="nuo_data"
-                  value={startDate}
-                />
 
-                <label className="word2" htmlFor="iki_data">iki</label>
-                <input
-                  onChange={(event) => setEndDate(event.target.value)}
-                  className="data_filter"
-                  type="date"
-                  id="iki_data"
-                  value={endDate}
-                />
-              </p>
-              <button className="btn-dark" onClick={(event) => removeFilter(event)}>Išvalyti</button>
-            </form>
-          </div>
+              <label className="word2" htmlFor="iki_data">
+                iki
+              </label>
+              <input
+                onChange={(event) => setEndDate(event.target.value)}
+                className="data_filter"
+                type="date"
+                id="iki_data"
+                value={endDate}
+              />
+            </p>
+            <button
+              className="btn-dark"
+              onClick={(event) => removeFilter(event)}
+            >
+              Išvalyti
+            </button>
+          </form>
         </div>
+      </div>
     </div>
   );
 };

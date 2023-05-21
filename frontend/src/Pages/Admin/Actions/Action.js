@@ -2,7 +2,7 @@ import React from "react";
 import { formatDateFull, getActionTitle } from "../../../func";
 export default function Action(props) {
   const { obj } = props;
-  const { _id, user_id, createdAt, action, data } = obj;
+  const { user_id, createdAt, action, data } = obj;
   const { username } = user_id;
   let details;
   switch (action) {
@@ -55,7 +55,7 @@ export default function Action(props) {
 
   return (
     <tr>
-      <td>{formatDateFull(createdAt)}</td>
+      <td className="nowrap">{formatDateFull(createdAt)}</td>
       <td>{username}</td>
       <td>{getActionTitle(action)}</td>
       <td>{details}</td>

@@ -169,22 +169,6 @@ export default function ExpenseEditModal(props) {
               noValidate
               onSubmit={formik.handleSubmit}
             >
-              {/* <select
-                className="boxOptions"
-                id="category"
-                value={formik.values.category}
-                onChange={formik.handleChange}
-              >
-                <option className="category" value="">
-                  Pasirinkite kategoriją
-                </option>
-                <option value="Transportas">Transportas</option>
-                <option value="Maistas">Maistas</option>
-                <option value="Mokesčiai">Mokesčiai</option>
-                <option value="Laisvalaikis">Laisvalaikis</option>
-                <option value="Parduotuvė">Parduotuvė</option>
-              </select> */}
-
               <select
                 className="boxOptions"
                 id="category"
@@ -280,7 +264,7 @@ export default function ExpenseEditModal(props) {
 
               <div className="buttons-container">
                 <button className="add-btn" type="submit">
-                  Pridėti
+                  Pakeisti
                 </button>
                 <button
                   className="cancel-btn"

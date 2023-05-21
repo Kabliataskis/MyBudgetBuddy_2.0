@@ -17,7 +17,7 @@ export default function Income(props) {
       <td>
         <FaPiggyBank />
       </td>
-      <td>{formatDate(date)}</td>
+      <td className="General-history__date nowrap">{formatDate(date)}</td>
       <td>{title}</td>
       <td className="color-eur">+{sum}€</td>
     </tr>

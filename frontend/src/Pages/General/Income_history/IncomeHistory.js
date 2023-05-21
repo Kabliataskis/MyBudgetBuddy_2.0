@@ -3,8 +3,6 @@ import { v4 as uuidv4 } from "uuid";
 import Income from "./Income";
 import axios from "../../../axios";
 import IncomeAdd_Modal from "../../Income/IncomeAddModal";
-//Icons
-import { FaPiggyBank } from "react-icons/fa";
 
 export default function IncomeHistory() {
   const [incomes, setIncomes] = useState([]);
@@ -37,7 +35,7 @@ export default function IncomeHistory() {
       <thead>
         <tr>
           <th>#</th>
-          <th>Data</th>
+          <th className="General-history__date">Data</th>
           <th>Pavadinimas</th>
           <th>Suma</th>
         </tr>

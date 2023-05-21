@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { AiOutlineClose, AiFillWarning } from "react-icons/ai";
 import { toast } from "react-toastify";
 import "./Income.css";
@@ -8,7 +8,13 @@ import swal from "sweetalert2";
 import { useFormik } from "formik";
 
 export default function IncomeEditModal(props) {
-  const {modal_IncomeEdit, setModal_IncomeEdit, editId, setEditId, getIncomes} = props;
+  const {
+    modal_IncomeEdit,
+    setModal_IncomeEdit,
+    editId,
+    setEditId,
+    getIncomes,
+  } = props;
   const max_amount = 9999999; // Maksimali suma €
   const validate = (values) => {
     let selected_time = new Date(values.date).getTime();
@@ -26,7 +32,7 @@ export default function IncomeEditModal(props) {
       errors.date = "Prašome užpildyti laukelį (Data)";
     } else if (selected_time > curr_time) {
       errors.date = "Data negali būti vėlesnė nei ši diena";
-    }else if (selected_time<min){
+    } else if (selected_time < min) {
       errors.date = "Data negali būti anktesne";
     }
 
@@ -43,14 +49,14 @@ export default function IncomeEditModal(props) {
   };
 
   const onSubmit = async (values) => {
-    // Užklausa į backend
-    try{
-      let {title, date, amount} = values;
+    try {
+      let { title, date, amount } = values;
       let sum = amount;
-      const res = await axios.patch("/income/"+editId, {
-        title, date, sum
+      const res = await axios.patch("/income/" + editId, {
+        title,
+        date,
+        sum,
       });
-      //Jei backend grąžina success
       setModal_IncomeEdit(false);
       getIncomes();
       swal.fire({
@@ -59,26 +65,25 @@ export default function IncomeEditModal(props) {
         icon: "success",
         confirmButtonColor: "#28b78d",
       });
-    } catch (err){
+    } catch (err) {
       console.log(err);
-      toast.error('Klaida');
+      toast.error("Klaida");
     }
   };
 
-
   const formatDate = (date) => {
-    date =  new Date(date);
-    let m = String(date.getMonth() + 1).padStart(2, '0'); // month with leading zero
-    let d = String(date.getDate()).padStart(2, '0'); // day with leading zero
-    let y = date.getFullYear()  // year
+    date = new Date(date);
+    let m = String(date.getMonth() + 1).padStart(2, "0"); // month with leading zero
+    let d = String(date.getDate()).padStart(2, "0"); // day with leading zero
+    let y = date.getFullYear(); // year
     return `${y}-${m}-${d}`;
-}
+  };
 
   useEffect(() => {
     const getIncomeItem = async () => {
-      if(editId){
+      if (editId) {
         try {
-          const res = await axios.get("/income/"+editId);
+          const res = await axios.get("/income/" + editId);
           formik.setFieldValue("title", res.data.title);
           formik.setFieldValue("date", formatDate(res.data.date));
           formik.setFieldValue("amount", res.data.sum);
@@ -86,12 +91,11 @@ export default function IncomeEditModal(props) {
           console.log(err);
         }
       }
-    }
+    };
     getIncomeItem();
   }, [editId]);
 
-
-  const formik = useFormik({  
+  const formik = useFormik({
     initialValues: {
       title: "",
       date: "",
@@ -164,7 +168,7 @@ export default function IncomeEditModal(props) {
               </p>
               {formik.touched.title && formik.errors.title ? (
                 <div className="error-mess-box">
-                  <AiFillWarning className="error-mess-icon" />{" "}
+                  <AiFillWarning className="error-mess-icon" />
                   <span>{formik.errors.title}</span>
                 </div>
               ) : null}
@@ -187,7 +191,7 @@ export default function IncomeEditModal(props) {
               </p>
               {formik.touched.date && formik.errors.date ? (
                 <div className="error-mess-box">
-                  <AiFillWarning className="error-mess-icon" />{" "}
+                  <AiFillWarning className="error-mess-icon" />
                   <span>{formik.errors.date}</span>
                 </div>
               ) : null}
@@ -216,7 +220,7 @@ export default function IncomeEditModal(props) {
               </p>
               {formik.touched.amount && formik.errors.amount ? (
                 <div className="error-mess-box">
-                  <AiFillWarning className="error-mess-icon" />{" "}
+                  <AiFillWarning className="error-mess-icon" />
                   <span>{formik.errors.amount}</span>
                 </div>
               ) : null}

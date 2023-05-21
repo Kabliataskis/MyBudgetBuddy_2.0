@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "../../../axios";
 import Action from "./Action";
 import { getActionTitle, getPageNumbers } from "../../../func";
+import BeatLoader from "react-spinners/BeatLoader";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
@@ -10,26 +11,27 @@ import {
   MdKeyboardArrowLeft,
 } from "react-icons/md";
 export const Actions = () => {
-  const [categoryFilter, setCategoryFilter]= useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
   const [value, setValue] = useState("");
   const [actions, setActions] = useState([]);
-  const [categories, setCategories] = useState([])
-
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getCategories = async () => {
     try {
       const res = await axios.get("/actions/categories");
       setCategories(res.data.data.categories);
-      // console.log(res);
     } catch (err) {
       console.log(err);
     }
   };
 
   const getActions = async () => {
+    setLoading(true);
     try {
       const res = await axios.get("/actions");
       setActions(res.data.data.actions);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -39,16 +41,13 @@ export const Actions = () => {
     getCategories();
   }, []);
 
-
-
-  let categories_list = categories.map((el) =>{
-    return(
-      <option value={el} key={uuidv4() +0}> 
-      {getActionTitle(el)}
-    </option>
-    )
-   });
-
+  let categories_list = categories.map((el) => {
+    return (
+      <option value={el} key={uuidv4() + 0}>
+        {getActionTitle(el)}
+      </option>
+    );
+  });
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -57,7 +56,7 @@ export const Actions = () => {
     const date = el.createdAt || "";
     const category = el.action || "";
     const lowercaseValue = value ? value.toLocaleLowerCase() : "";
-  
+
     const startDateObj = startDate ? new Date(startDate) : null;
     const endDateObj = endDate ? new Date(endDate) : null;
     const incomeDateObj = date ? new Date(date) : null;
@@ -67,7 +66,11 @@ export const Actions = () => {
         startDateObj <= incomeDateObj.setHours(0, 0, 0, 0) + 86400000) &&
       (!endDateObj || endDateObj >= incomeDateObj.setHours(0, 0, 0, 0));
 
-    return title.toLocaleLowerCase().includes(lowercaseValue) && dateInRange && category.includes(categoryFilter);
+    return (
+      title.toLocaleLowerCase().includes(lowercaseValue) &&
+      dateInRange &&
+      category.includes(categoryFilter)
+    );
   });
 
   const removeFilter = (event) => {
@@ -79,37 +82,25 @@ export const Actions = () => {
     setCategoryFilter("");
   };
 
-
   const [pageSize, setPageSize] = useState(10); // number of records per page
   const [currentPage, setCurrentPage] = useState(1); // current page number
   const totalItems = filterActions.length;
   const totalPages = Math.ceil(totalItems / pageSize);
   const pages = [];
 
-
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
   }
-
-
-
-
 
   const handleSearchChange = (e) => {
     setValue(e.target.value);
     setCurrentPage(1);
   };
 
-
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   let actions_list = filterActions.slice(startIndex, endIndex).map((el) => {
-    return (
-      <Action
-        key={uuidv4()}
-        obj={el}
-      />
-    );
+    return <Action key={uuidv4()} obj={el} />;
   });
 
   return (
@@ -124,101 +115,126 @@ export const Actions = () => {
               <th>Daugiau informacijos</th>
             </tr>
           </thead>
-          <tbody>{actions_list}</tbody>
+          <tbody>
+            {loading ? (
+              <tr>
+                <td colSpan={4} style={{ textAlign: "center" }}>
+                  <BeatLoader
+                    color="#28b78d"
+                    loading
+                    margin={2}
+                    size={20}
+                    cssOverride={{
+                      display: "block",
+                    }}
+                  />
+                </td>
+              </tr>
+            ) : (
+              actions_list
+            )}
+          </tbody>
         </table>
         <div className="pagination-container">
-            <ul>
-              <li
-                disabled={currentPage === 1}
-                onClick={() => setCurrentPage(1)}
-              >
-                <MdKeyboardDoubleArrowLeft />
-              </li>
-              <li
-                onClick={() =>
-                  setCurrentPage(
-                    currentPage === 1 ? currentPage - 0 : currentPage - 1
-                  )
-                }
-              >
-                <MdKeyboardArrowLeft />
-              </li>
+          <ul>
+            <li disabled={currentPage === 1} onClick={() => setCurrentPage(1)}>
+              <MdKeyboardDoubleArrowLeft />
+            </li>
+            <li
+              onClick={() =>
+                setCurrentPage(
+                  currentPage === 1 ? currentPage - 0 : currentPage - 1
+                )
+              }
+            >
+              <MdKeyboardArrowLeft />
+            </li>
 
-              {getPageNumbers(totalPages, currentPage).map((page, index) => (
-                <li
-                  className={currentPage === page ? "select" : ""}
-                  key={index}
-                  onClick={() => {
-                    if (page === "...") {
-                      return;
-                    }
-                    setCurrentPage(page);
-                  }}
-                >
-                  {page}
-                </li>
-              ))}
-
+            {getPageNumbers(totalPages, currentPage).map((page, index) => (
               <li
-                onClick={() =>
-                  setCurrentPage(
-                    endIndex >= actions.length
-                      ? currentPage - 0
-                      : currentPage + 1
-                  )
-                }
+                className={currentPage === page ? "select" : ""}
+                key={index}
+                onClick={() => {
+                  if (page === "...") {
+                    return;
+                  }
+                  setCurrentPage(page);
+                }}
               >
-                <MdOutlineKeyboardArrowRight />
+                {page}
               </li>
-              <li
-                onClick={() =>
-                  setCurrentPage(
-                    endIndex >= actions.length
-                      ? currentPage - 0
-                      : totalPages
-                  )
-                }
-              >
-                <MdKeyboardDoubleArrowRight />
-              </li>
-            </ul>
-          </div>
+            ))}
 
+            <li
+              onClick={() =>
+                setCurrentPage(
+                  endIndex >= actions.length ? currentPage - 0 : currentPage + 1
+                )
+              }
+            >
+              <MdOutlineKeyboardArrowRight />
+            </li>
+            <li
+              onClick={() =>
+                setCurrentPage(
+                  endIndex >= actions.length ? currentPage - 0 : totalPages
+                )
+              }
+            >
+              <MdKeyboardDoubleArrowRight />
+            </li>
+          </ul>
+        </div>
       </div>
 
-
       <div className="filter-block">
-          <h3>Filtravimas</h3>
-          <div>
+        <h3>Filtravimas</h3>
+        <div>
           <form>
+            <input
+              type="text"
+              placeholder="Vartotojo slapyvardis..."
+              className="paieska_filter"
+              onChange={(e) => handleSearchChange(e)}
+              value={value}
+            />
+            <select
+              className="dropdown-kategorija"
+              name="Kategorija"
+              id="Kategorija"
+              onChange={(event) => setCategoryFilter(event.target.value)}
+              value={categoryFilter}
+            >
+              <option value="">Įvykis</option>
+              {categories_list}
+            </select>
+            <p className="data_filter_p">
+              <label htmlFor="nuo_data">Nuo</label>
               <input
-                type="text"
-                placeholder="Vartotojo slapyvardis..."
-                className="paieska_filter"
-                onChange={(e) => handleSearchChange(e)}
-                value={value}
+                onChange={(event) => setStartDate(event.target.value)}
+                className="data_filter"
+                type="date"
+                id="nuo_data"
+                value={startDate}
+              />{" "}
+              <label htmlFor="iki_data">iki</label>
+              <input
+                onChange={(event) => setEndDate(event.target.value)}
+                className="data_filter"
+                type="date"
+                id="iki_data"
+                value={endDate}
               />
-              <select
-                className="dropdown-kategorija"
-                name="Kategorija"
-                id="Kategorija"
-                onChange={(event) => setCategoryFilter(event.target.value)}
-                value={categoryFilter}
-              >
-                <option value="">Įvykis</option>
-                {categories_list}
-             
-              </select>
-              <p className="data_filter_p">
-                <label htmlFor="nuo_data">Nuo</label>{" "}
-                <input onChange={(event) => setStartDate(event.target.value)}  className="data_filter" type="date" id="nuo_data" value={startDate} />{" "}
-                <label htmlFor="iki_data">iki</label>{" "}
-                <input onChange={(event) => setEndDate(event.target.value)} className="data_filter" type="date" id="iki_data" value={endDate} />
-              </p>
-              <button  onClick={(event) => removeFilter(event)} className="btn-dark">Išvalyti</button>
-            </form>
-          </div>
+            </p>
+            <button
+              onClick={(event) => removeFilter(event)}
+              className="btn-dark"
+            >
+              Išvalyti
+            </button>
+          </form>
         </div>
+      </div>
     </div>
   );
 };
