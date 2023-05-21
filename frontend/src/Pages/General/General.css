@@ -20,7 +20,6 @@
 .General .history-containers {
   display: flex;
   justify-content: space-between;
-  /* margin-top: 25px; */
   margin-top: 15px;
 }
 .General .history-container {
@@ -32,7 +31,6 @@
   border-radius: 5px;
   width: 49.5%;
   max-width: 800px;
-  /* max-width: 600px; */
 }
 .General .stats-containers {
   display: flex;
@@ -59,9 +57,6 @@
 .General .history-container table {
   margin-top: 15px;
   border-collapse: collapse;
-  /* border-collapse:separate; 
-    border-spacing: 0 0.5em; */
-  /* padding: 10px 50px; */
   color: var(--dark-color);
   font-weight: 500;
   width: 100%;
@@ -73,7 +68,6 @@
   padding: 10px 15px;
 }
 .General .history-container table tr {
-  /* background-color: var(--grey-color); */
   border-bottom: 1px solid var(--grey-color);
   padding: 10px 15px;
 }
@@ -101,13 +95,11 @@
 }
 .General .doughnut-chart-container {
   width: 500px;
-  /* margin-right: 100px; */
   transition: 0.2s;
 }
 .General .horizontal-bar-container {
   display: flex;
   margin-top: 15px;
-  /* width: 400px; */
   height: 40px;
   border-radius: 5px;
 }
@@ -140,7 +132,6 @@
   .General .top-container {
     flex-wrap: nowrap;
     padding: 10px;
-    /* justify-content: center; */
   }
   .General .history-containers {
     flex-wrap: wrap;
@@ -149,9 +140,6 @@
     margin-top: 15px;
     max-width: unset;
     width: 100%;
-  }
-  .General .stats-containers{
-    /* width: 400px; */
   }
   .General .isleista-per-men{
     margin-top: 0px;

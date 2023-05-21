@@ -117,10 +117,14 @@
 
 .main-container {
   /* max-width: calc(100% - 250px); */
-  padding: 20px;
+  /* padding: 20px;
   margin-top: 105px;
   margin-left: 250px;
-  width: calc(100% - 250px);
+  width: calc(100% - 250px); */
+  /* max-width: calc(100% - 70px);
+  margin-top: 60px;
+  padding: 0px;
+  margin-left: 75px; */
 }
 .Auth .content-container {
   display: flex;
@@ -162,12 +166,26 @@
 /* tablet */
 @media screen and (max-width: 1439px) {
   .Auth .content-container {
-    padding: 50px 60px 50px 50px;
+    /* padding: 50px 60px 50px 50px; */
+    padding: 25px;
+    flex-direction: column;
+    align-items: center;
+  }
+  .Auth .boxes{
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* justify-content: center; */
+  }
+  .Auth .box{
+    flex-basis: 300px;
+    flex-grow: 1;
   }
   .Auth .forma {
     width: 100%;
     padding: 35px;
     max-width: 500px;
+    margin-left: 0px;
   }
   .Auth .row {
     width: 100%;
@@ -175,15 +193,19 @@
 }
 /* mobile */
 @media screen and (max-width: 767px) {
+  .Auth .content-container {
+    padding: 15px;
+  }
   .Auth .forma {
+    margin-top: 10px;
     padding: inherit;
-    margin-left: 0px;
   }
   .Auth .row {
     width: 100%;
   }
   .Auth .boxes {
     width: 100%;
+    gap: 15px;
   }
   .Auth .content-container {
     flex-direction: column;

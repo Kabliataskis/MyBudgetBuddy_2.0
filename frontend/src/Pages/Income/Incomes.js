@@ -150,7 +150,7 @@ export default function Incomes() {
         <h3 className="h3-text">Pajamos</h3>
         <div className="block_pajamos">
           <p className="block_pajamo">
-            Mėnesio pajamos:{" "}
+            Mėnesio pajamos:
             <span className="color-eur">{totalIncome.toFixed(2)}€</span>
           </p>
           <button className="btn-gren" onClick={() => setModal_IncomeAdd(true)}>
