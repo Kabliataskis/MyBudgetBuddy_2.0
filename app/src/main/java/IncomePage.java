@@ -18,7 +18,7 @@ public class IncomePage extends PageObject {
     @FindBy(css = "button.add-btn")
     private WebElement addButton;
 
-    @FindBy(css = "h2.swal2-title#swal2-title")
+    @FindBy(css = "h2#swal2-title.swal2-title")
     private WebElement successMessage;
 
     @FindBy(xpath = "//*[@id=\"root\"]/table/tbody/tr[1]/td[2]")
@@ -45,9 +45,11 @@ public class IncomePage extends PageObject {
         addButton.click();
     }
 
-    public String getSuccessMessage(){
-        return successMessage.getText();
+    public boolean isSuccessMessageDisplayed(String expectedMessage) {
+        String actualMessage = successMessage.getText();
+        return actualMessage.equals(expectedMessage);
     }
+
 //    public boolean okIncome(String title, String date, double sum){
 //        return title.equals(titleElementText) &&
 //                date.equals(dateElementText) &&

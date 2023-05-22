@@ -27,8 +27,9 @@ public class IncomeTest extends BaseTest {
         incomePage.clickIncomeButton();
         incomePage.createIncome("Alga", "2023-05-22", 1000);
 
-        String successMessage = "Sėkmingai";
-        wait.until(ExpectedConditions.textToBePresentInElement(incomePage.getSuccessMessage(), successMessage));
+        String expectedMessage = "Sėkmingai";
+        Assertions.assertTrue(incomePage.isSuccessMessageDisplayed(expectedMessage), "Sėkmingai");
+
 //        Assertions.assertEquals(successMessage, "Sėkmingai");
 //        assert incomePage.okIncome("Alga", "2023-05-22", 1000);
     }
