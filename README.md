@@ -53,3 +53,8 @@
 
 
 ####  Linkime sklandaus ir patogaus naudojimosi.
+
+
+#### Kūrėjai: Daniel, Aleksandr, Dominik, Karolis, Slavomir, Živilė, Agnė, Inga, Justina(Product owner). 
+
+© Copyright 2023. Visos teisės saugomos. 
