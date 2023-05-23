@@ -28,7 +28,7 @@ public class IncomeTest extends BaseTest {
         incomePage.createIncome("Alga", "2023-05-22", 1000);
 
         String expectedMessage = "Sėkmingai";
-        Assertions.assertTrue(incomePage.isSuccessMessageDisplayed(expectedMessage), "Sėkmingai");
+        Assertions.assertTrue(incomePage.isSuccessMessageDisplayed(expectedMessage), "The success message is not displayed");
 
 //        Assertions.assertEquals(successMessage, "Sėkmingai");
 //        assert incomePage.okIncome("Alga", "2023-05-22", 1000);
