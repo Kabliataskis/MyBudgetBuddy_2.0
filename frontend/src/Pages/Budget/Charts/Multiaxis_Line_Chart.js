@@ -35,12 +35,12 @@ export default function MultiAxgis(props) {
       y: {
         type: "linear",
         display: true,
-        position: "left",
+        position: "right",
       },
       y1: {
         type: "linear",
-        display: true,
-        position: "right",
+        display: false,
+        position: "left",
         grid: {
           drawOnChartArea: false,
         },
@@ -52,25 +52,46 @@ export default function MultiAxgis(props) {
   const data1 = incomes_earned;
   const data2 = expenses_spent;
 
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: "Pajamos",
-        data: data1,
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
-        yAxisID: "y1",
-      },
-      {
-        label: "Išlaidos",
-        data: data2,
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-        yAxisID: "y",
-      },
-    ],
-  };
+ const data = {
+  labels,
+  datasets: [
+    {
+      label: 'Išlaidos',
+      data: data2,
+      borderColor: 'rgb(53, 162, 235)',
+      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      yAxisID: 'y',
+    },
+    {
+      label: 'Pajamos',
+      data: data1,
+      borderColor: 'rgb(255, 99, 132)',
+      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      yAxisID: 'y',
+    }
+    
+  ],
+};
+
+  // const data = {
+  //   labels,
+  //   datasets: [
+  //     {
+  //       label: "Pajamos",
+  //       data: data1,
+  //       borderColor: "rgb(255, 99, 132)",
+  //       backgroundColor: "rgba(255, 99, 132, 0.5)",
+  //       yAxisID: "y",
+  //     },
+  //     {
+  //       label: "Islaidos",
+  //       data: data2,
+  //       borderColor: "rgb(53, 162, 235)",
+  //       backgroundColor: "rgba(53, 162, 235, 0.5)",
+  //       yAxisID: "y1",
+  //     },
+  //   ],
+  // };
 
   return <Line options={options} data={data} />;
 }
