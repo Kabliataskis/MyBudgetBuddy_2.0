@@ -7,10 +7,9 @@ import "./Income.css";
 import swal from "sweetalert2";
 import { useFormik } from "formik";
 export default function IncomeAdd_Modal(props) {
-  const { getIncomes } = props;
+  const { getIncomes, generalPageUpdate } = props;
   const { modal_IncomeAdd, setModal_IncomeAdd } = useContext(ContextProvider);
   const max_sum = 9999999; // Maksimali suma €
-
   const validate = (values) => {
     let selected_time = new Date(values.date).getTime();
     let curr_time = new Date().getTime();
@@ -61,6 +60,9 @@ export default function IncomeAdd_Modal(props) {
       });
       formik.resetForm();
       getIncomes();
+      if(generalPageUpdate){
+        generalPageUpdate();
+      }
     } catch (err) {
       console.log(err);
       toast.error("Klaida");

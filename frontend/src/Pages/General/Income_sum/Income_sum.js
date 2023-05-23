@@ -11,6 +11,7 @@ export default function calculateTotalIncome(incomes) {
     const incomeMonth = incomeDate.getMonth() + 1;
     return incomeMonth === currentMonth;
   });
-
-  return filteredIncomes.reduce((total, income) => total + income.sum, 0);
+  const totalIncome = filteredIncomes.reduce((total, income) => total + income.sum, 0);
+  localStorage.setItem("totalIncomeCurrMonth", totalIncome);
+  return totalIncome;
 } 

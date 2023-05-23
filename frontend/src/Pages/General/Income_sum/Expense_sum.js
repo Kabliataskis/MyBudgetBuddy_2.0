@@ -11,6 +11,7 @@ export default function calculateTotalExpense(expenses) {
     const expenseMonth = expenseDate.getMonth() + 1;
     return expenseMonth === currentMonth;
   });
-
-  return filteredExpenses.reduce((total, expense) => total + expense.sum, 0);
+  const totalExpense = filteredExpenses.reduce((total, expense) => total + expense.sum, 0);
+  localStorage.setItem("totalExpenseCurrMonth", totalExpense);
+  return totalExpense;
 }

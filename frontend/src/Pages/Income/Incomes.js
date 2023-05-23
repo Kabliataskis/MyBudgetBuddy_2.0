@@ -26,11 +26,14 @@ export default function Incomes() {
   const { setModal_IncomeAdd } = useContext(ContextProvider);
   const [loading, setLoading] = useState(true);
   const [incomes, setIncomes] = useState([]);
+  let totalIncome_storage = localStorage.getItem("totalIncomeCurrMonth") || 0;
+  const [totalIncome, setTotalIncome] = useState(parseFloat(totalIncome_storage));
   const getIncomes = async () => {
     setLoading(true);
     try {
       const res = await axios.get("/income?");
       setIncomes(res.data.data.incomes);
+      setTotalIncome(calculateTotalIncome(res.data.data.incomes));
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -39,7 +42,6 @@ export default function Incomes() {
   useEffect(() => {
     getIncomes();
   }, []);
-  const totalIncome = calculateTotalIncome(incomes);
   async function deleteIncome(id) {
     swal
       .fire({
@@ -151,7 +153,7 @@ export default function Incomes() {
         <div className="block_pajamos">
           <p className="block_pajamo">
             Mėnesio pajamos:
-            <span className="color-eur">{totalIncome.toFixed(2)}€</span>
+            <span className="color-eur">{parseFloat(totalIncome).toFixed(2)}€</span>
           </p>
           <button className="btn-gren" onClick={() => setModal_IncomeAdd(true)}>
             Įvesti pajamas
@@ -186,9 +188,16 @@ export default function Incomes() {
                     />
                   </td>
                 </tr>
+              )  : incomes_list.length === 0 ? (
+                <tr>
+                  <td colSpan={5} style={{ textAlign: "center" }}>
+                    Įrašų nėra
+                  </td>
+                </tr>
               ) : (
                 incomes_list
-              )}
+              )
+}
             </tbody>
           </table>
           <div className="pagination-container">
