@@ -402,6 +402,7 @@ td {
    .data_filter_p{
     display: flex;
     align-items: center;
+    gap: 0px;
    }
    .pagination-container{
     justify-content: unset; 
