@@ -344,7 +344,10 @@
       margin: 0 auto;
     }
     .Budget .multiaxis-chart-container{
-      max-width: 600px;
+      max-width: 550px;
+      margin: 0 auto;
+    }
+    .Budget .multiaxis-chart-container canvas{
       margin: 0 auto;
     }
   }
@@ -383,5 +386,7 @@
   width: 410px !important;
   margin: 0 auto;
 }
-
+.Budget .multiaxis-chart-container canvas{
+  margin: 0px;
+}
   }
