@@ -25,8 +25,10 @@ export default function Expenses() {
   const [modal_ExpenseEdit, setModal_ExpenseEdit] = useState(false);
   const { setModal_ExpenseAdd } = useContext(ContextProvider);
   const [expenses, setExpenses] = useState([]);
-  const totalExpense = calculateTotalExpense(expenses);
+  // const totalExpense = calculateTotalExpense(expenses);
   const [loading, setLoading] = useState(true);
+  let totalExpense_storage = localStorage.getItem("totalExpenseCurrMonth") || 0;
+  const [totalExpense, setTotalExpense] = useState(parseFloat(totalExpense_storage));
 
   const [categories, setCategories] = useState([]);
   let categories_list = categories.map((el) => {
@@ -42,6 +44,7 @@ export default function Expenses() {
     try {
       const res = await axios.get("/expense?");
       setExpenses(res.data.data.expenses);
+      setTotalExpense(calculateTotalExpense(res.data.data.expenses));
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -183,7 +186,7 @@ export default function Expenses() {
         <div className="block_pajamos">
           <p className="block_pajamo">
             Mėnesio išlaidos:{" "}
-            <span className="red-eur">{totalExpense.toFixed(2)}€</span>
+            <span className="red-eur">{parseFloat(totalExpense).toFixed(2)}€</span>
           </p>
           <button className="btnAdd" onClick={() => setModal_ExpenseAdd(true)}>
             Įvesti išlaidas
@@ -217,6 +220,12 @@ export default function Expenses() {
                         display: "block",
                       }}
                     />
+                  </td>
+                </tr>
+              )  : expenses_list.length === 0 ? (
+                <tr>
+                  <td colSpan={6} style={{ textAlign: "center" }}>
+                    Įrašų nėra
                   </td>
                 </tr>
               ) : (

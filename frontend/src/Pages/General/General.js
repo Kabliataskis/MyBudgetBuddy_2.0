@@ -20,36 +20,39 @@ export default function General() {
   const { setModal_IncomeAdd } = useContext(ContextProvider);
   const [incomes, setIncomes] = useState([]);
   const [expenses, setExpenses] = useState([]);
-  const totalIncome = calculateTotalIncome(incomes);
-  const totalExpense = calculateTotalExpense(expenses);
+  // const totalIncome = calculateTotalIncome(incomes);
+
+  let totalIncome_storage = localStorage.getItem("totalIncomeCurrMonth") || 0;
+  const [totalIncome, setTotalIncome] = useState(parseFloat(totalIncome_storage));
+  let totalExpense_storage = localStorage.getItem("totalExpenseCurrMonth") || 0;
+  const [totalExpense, setTotalExpense] = useState(parseFloat(totalExpense_storage));
+
+
+  // const totalExpense = calculateTotalExpense(expenses);
 
   const pelnasWidth = ((totalIncome / (totalIncome + totalExpense)) * 100);
   const islaidosWidth = ((totalExpense / (totalIncome + totalExpense)) * 100);
 
-
+  const getIncomes = async () => {
+    try {
+      const res = await axios.get("/income?");
+      setIncomes(res.data.data.incomes);
+      setTotalIncome(calculateTotalIncome(res.data.data.incomes));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const getExpense = async () => {
+    try {
+      const res = await axios.get("/expense?");
+      setExpenses(res.data.data.expenses);
+      setTotalExpense(calculateTotalExpense(res.data.data.expenses));
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
-    const getIncomes = async () => {
-      try {
-        const res = await axios.get("/income?");
-        setIncomes(res.data.data.incomes);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
     getIncomes();
-  }, []);
-
-  useEffect(() => {
-    const getExpense = async () => {
-      try {
-        const res = await axios.get("/expense?");
-        setExpenses(res.data.data.expenses);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
     getExpense();
   }, []);
 
@@ -60,26 +63,29 @@ export default function General() {
     document.documentElement.style.setProperty("--pelnas-width", pelnasWidth);
     document.documentElement.style.setProperty("--islaidos-width", islaidosWidth);
   }, [totalIncome, totalExpense]);
-
+  const generalPageUpdate = () => {
+    getIncomes();
+    getExpense();
+  }
   return (
    <main className="main_back General">
       <div className="top-container">
         <div className="stats-containers">
           <div className="stat-container">
             <p>
-              Likutis: <span className="green">{(totalIncome-totalExpense).toFixed(2)}€</span>
+              Likutis: <span className="green">{parseFloat(totalIncome-totalExpense).toFixed(2)}€</span>
             </p>
           </div>
   
           <div className="stat-container isleista-per-men">
             <p>
-              Išleista per mėn: <span className="red">{(totalExpense.toFixed(2))}€</span>
+              Išleista per mėn: <span className="red">{parseFloat(totalExpense).toFixed(2)}€</span>
             </p>
           </div>
   
           <div className="horizontal-bar-container">
-            <div className="horizontal-bar__pelnas">{totalIncome.toFixed((2))} €</div>
-            <div className="horizontal-bar__islaidos">{totalExpense.toFixed((2))} €</div>
+            <div className="horizontal-bar__pelnas">{parseFloat(totalIncome).toFixed(2)} €</div>
+            <div className="horizontal-bar__islaidos">{parseFloat(totalExpense).toFixed(2)} €</div>
           </div>
         </div>
   
@@ -99,7 +105,7 @@ export default function General() {
           </button>
           <div className="history-top-line"></div>
 
-          <ExpenseHistory />
+          <ExpenseHistory generalPageUpdate={generalPageUpdate}/>
         </div>
 
         <div className="history-container">
@@ -111,7 +117,7 @@ export default function General() {
             Įvesti pajamas
           </button>
           <div className="history-top-line"></div>
-          <IncomeHistory />
+          <IncomeHistory generalPageUpdate={generalPageUpdate}/>
         </div>
       </div>
     </main>

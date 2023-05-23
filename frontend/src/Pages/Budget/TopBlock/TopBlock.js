@@ -9,7 +9,8 @@ export default function TopBlock() {
 
     const [categoryList, setCategoryList] = useState();
     const [spentList, setSpentList] = useState();
-    const [totalExpence, setTotalExpence] = useState(1);
+    let totalExpense_storage = localStorage.getItem("totalExpenseCurrMonth") || 0;
+    const [totalExpence, setTotalExpence] = useState(parseFloat(totalExpense_storage));
 
 
   const getBudgetExpense = async () => {

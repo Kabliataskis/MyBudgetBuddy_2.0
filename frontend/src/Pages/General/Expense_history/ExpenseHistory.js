@@ -3,17 +3,19 @@ import { v4 as uuidv4 } from "uuid";
 import Expense from "./Expense";
 import axios from "../../../axios";
 import ExpenseAddModal from "../../Expense/ExpenseAddModal";
-//Icons
-import { FaPiggyBank } from "react-icons/fa";
+import BeatLoader from "react-spinners/BeatLoader";
 
 
-export default function ExpenseHistory() {
+export default function ExpenseHistory(props) {
+  const {generalPageUpdate} = props;
   const [expenses, setExpenses] = useState([]);
-
+  const [loading, setLoading] = useState(true);
   const getExpense = async () => {
+    setLoading(true);
     try {
       const res = await axios.get("/expense?limit=5");
       setExpenses(res.data.data.expenses);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -33,7 +35,7 @@ export default function ExpenseHistory() {
   });
   return (
     <>
-     <ExpenseAddModal getExpense={getExpense}/>
+     <ExpenseAddModal getExpense={getExpense} generalPageUpdate={generalPageUpdate}/>
     <table>
       <thead>
         <tr>
@@ -45,8 +47,30 @@ export default function ExpenseHistory() {
         </tr>
       </thead>
       <tbody>
-        {expenses_list}
-      </tbody>
+              {loading ? (
+                <tr>
+                  <td colSpan={5} style={{ textAlign: "center" }}>
+                    <BeatLoader
+                      color="#28b78d"
+                      loading
+                      margin={2}
+                      size={20}
+                      cssOverride={{
+                        display: "block",
+                      }}
+                    />
+                  </td>
+                </tr>
+              ): expenses_list.length === 0 ? (
+                <tr>
+                  <td colSpan={6} style={{ textAlign: "center" }}>
+                    Įrašų nėra
+                  </td>
+                </tr> ) 
+                : (
+                expenses_list
+              )}
+            </tbody>      
     </table>
     </>
   );
