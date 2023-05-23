@@ -50,6 +50,10 @@ public class IncomePage extends PageObject {
         return actualMessage.equals(expectedMessage);
     }
 
+    public WebElement getSuccessMessage() {
+        return successMessage;
+    }
+
 //    public boolean okIncome(String title, String date, double sum){
 //        return title.equals(titleElementText) &&
 //                date.equals(dateElementText) &&

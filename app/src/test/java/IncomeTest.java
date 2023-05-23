@@ -25,10 +25,11 @@ public class IncomeTest extends BaseTest {
         IncomePage incomePage = new IncomePage(driver);
 
         incomePage.clickIncomeButton();
-        incomePage.createIncome("Alga", "2023-05-22", 1000);
+        incomePage.createIncome("Alga", "05/23/2023", 1000);
 
         String expectedMessage = "Sėkmingai";
-        Assertions.assertTrue(incomePage.isSuccessMessageDisplayed(expectedMessage), "The success message is not displayed");
+        wait.until(ExpectedConditions.textToBePresentInElement(incomePage.getSuccessMessage(), expectedMessage));
+//        Assertions.assertTrue(incomePage.isSuccessMessageDisplayed(expectedMessage), "The success message is not displayed");
 
 //        Assertions.assertEquals(successMessage, "Sėkmingai");
 //        assert incomePage.okIncome("Alga", "2023-05-22", 1000);
