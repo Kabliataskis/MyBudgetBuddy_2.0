@@ -341,7 +341,7 @@
     }
     .Budget .until,
     .Budget .from{
-      width: 300px;
+      width: 200px;
       flex-direction: column;
     }
   }
@@ -378,7 +378,7 @@
   }
 .Budget .multiaxis-chart-container{
   width: 410px !important;
-  margin-top: 15px;
+  margin: 0 auto;
 }
 
   }
