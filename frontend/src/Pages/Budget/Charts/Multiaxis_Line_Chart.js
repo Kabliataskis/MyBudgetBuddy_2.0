@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -58,40 +58,19 @@ export default function MultiAxgis(props) {
     {
       label: 'Išlaidos',
       data: data2,
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      borderColor: 'rgb(255, 99, 132)',
+      backgroundColor: 'rgba(255, 99, 132, 0.5)',
       yAxisID: 'y',
     },
     {
       label: 'Pajamos',
       data: data1,
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      borderColor: 'rgb(53, 162, 235)',
+      backgroundColor: 'rgba(53, 162, 235, 0.5)',
       yAxisID: 'y',
     }
-    
   ],
 };
-
-  // const data = {
-  //   labels,
-  //   datasets: [
-  //     {
-  //       label: "Pajamos",
-  //       data: data1,
-  //       borderColor: "rgb(255, 99, 132)",
-  //       backgroundColor: "rgba(255, 99, 132, 0.5)",
-  //       yAxisID: "y",
-  //     },
-  //     {
-  //       label: "Islaidos",
-  //       data: data2,
-  //       borderColor: "rgb(53, 162, 235)",
-  //       backgroundColor: "rgba(53, 162, 235, 0.5)",
-  //       yAxisID: "y1",
-  //     },
-  //   ],
-  // };
 
   return <Line options={options} data={data} />;
 }
