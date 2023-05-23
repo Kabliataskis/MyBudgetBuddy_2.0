@@ -35,12 +35,12 @@ export default function MultiAxgis(props) {
       y: {
         type: "linear",
         display: true,
-        position: "left",
+        position: "right",
       },
       y1: {
         type: "linear",
         display: false,
-        position: "right",
+        position: "left",
         grid: {
           drawOnChartArea: false,
         },
