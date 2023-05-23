@@ -344,6 +344,18 @@
       width: 200px;
       flex-direction: column;
     }
+    .Budget .compares-container{
+      flex-direction: column;
+      overflow-x: auto;
+    }
+    .Budget .inside-container{
+      flex-direction: row;
+      margin: 0 auto;
+    }
+    .Budget .multiaxis-chart-container{
+      max-width: 600px;
+      margin: 0 auto;
+    }
   }
   /* mobile */
   @media screen and (max-width: 767px) {
