@@ -42,10 +42,7 @@
   flex-direction: row;
   gap: 20px;
 }
-.Budget .isleista-per-men,
-.Budget .data {
-  /* margin-top: 20px; */
-}
+
 
 .Budget .doughnut-chart-container {
   width: 500px;
@@ -54,7 +51,6 @@
 .Budget .horizontal-bar-container {
   display: flex;
   margin-top: 15px;
-  /* width: 400px; */
   height: 40px;
   border-radius: 5px;
 }
@@ -72,7 +68,6 @@
 .Budget h2 {
   margin-top: 30px;
   text-align: center;
-  /* margin-left: -70px; */
 }
 .Budget .compares-container {
   margin-top: 30px;
@@ -86,10 +81,8 @@
 }
 
 .Budget .inside-container {
-  /* margin-top: 100px; */
   display: flex;
   flex-direction: column;
-  /* width: 500px; */
   gap: 25px;
 }
 .Budget .dropdown-month {
@@ -293,7 +286,6 @@
 .Budget .horizontal-bar__pelnas {
   min-width: 40px;
   background-color: var(--main-color);
-  /* border-radius: 5px 0px 0px 5px; */
   transition: 0.2s;
   padding: 0px;
 }
@@ -301,7 +293,6 @@
 .Budget .horizontal-bar__islaidos {
   min-width: 40px;
   background-color: var(--red-color);
-  /* border-radius: 0px 5px 5px 0px; */
   transition: 0.2s;
   padding: 0px;
 }
