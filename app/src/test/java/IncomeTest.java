@@ -29,9 +29,5 @@ public class IncomeTest extends BaseTest {
 
         String expectedMessage = "Sėkmingai";
         wait.until(ExpectedConditions.textToBePresentInElement(incomePage.getSuccessMessage(), expectedMessage));
-//        Assertions.assertTrue(incomePage.isSuccessMessageDisplayed(expectedMessage), "The success message is not displayed");
-
-//        Assertions.assertEquals(successMessage, "Sėkmingai");
-//        assert incomePage.okIncome("Alga", "2023-05-22", 1000);
     }
 }

@@ -40,7 +40,7 @@ public class IncomePage extends PageObject {
 
     public void createIncome(String title, String date, double sum){
         addTitle.sendKeys(title);
-        addDate.sendKeys(date);
+//        addDate.sendKeys(date);
         addIncome.sendKeys(String.valueOf(sum));
         addButton.click();
     }
