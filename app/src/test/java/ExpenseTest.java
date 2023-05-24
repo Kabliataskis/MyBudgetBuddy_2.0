@@ -3,6 +3,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.Date;
 
 public class ExpenseTest extends BaseTest {
     @Test
@@ -18,14 +19,26 @@ public class ExpenseTest extends BaseTest {
         wait.until(ExpectedConditions.visibilityOf(homePage.getExpenseLink()));
         homePage.clickExpenseLink();
 
+        String expenseName = "Expense";
+
         ExpensesPage expensesPage = new ExpensesPage(driver);
         expensesPage.clickAddExpense();
         expensesPage.setChooseCategory("Laisvalaikis");
-        expensesPage.setChooseExpenseName("Maxima");
+        expensesPage.setChooseExpenseName(expenseName);
         expensesPage.setChooseDate("05/19/2023");
         expensesPage.setChooseSum("50");
         expensesPage.setSaveButton();
 
+        String expectedMessage = "Sėkmingai";
+        wait.until(ExpectedConditions.textToBePresentInElement(expensesPage.getSuccessMessage(), expectedMessage));
+        wait.until(ExpectedConditions.elementToBeClickable(expensesPage.getConfirmationButton()));
+        expensesPage.clickConfirmationButton();
+
+        // Delete
+        expensesPage.deleteFirstExpense();
+        wait.until(ExpectedConditions.elementToBeClickable(expensesPage.getConfirmationButton()));
+        expensesPage.clickConfirmationButton();
+        wait.until(ExpectedConditions.textToBePresentInElement(expensesPage.getSuccessMessage(), expectedMessage));
     }
 
 }
